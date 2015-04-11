@@ -1,121 +1,110 @@
 function IngameState() {
-  
-  this.cube;
-  this.stats;
-  
-  this.gear;
-  
-  this.lookAtX = 0.0;
-  
-  this.mainNode;
-  
-  
-  this.init = function() {
-    
-    s = new THREE.Scene();
-    
-    cam = new Camera();
-    cam.initPerspectiveCamera(75, 1.0, 1000.0);
-  };
-  
-  
-  this.show = function() {
-   
-    var ambientLight = new THREE.AmbientLight(0x333333);
-    s.add(ambientLight);
-    
-    var light = new THREE.DirectionalLight(0xffffff);
-    light.position.set(0.5, 0.5, 0.0).normalize();
-    
-    light.castShadow = true;
-    
-    light.shadowCameraVisible = true;
-    
-    light.shadowCameraNear = -5;
-    light.shadowCameraFar = 25;
-    
-    light.shadowCameraLeft = -10;
-    light.shadowCameraRight = 10;
-    light.shadowCameraTop = 10;
-    light.shadowCameraBottom = -10;
-    
-    s.add(light);
-    
-    this.mainNode = new THREE.Object3D();
-    s.add(this.mainNode);
-    
-    var geometry = new THREE.BoxGeometry(1, 1, 1);
-    this.cube = new THREE.Mesh(geometry, img.material("test"));
-    this.cube.castShadow = true;
-    this.mainNode.add(this.cube);
-    
-    var geometry2 = new THREE.BoxGeometry(8, 1, 8);
-    var cube2 = new THREE.Mesh(geometry2, img.material("test3"));
-    cube2.receiveShadow = true;
-    cube2.position.set(0, -1, 0);
-    this.mainNode.add(cube2);
-    
-    /*var gearVertices = [];
-    var numOfTeeth = 20;
-    var teethWidth = 0.06;
-    var teethHeight = 0.1;
-    var size = 5.0;
-    for(var i = 0; i < numOfTeeth; i++) {
-      var xRotX = cos(6.2832 * i / numOfTeeth);
-      var yRotX = -sin(6.2832 * i / numOfTeeth);
-      var xRotY = sin(6.2832 * i / numOfTeeth);
-      var yRotY = cos(6.2832 * i / numOfTeeth);
-      
-      gear
-      
-      gearVertices.push(new THREE.Vector3(-0.2));
-    }
-    
-    
-    var gearGeometry = createGeometryFromVertices(gearVertices);
-    this.gear = new THREE.Mesh(gearGeometry, img.material("test"));
-    this.gear.castShadow = true;
-    this.mainNode.add(this.gear);*/
 
-    cam.setPosition(5.0, 5.0, 5.0);
-    cam.lookAt(0.0, 0.0, 0.0);
-  };
-  
-  
-  this.update = function() {
-    this.cube.rotation.y += 1.5 * timer.delta;
-<<<<<<< HEAD
-    this.lookAtX += 0.3 * timer.delta;
-    var results = cam.getObjectsAtCoords(mouse.x, mouse.y, this.mainNode.children);
-=======
-    //this.lookAtX += 0.3 * timer.delta;
-    this.drawableMap.update(0.1)
-    var results = cam.getObjectsAtCoords(mouse.x, mouse.y, s.children);
-    //console.log(mouse.x, mouse.y);
->>>>>>> branch 'master' of https://github.com/ZYXer-/base-code-3d.git
-    if(results.length > 0) {
-<<<<<<< HEAD
-      console.log(results[0]);
-=======
-      this.moveCamera(mouse.x);
-      //console.log(mouse.x, mouse.y);
-      //console.log(mouse.x, mouse.y, results[0]);
->>>>>>> branch 'master' of https://github.com/ZYXer-/base-code-3d.git
-    }
-  };
+	// just for demonstration purposes:
 
-  this.moveCamera = function(distance) {
-    cam.threeJSCamera.rotation.x += 1.1;
-    //currentPosition = cam.threeJSCamera;
-    //currentPosition.setRotation(1,2,3,0);
-    //currentPosition.rotation.z += 0.01;
+	this.demoText;
+	
+	this.demoParticleSystem1;
+	this.demoParticleSystem2;
+	
+	this.demoShaking;
+	
+	this.demoImageRotation = 0;
+	this.demoImageX = 450;
+	this.demoImageY = 300;
 
-  }
-  
-  
-  this.draw = function() {
-    cam.lookAt(this.lookAtX, 0.0);
-    renderer.render(s, cam);
-  };
-  
+
+	this.init = function() {
+		
+		// setup stuff here, examples:
+
+		this.demoParticleSystem1 = new ParticleSystem();
+		this.demoParticleSystem1.setType(1);
+		this.demoParticleSystem1.setEmitter(225, 300, 0);
+		this.demoParticleSystem1.setV(-50.0, 50.0, -250.0, -200.0, 0.0, 0.0);
+		this.demoParticleSystem1.setA(-10.0, 10.0, 0.0, 0.0, 0.0, 0.0);
+		this.demoParticleSystem1.setFriction(0.0, 100.0, 100.0);
+		this.demoParticleSystem1.setLife(1.0, 2.0);
+
+		this.demoParticleSystem2 = new ParticleSystem();
+		this.demoParticleSystem2.setMode(ParticleSystem.BURST_MODE);
+		this.demoParticleSystem2.setType(2);
+		this.demoParticleSystem2.setV(-240.0, 240.0, -240.0, 240.0, 0.0, 0.0);
+		this.demoParticleSystem2.setA(-6.0, 6.0, -6.0, 6.0, 0.0, 0.0);
+		this.demoParticleSystem2.setLife(0.5, 0.7);
+		this.demoParticleSystem2.setParticlesPerTick(50);
+
+		this.demoShaking = new Shaking();
+
+	};
+
+
+	this.show = function() {
+
+		// do stuff before we start in-game state, examples:
+		
+		this.demoText = new Text();
+		this.demoText.pos(450, 20);
+		this.demoText.setAlignment(Text.CENTER);
+		this.demoText.text("Hello World!");
+
+		mouse.registerUpArea("demoFire", 0, 0, game.WIDTH, game.HEIGHT, function() {
+			if(!game.paused) {
+				game.state.demoParticleSystem2.setEmitter(mouse.x, mouse.y);
+				game.state.demoParticleSystem2.burst();
+				game.state.demoShaking.shake(6, 18, 2);
+				sound.play("cannon");
+			}
+		});
+		
+		mouse.registerDraggableArea("demoDragAndDrop", 420, 270, 60, 60, function() {
+			console.log("started dragging.");
+		}, function() {
+			game.state.demoImageX += mouse.dragDeltaX;
+			game.state.demoImageY += mouse.dragDeltaY;
+		}, function() {
+			console.log("end dragging.");
+		});
+	};
+
+
+	this.hide = function() {
+
+		// do stuff before we end in-game state, examples:
+
+		mouse.deleteUpArea("demoFire");
+		
+		mouse.deleteDraggableArea("demoDragAndDrop");
+	};
+
+
+	this.update = function() {
+
+		// update stuff here:
+
+		if(!game.paused) {
+			this.demoImageRotation += 10 * timer.delta;
+		}
+	};
+
+
+	this.draw = function() {
+
+		// draw stuff here, examples:
+
+		c.fillStyle = "#fff";
+		c.fillRect(0, 0, game.WIDTH, game.HEIGHT);
+
+		this.demoText.draw();
+
+		this.demoShaking.apply();
+
+		img.drawRotated("test", this.demoImageX, this.demoImageY, 38, 38, this.demoImageRotation);
+
+		this.demoParticleSystem1.draw();
+		this.demoParticleSystem2.draw();
+
+		this.demoShaking.remove();
+	};
+
 }
