@@ -1,0 +1,58 @@
+body {
+  padding: 0px;
+  margin: 0px;
+}
+
+form, table {
+  margin: 0px;
+  padding: 0px;
+  border: none;
+}
+
+img {
+  border: 0px;
+}
+
+#game_box {
+  position: relative;
+  width: 900px;
+  height: 600px;
+  margin: 10px auto 0px;
+  border: 1px solid #000;
+}
+
+#loading {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 210px;
+  height: 50px;
+  padding: 275px 345px;
+  background: #ccc;
+}
+
+#loading_text {
+  width: 210px;
+  height: 30px;
+  color: #000;
+  text-align: center;
+  line-height: 30px;
+}
+
+#loading_bar_box {
+  width: 200px;
+  height: 10px;
+  padding: 4px;
+  border: 1px solid #000;
+}
+
+#loading_bar {
+  width: 0px;
+  height: 10px;
+  background: #000;
+}
+
+#fps {
+  background: #fff;
+  color: #000;
+}

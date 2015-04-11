@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Game</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="css/main.css"/>
+    <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="lib/shader_loader.js"></script>
+    <script type="text/javascript" src="js/soundmanager2.js"></script>
+    <script type="text/javascript" src="js/three.min.js"></script>
+    <script type="text/javascript" src="js/tools.js"></script>
+    <script type="text/javascript" src="js/resources.js"></script>
+    <script type="text/javascript" src="js/img.js"></script>
+    <script type="text/javascript" src="js/sound.js"></script>
+    <script type="text/javascript" src="js/timer.js"></script>
+    <script type="text/javascript" src="js/mouse.js"></script>
+    <script type="text/javascript" src="js/keyboard.js"></script>
+    <script type="text/javascript" src="js/renderer.js"></script>
+    <script type="text/javascript" src="js/camera.js"></script>
+    <script type="text/javascript" src="js/preloader.js"></script>
+    <script type="text/javascript" src="js/preloading_manager.js"></script>
+    <script type="text/javascript" src="js/performance_monitor.js"></script>
+    <script type="text/javascript" src="js/priority_queue.js"></script>
+    <script type="text/javascript" src="js/path_finding.js"></script>
+    <script type="text/javascript" src="js/particle.js"></script>
+    <script type="text/javascript" src="js/particle_system.js"></script>
+    <script type="text/javascript" src="js/loading_state.js"></script>
+    <script type="text/javascript" src="js/ingame_state.js"></script>
+    <script type="text/javascript" src="js/game.js"></script>
+    <script type="text/javascript" src="js/tile.js"></script>
+    <script type="text/javascript" src="js/hexagon_map.js"></script>
+    <script type="text/javascript" src="js/shapes.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+
+
+    <script data-src="js/shader/floatingHexagon/vertex.glsl" data-name='floatingHexagon' type="x-shader/x-vertex" id="floatingHexagon_vertex"></script>
+    <script data-src="js/shader/floatingHexagon/fragment.glsl" data-name='floatingHexagon' type="x-shader/x-fragment" id="floatingHexagon_fragment"></script>
+</head>
+<body>
+<div id="game_box">
+    <canvas id="game" width="900" height="600">
+        Your browser doesn't support the &lt;canvas&gt; tag. Please install the newest version of Mozilla Firefox,
+        Google Chrome or Microsoft Internet Explorer.
+    </canvas>
+    <div id="loading">
+        <div id="loading_text">&nbsp;</div>
+        <div id="loading_bar_box">
+            <div id="loading_bar">&nbsp;</div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
