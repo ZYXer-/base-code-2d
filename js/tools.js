@@ -65,6 +65,18 @@ function limit(value, min, max) {
 }
 
 
+function createMatrix(width, height, defaultValue) {
+	var matrix = [];
+	for(var x = 0; x < width; x++) {
+		matrix[x] = [];
+		for(var y = 0; y < height; y++) {
+			matrix[x][y] = defaultValue;
+		}
+	}
+	return matrix;
+}
+
+
 function createCanvas(width, height) {
 	var canvas = document.createElement("canvas");
 	canvas.width = width;

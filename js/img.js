@@ -21,7 +21,7 @@ function Img() {
 	this.drawRotated = function(name, x, y, centerX, centerY, angle) {
 		c.save();
 		c.translate(x, y);
-		c.rotate(angle * 0.0174533);
+		c.rotate(angle);
 		c.translate(-centerX, -centerY);
 		c.drawImage(this.assets[name], 0, 0);
 		c.restore();
@@ -31,7 +31,7 @@ function Img() {
 	this.drawRotatedSprite = function(name, x, y, w, h, posX, posY, centerX, centerY, angle) {
 		c.save();
 		c.translate(x, y);
-		c.rotate(angle * 0.0174533);
+		c.rotate(angle);
 		c.translate(-centerX, -centerY);
 		c.drawImage(this.assets[name], w * posX, h * posY, w, h, 0, 0, w, h);
 		c.restore();
