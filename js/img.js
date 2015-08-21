@@ -36,5 +36,10 @@ function Img() {
 		c.drawImage(this.assets[name], w * posX, h * posY, w, h, 0, 0, w, h);
 		c.restore();
 	};
+	
+	
+	this.add = function(name, image) {
+		this.assets[name] = image;
+	};
 
 }

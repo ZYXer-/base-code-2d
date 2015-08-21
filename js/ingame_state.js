@@ -7,12 +7,14 @@ function IngameState() {
 	this.demoParticleSystem1;
 	this.demoParticleSystem2;
 	
+	this.demoMatrixFromImage;
+	
 	this.demoShaking;
 	
 	this.demoImageRotation = 0;
 	this.demoImageX = 450;
 	this.demoImageY = 300;
-
+	
 
 	this.init = function() {
 		
@@ -42,6 +44,10 @@ function IngameState() {
 	this.show = function() {
 
 		// do stuff before we start in-game state, examples:
+		
+		this.demoMatrixFromImage = ImageProcessing.readMatrix("demoData", 10, 10, "empty" , {
+			"#000000" : "full",
+		});
 		
 		this.demoText = new Text();
 		this.demoText.pos(450, 20);
@@ -83,7 +89,7 @@ function IngameState() {
 		// update stuff here:
 
 		if(!game.paused) {
-			this.demoImageRotation += 10 * timer.delta;
+			this.demoImageRotation += 2.0 * timer.delta;
 		}
 	};
 
@@ -94,6 +100,15 @@ function IngameState() {
 
 		c.fillStyle = "#fff";
 		c.fillRect(0, 0, game.WIDTH, game.HEIGHT);
+		
+		for(var x = 0; x < 10; x++) {
+			for(var y = 0; y < 10; y++) {
+				if(this.demoMatrixFromImage[x][y] == "full") {
+					c.fillStyle = "#ddd";
+					c.fillRect(x * 20, y * 20, 20, 20);
+				}
+			}
+		}
 
 		this.demoText.draw();
 
@@ -103,6 +118,8 @@ function IngameState() {
 
 		this.demoParticleSystem1.draw();
 		this.demoParticleSystem2.draw();
+		
+		img.draw("demoGeneratedTexture", 740, 440);
 
 		this.demoShaking.remove();
 	};
