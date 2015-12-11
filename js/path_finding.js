@@ -16,7 +16,7 @@ function PathFinding() {
 	this.grid;
 
 
-	this.find = function(start, end, isFreeCallback) {
+	this.find = function(start, end, directions, isFreeCallback) { // directions = 4 or 8;
 
 		this.isFreeCallback = isFreeCallback;
 
@@ -47,7 +47,7 @@ function PathFinding() {
 
 			currentNode.processed = true;
 
-			var neighbors = this.getNeighbors(currentNode);
+			var neighbors = this.getNeighbors(currentNode, directions);
 
 			for(var i in neighbors) {
 				var neighbor = neighbors[i];
@@ -133,11 +133,11 @@ function PathFinding() {
 	};
 
 
-	this.getNeighbors = function(node) {
+	this.getNeighbors = function(node, directions) {
 
 		var neighbors = [];
 
-		for(var dir = 0; dir < 8; dir++) {
+		for(var dir = 0; dir < directions; dir++) {
 
 			var newX = node.x + PathFinding.NEIGHBOR_X[dir];
 			var newY = node.y + PathFinding.NEIGHBOR_Y[dir];
@@ -161,8 +161,8 @@ function PathFinding() {
 }
 
 
-PathFinding.NEIGHBOR_X = [ 0,  1,  1,  1,  0, -1, -1, -1];
-PathFinding.NEIGHBOR_Y = [-1, -1,  0,  1,  1,  1,  0, -1];
-PathFinding.NEIGHBOR_COST = [1000, 1414, 1000, 1414, 1000, 1414, 1000, 1414];
+PathFinding.NEIGHBOR_X = [ 0,  1,  0, -1,  1,  1, -1, -1];
+PathFinding.NEIGHBOR_Y = [-1,  0,  1,  0, -1,  1,  1, -1];
+PathFinding.NEIGHBOR_COST = [1000, 1000, 1000, 1000, 1414, 1414, 1414, 1414];
 
 PathFinding.GRID_PADDING_SIZE = 10;

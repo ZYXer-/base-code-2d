@@ -1,4 +1,9 @@
 
+var HALF_PI = 1.570796;
+var PI = 3.141593;
+var TWO_PI = 6.283185;
+
+
 function rand(min, max) {
 	return min + Math.floor((1 + max - min) * Math.random());
 }
@@ -28,6 +33,18 @@ function angle(x1, y1, x2, y2) {
 
 function toRad(degrees) {
 	return degrees * 0.0174532;
+}
+
+
+function angleDelta(angleA, angleB) {
+    var angleDelta = angleB - angleA;
+    while(angleDelta > PI) {
+        angleDelta -= TWO_PI;
+    }
+    while(angleDelta <= -PI) {
+        angleDelta += TWO_PI;
+    }
+    return angleDelta;
 }
 
 
@@ -68,7 +85,7 @@ function hslToRGB(h, s, l) {
 
 
 function hueToRGB(p, q, t) {
-    
+	
     if(t < 0) {
         t += 1;
     }
