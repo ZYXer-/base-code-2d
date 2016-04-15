@@ -1,110 +1,121 @@
 function ParticleSystem() {
 
-	this.mode = ParticleSystem.CONTINUOUS_MODE;
+    this.mode = ParticleSystem.CONTINUOUS_MODE;
 
-	this.type;
+    this.type;
 
-	this.emitter = { x : 0.0, y : 0.0, z : 0.0 };
+    this.emitter = { x : 0.0, y : 0.0, z : 0.0 };
+    this.emitterSize = { x : 0.0, y : 0.0, z : 0.0 };
 
-	this.initMinV = { x : 0.0, y : 0.0, z : 0.0 };
-	this.initMaxV = { x : 0.0, y : 0.0, z : 0.0 };
+    this.initMinV = { x : 0.0, y : 0.0, z : 0.0 };
+    this.initMaxV = { x : 0.0, y : 0.0, z : 0.0 };
 
-	this.initMinA = { x : 0.0, y : 0.0, z : 0.0 };
-	this.initMaxA = { x : 0.0, y : 0.0, z : 0.0 };
+    this.initMinA = { x : 0.0, y : 0.0, z : 0.0 };
+    this.initMaxA = { x : 0.0, y : 0.0, z : 0.0 };
 
-	this.friction = { x : 0.0, y : 0.0, z : 0.0 };
+    this.friction = { x : 0.0, y : 0.0, z : 0.0 };
 
-	this.lifeMin = 0.0;
-	this.lifeMax = 0.0;
+    this.lifeMin = 0.0;
+    this.lifeMax = 0.0;
 
-	this.particlesPerTick = 1;
+    this.particlesPerTick = 1;
 
-	this.particles = {};
-	this.particleCounter = 0;
+    this.particles = {};
+    this.particleCounter = 0;
 
-	this.isOn = true;
+    this.isOn = true;
 
-	this.burstNow = false;
-
-
-	this.setMode = function(mode) {
-		this.mode = mode;
-	};
+    this.burstNow = false;
 
 
-	this.setType = function(type) {
-		this.type = type;
-	};
+    this.setMode = function(mode) {
+        this.mode = mode;
+    };
 
 
-	this.setEmitter = function(emitterX, emitterY, emitterZ) {
-		this.emitter = { x : emitterX, y : emitterY, z : emitterZ };
-	};
+    this.setType = function(type) {
+        this.type = type;
+    };
 
 
-	this.setV = function(initMinVx, initMaxVx, initMinVy, initMaxVy, initMinVz, initMaxVz) {
-		this.initMinV = { x : initMinVx, y : initMinVy, z : initMinVz };
-		this.initMaxV = { x : initMaxVx, y : initMaxVy, z : initMaxVz };
-	};
+    this.setEmitter = function(emitterX, emitterY, emitterZ) {
+        this.emitter = { x : emitterX, y : emitterY, z : emitterZ };
+    };
 
 
-	this.setA = function(initMinAx, initMaxAx, initMinAy, initMaxAy, initMinAz, initMaxAz) {
-		this.initMinA = { x : initMinAx, y : initMinAy, z : initMinAz };
-		this.initMaxA = { x : initMaxAx, y : initMaxAy, z : initMaxAz };
-	};
+    this.setEmitterSize = function(sizeX, sizeY, sizeZ) {
+        this.emitterSize = { x : sizeX, y : sizeY, z : sizeZ };
+    };
 
 
-	this.setFriction = function(frictionX, frictionY, frictionZ) {
-		this.friction = { x : frictionX, y : frictionY, z : frictionZ };
-	};
+    this.setV = function(initMinVx, initMaxVx, initMinVy, initMaxVy, initMinVz, initMaxVz) {
+        this.initMinV = { x : initMinVx, y : initMinVy, z : initMinVz };
+        this.initMaxV = { x : initMaxVx, y : initMaxVy, z : initMaxVz };
+    };
 
 
-	this.setLife = function(lifeMin, lifeMax) {
-		this.lifeMin = lifeMin;
-		this.lifeMax = lifeMax;
-	};
+    this.setA = function(initMinAx, initMaxAx, initMinAy, initMaxAy, initMinAz, initMaxAz) {
+        this.initMinA = { x : initMinAx, y : initMinAy, z : initMinAz };
+        this.initMaxA = { x : initMaxAx, y : initMaxAy, z : initMaxAz };
+    };
 
 
-	this.setParticlesPerTick = function(particlesPerTick) {
-		this.particlesPerTick = particlesPerTick;
-	};
+    this.setFriction = function(frictionX, frictionY, frictionZ) {
+        this.friction = { x : frictionX, y : frictionY, z : frictionZ };
+    };
 
 
-	this.on = function() {
-		this.isOn = true;
-	};
+    this.setLife = function(lifeMin, lifeMax) {
+        this.lifeMin = lifeMin;
+        this.lifeMax = lifeMax;
+    };
 
 
-	this.off = function() {
-		this.isOn = false;
-	};
+    this.setParticlesPerTick = function(particlesPerTick) {
+        this.particlesPerTick = particlesPerTick;
+    };
 
 
-	this.burst = function() {
-		this.burstNow = true;
-	};
+    this.on = function() {
+        this.isOn = true;
+    };
 
 
-	this.draw = function() {
-		if(this.isOn && !game.paused) {
-			if(this.mode == ParticleSystem.CONTINUOUS_MODE || (this.mode == ParticleSystem.BURST_MODE && this.burstNow)) {
-				this.burstNow = false;
-				for(var i = 0; i < this.particlesPerTick; i++) {
-					this.particles[this.particleCounter] = new Particle();
-					this.particles[this.particleCounter].init(this.type, this.emitter, this.initMinV, this.initMaxV, this.initMinA, this.initMaxA, this.friction, this.lifeMin, this.lifeMax);
-					this.particleCounter++;
-				}
-			}
-		}
+    this.off = function() {
+        this.isOn = false;
+    };
 
-		for(var particleId in this.particles) {
-			if(this.particles[particleId].life < 0) {
-				delete this.particles[particleId];
-			} else {
-				this.particles[particleId].draw();
-			}
-		}
-	};
+
+    this.burst = function() {
+        this.burstNow = true;
+    };
+
+
+    this.draw = function() {
+        if(!game.particlesOn) {
+            this.particles = {};
+            this.particleCounter = 0;
+            return;
+        }
+        if(this.isOn && !game.paused) {
+            if(this.mode == ParticleSystem.CONTINUOUS_MODE || (this.mode == ParticleSystem.BURST_MODE && this.burstNow)) {
+                this.burstNow = false;
+                for(var i = 0; i < this.particlesPerTick; i++) {
+                    this.particles[this.particleCounter] = new Particle();
+                    this.particles[this.particleCounter].init(this.type, this.emitter, this.emitterSize, this.initMinV, this.initMaxV, this.initMinA, this.initMaxA, this.friction, this.lifeMin, this.lifeMax);
+                    this.particleCounter++;
+                }
+            }
+        }
+
+        for(var particleId in this.particles) {
+            if(this.particles[particleId].life < 0) {
+                delete this.particles[particleId];
+            } else {
+                this.particles[particleId].draw();
+            }
+        }
+    };
 
 }
 

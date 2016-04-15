@@ -1,59 +1,59 @@
 function Keyboard() {
 
-	this.keyPressed = {};
+    this.keyPressed = {};
 
-	this.keyDownHandlers = {};
-	this.keyUpHandlers = {};
-
-	
-	this.init = function() {
-		jQuery(window).keydown(function(event) {
-			event.preventDefault();
-			keyboard.keyPressed[event.which] = true;
-			if(keyboard.keyDownHandlers.hasOwnProperty(event.which)) {
-				keyboard.keyDownHandlers[event.which].callback();
-			}
-
-		}).keyup(function(event) {
-			event.preventDefault();
-			keyboard.keyPressed[event.which] = false;
-			if(keyboard.keyUpHandlers.hasOwnProperty(event.which)) {
-				keyboard.keyUpHandlers[event.which].callback();
-			}
-		});
-	};
+    this.keyDownHandlers = {};
+    this.keyUpHandlers = {};
 
 
-	this.isPressed = function(key) {
-		if(!this.keyPressed.hasOwnProperty(key)) {
-			return false;
-		}
-		return this.keyPressed[key];
-	};
+    this.init = function() {
+        jQuery(window).keydown(function(event) {
+            event.preventDefault();
+            keyboard.keyPressed[event.which] = true;
+            if(keyboard.keyDownHandlers.hasOwnProperty(event.which)) {
+                keyboard.keyDownHandlers[event.which].callback();
+            }
+
+        }).keyup(function(event) {
+            event.preventDefault();
+            keyboard.keyPressed[event.which] = false;
+            if(keyboard.keyUpHandlers.hasOwnProperty(event.which)) {
+                keyboard.keyUpHandlers[event.which].callback();
+            }
+        });
+    };
 
 
-	this.registerKeyDownHandler = function(key, callback) {
-		this.keyDownHandlers[key] = { key : key, callback : callback };
-	};
+    this.isPressed = function(key) {
+        if(!this.keyPressed.hasOwnProperty(key)) {
+            return false;
+        }
+        return this.keyPressed[key];
+    };
 
 
-	this.deleteKeyDownHandler = function(key) {
-		if(this.keyDownHandlers.hasOwnProperty(key)) {
-			delete this.keyDownHandlers[key];
-		}
-	};
+    this.registerKeyDownHandler = function(key, callback) {
+        this.keyDownHandlers[key] = { key : key, callback : callback };
+    };
 
 
-	this.registerKeyUpHandler = function(key, callback) {
-		this.keyUpHandlers[key] = { key : key, callback : callback };
-	};
+    this.deleteKeyDownHandler = function(key) {
+        if(this.keyDownHandlers.hasOwnProperty(key)) {
+            delete this.keyDownHandlers[key];
+        }
+    };
 
 
-	this.deleteKeyUpHandler = function(key) {
-		if(this.keyUpHandlers.hasOwnProperty(key)) {
-			delete this.keyUpHandlers[key];
-		}
-	};
+    this.registerKeyUpHandler = function(key, callback) {
+        this.keyUpHandlers[key] = { key : key, callback : callback };
+    };
+
+
+    this.deleteKeyUpHandler = function(key) {
+        if(this.keyUpHandlers.hasOwnProperty(key)) {
+            delete this.keyUpHandlers[key];
+        }
+    };
 
 }
 
@@ -103,6 +103,16 @@ Keyboard.Z = 90;
 Keyboard.SPACE_BAR = 32;
 Keyboard.ENTER = 13;
 Keyboard.BACKSPACE = 8;
+
+Keyboard.SEMI_COLON = 186;
+Keyboard.EQUALS = 187;
+Keyboard.COMMA = 188;
+Keyboard.DASH = 189;
+Keyboard.PERIOD = 190;
+Keyboard.SLASH = 191;
+Keyboard.OPEN_BRACKET = 219;
+Keyboard.BACKSLASH = 220;
+Keyboard.CLOSE_BRACKET = 221;
 
 Keyboard.ESCAPE = 27;
 Keyboard.TAB = 9;
