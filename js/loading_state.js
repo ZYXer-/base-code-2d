@@ -64,7 +64,7 @@ function LoadingState() {
 
     this.draw = function() {
         jQuery("#loading_text").text(Math.ceil(this.percentage) + "%");
-        jQuery("#loading_bar").width(jQuery("#loading_bar_box").width * (this.percentage / 100.0));
+        jQuery("#loading_bar").width(jQuery("#loading_bar_box").width() * (this.percentage / 100.0));
     };
 
 }
