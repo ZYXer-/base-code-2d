@@ -33,25 +33,40 @@ function Timer() {
 
     this.countdown = function(time, callback) {
         var timerCallback = new TimerCallback();
-        timerCallback.init(time, null, callback);
+        timerCallback.init(time, null, callback, false);
         this.callbacks[this.callbackCounter] = timerCallback;
         this.callbackCounter++;
+        return timerCallback;
     };
 
 
-    this.forDo = function(time, callback) {
+    this.doFor = function(time, callback) {
         var timerCallback = new TimerCallback();
-        timerCallback.init(time, callback, null);
+        timerCallback.init(time, callback, null, false);
         this.callbacks[this.callbackCounter] = timerCallback;
         this.callbackCounter++;
+        return timerCallback;
     };
 
 
-    this.forDoCallback = function(time, updateCallback, endCallback) {
+    this.doForCountdown = function(time, updateCallback, endCallback) {
         var timerCallback = new TimerCallback();
-        timerCallback.init(time, updateCallback, endCallback);
+        timerCallback.init(time, updateCallback, endCallback, false);
         this.callbacks[this.callbackCounter] = timerCallback;
         this.callbackCounter++;
+        return timerCallback;
+    };
+
+
+    this.repeatEvery = function(interval, callback, skipFirst) {
+        var timerCallback = new TimerCallback();
+        timerCallback.init(interval, null, callback, true);
+        if(typeof skipFirst === "undefined" || !skipFirst) {
+            timerCallback.life = 0.0;
+        }
+        this.callbacks[this.callbackCounter] = timerCallback;
+        this.callbackCounter++;
+        return timerCallback;
     };
 
 

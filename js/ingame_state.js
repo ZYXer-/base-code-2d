@@ -73,12 +73,12 @@ function IngameState() {
         });
 
         keyboard.registerKeyUpHandler(Keyboard.C, function() {
-            timer.forDoCallback(3.0, function(progress) {
+            timer.doForCountdown(3.0, function(progress) {
                 game.state.demoText.text("Progress: " + progress.toFixed(2));
             }, function() {
                 game.state.demoText.text("Hello World!");
             });
-        })
+        });
     };
 
 

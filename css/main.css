@@ -22,6 +22,19 @@ img {
     overflow: hidden;
 }
 
+#paused {
+    display: none;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 900px;
+    height: 600px;
+    background: rgba(0, 0, 0, 0.5);
+    line-height: 600px;
+    text-align: center;
+    color: #fff;
+}
+
 #loading {
     position: absolute;
     left: 0px;

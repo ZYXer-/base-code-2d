@@ -4,28 +4,30 @@
     <title>My Game</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" type="text/css" href="css/main.css"/>
-    <script type="text/javascript" src="js/jquery-1.12.3.min.js"></script>
-    <script type="text/javascript" src="js/soundmanager2.js"></script>
-    <script type="text/javascript" src="js/tools.js"></script>
+    <script type="text/javascript" src="js/utils/jquery-1.12.3.min.js"></script>
+    <script type="text/javascript" src="js/utils/soundmanager2.js"></script>
+    <script type="text/javascript" src="js/utils/utils.js"></script>
+    <script type="text/javascript" src="js/utils/img.js"></script>
+    <script type="text/javascript" src="js/utils/pixel_fonts.js"></script>
+    <script type="text/javascript" src="js/utils/sound.js"></script>
+    <script type="text/javascript" src="js/utils/timer_callback.js"></script>
+    <script type="text/javascript" src="js/utils/timer.js"></script>
+    <script type="text/javascript" src="js/utils/mouse.js"></script>
+    <script type="text/javascript" src="js/utils/keyboard.js"></script>
+    <script type="text/javascript" src="js/utils/page_visibility.js"></script>
+    <script type="text/javascript" src="js/utils/fontfaceobserver.js"></script>
+    <script type="text/javascript" src="js/utils/preloader.js"></script>
+    <script type="text/javascript" src="js/utils/preloading_manager.js"></script>
+    <script type="text/javascript" src="js/utils/performance_monitor.js"></script>
+    <script type="text/javascript" src="js/utils/priority_queue.js"></script>
+    <script type="text/javascript" src="js/utils/path_finding.js"></script>
+    <script type="text/javascript" src="js/utils/shaking.js"></script>
+    <script type="text/javascript" src="js/utils/draw_queue.js"></script>
+    <script type="text/javascript" src="js/utils/text.js"></script>
+    <script type="text/javascript" src="js/utils/particle.js"></script>
+    <script type="text/javascript" src="js/utils/particle_system.js"></script>
+    <script type="text/javascript" src="js/utils/image_processing.js"></script>
     <script type="text/javascript" src="js/resources.js"></script>
-    <script type="text/javascript" src="js/img.js"></script>
-    <script type="text/javascript" src="js/pixel_fonts.js"></script>
-    <script type="text/javascript" src="js/sound.js"></script>
-    <script type="text/javascript" src="js/timer_callback.js"></script>
-    <script type="text/javascript" src="js/timer.js"></script>
-    <script type="text/javascript" src="js/mouse.js"></script>
-    <script type="text/javascript" src="js/keyboard.js"></script>
-    <script type="text/javascript" src="js/fontfaceobserver.js"></script>
-    <script type="text/javascript" src="js/preloader.js"></script>
-    <script type="text/javascript" src="js/preloading_manager.js"></script>
-    <script type="text/javascript" src="js/performance_monitor.js"></script>
-    <script type="text/javascript" src="js/priority_queue.js"></script>
-    <script type="text/javascript" src="js/path_finding.js"></script>
-    <script type="text/javascript" src="js/shaking.js"></script>
-    <script type="text/javascript" src="js/text.js"></script>
-    <script type="text/javascript" src="js/particle.js"></script>
-    <script type="text/javascript" src="js/particle_system.js"></script>
-    <script type="text/javascript" src="js/image_processing.js"></script>
     <script type="text/javascript" src="js/loading_state.js"></script>
     <script type="text/javascript" src="js/ingame_state.js"></script>
     <script type="text/javascript" src="js/game.js"></script>
@@ -37,6 +39,7 @@
 	        Your browser doesn't support the &lt;canvas&gt; tag. Please install the newest version of Mozilla Firefox,
 	        Google Chrome or Microsoft Internet Explorer.
 	    </canvas>
+        <div id="paused">Paused &ndash; Press P to unpause</div>
 	    <div id="loading">
 	        <div id="loading_text">&nbsp;</div>
 	        <div id="loading_bar_box">

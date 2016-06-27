@@ -25,6 +25,8 @@ function Game() {
 
     this.init = function() {
 
+        PageVisibility.init();
+
         timer.init();
         performanceMonitor.init();
 
@@ -32,7 +34,7 @@ function Game() {
         mouse.init();
 
         keyboard.registerKeyUpHandler(Keyboard.P, function() {
-            game.paused = !game.paused;
+            game.pauseUnpause();
         });
 
         keyboard.registerKeyUpHandler(Keyboard.M, function() {
@@ -41,6 +43,10 @@ function Game() {
 
         keyboard.registerKeyUpHandler(Keyboard.Q, function() {
             game.particlesOn = !game.particlesOn;
+        });
+
+        PageVisibility.registerBlurHandler("pause", function() {
+            game.pause();
         });
 
         for(var stateName in this.STATES) {
@@ -107,6 +113,27 @@ function Game() {
     this.draw = function() {
         if(this.state.hasOwnProperty("draw")) {
             this.state.draw();
+        }
+    };
+
+
+    this.pause = function() {
+        this.paused = true;
+        jQuery("#paused").show();
+    };
+
+
+    this.unpause = function() {
+        this.paused = false;
+        jQuery("#paused").hide();
+    };
+
+
+    this.pauseUnpause = function() {
+        if(this.paused) {
+            this.unpause();
+        } else {
+            this.pause();
         }
     };
 
