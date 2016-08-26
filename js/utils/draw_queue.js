@@ -1,21 +1,27 @@
 function DrawQueue() {
 
 
-    this.elements;
+    this.elements = [];
+    this.needsUpdate = false;
 
 
-    this.init = function() {
+    this.reset = function() {
         this.elements = [];
     };
 
 
-    this.addElement = function(element) {
-        this.elements.push(element);
-        this.elements.sort(this.comparator);
+    this.forceUpdate = function() {
+        this.needsUpdate = true;
     };
 
 
-    this.removeElement = function(element) {
+    this.add = function(element) {
+        this.elements.push(element);
+        this.needsUpdate = true;
+    };
+
+
+    this.remove = function(element) {
         for(var i = 0; i < this.elements.length; i++) {
             if(this.elements[i] == element) {
                 this.elements.splice(i, 1);
@@ -37,6 +43,10 @@ function DrawQueue() {
 
 
     this.draw = function() {
+        if(this.needsUpdate) {
+            this.elements.sort(this.comparator);
+            this.needsUpdate = false;
+        }
         for(var i = 0; i < this.elements.length; i++) {
             this.elements[i].draw();
         }

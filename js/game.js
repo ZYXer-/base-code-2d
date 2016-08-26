@@ -1,7 +1,18 @@
 function Game() {
 
-    this.WIDTH = 900;
-    this.HEIGHT = 600;
+    this.width = 900;
+    this.height = 600;
+
+    this.AUTO_RESIZE = false;
+
+    this.MIN_WIDTH = 900;
+    this.MIN_HEIGHT = 600;
+
+    this.MAX_WIDTH = 900;
+    this.MAX_HEIGHT = 600;
+
+    this.centerX = 450;
+    this.centerY = 300;
 
     this.DEBUG = true;
 
@@ -32,6 +43,13 @@ function Game() {
 
         keyboard.init();
         mouse.init();
+
+        if(this.AUTO_RESIZE) {
+            jQuery(window).resize(function() {
+                game.resize();
+            });
+            this.resize();
+        }
 
         keyboard.registerKeyUpHandler(Keyboard.P, function() {
             game.pauseUnpause();
@@ -98,6 +116,9 @@ function Game() {
             this.state = this.nextState;
             if(this.state.hasOwnProperty("show")) {
                 this.state.show();
+                if(this.AUTO_RESIZE) {
+                    this.resize();
+                }
             }
         }
     };
@@ -134,6 +155,28 @@ function Game() {
             this.unpause();
         } else {
             this.pause();
+        }
+    };
+
+
+    this.resize = function() {
+
+        this.width = jQuery(window).width();
+        this.width = limit(this.width, this.MIN_WIDTH, this.MAX_WIDTH);
+
+        this.height = jQuery(window).height();
+        this.height = limit(this.height, this.MIN_HEIGHT, this.MAX_HEIGHT);
+
+
+        jQuery("#game_box, #game").width(this.width).height(this.height);
+        canvas.width = this.width;
+        canvas.height = this.height;
+
+        this.centerX = Math.round(this.width / 2.0);
+        this.centerY = Math.round(this.height / 2.0);
+
+        if(this.state != null && this.state.hasOwnProperty("resize")) {
+            this.state.resize();
         }
     };
 

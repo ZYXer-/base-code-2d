@@ -54,7 +54,7 @@ function IngameState() {
         this.demoText.setAlignment(Text.CENTER);
         this.demoText.text("Hello World!");
 
-        mouse.registerUpArea("demoFire", 0, 0, game.WIDTH, game.HEIGHT, function() {
+        mouse.registerUpArea("demoFire", 0, 0, game.width, game.height, function() {
             if(!game.paused) {
                 game.state.demoParticleSystem2.setEmitter(mouse.x, mouse.y);
                 game.state.demoParticleSystem2.burst();
@@ -108,7 +108,7 @@ function IngameState() {
         // draw stuff here, examples:
 
         c.fillStyle = "#fff";
-        c.fillRect(0, 0, game.WIDTH, game.HEIGHT);
+        c.fillRect(0, 0, game.width, game.height);
 
         for(var x = 0; x < 10; x++) {
             for(var y = 0; y < 10; y++) {
