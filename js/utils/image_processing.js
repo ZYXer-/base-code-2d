@@ -31,7 +31,7 @@ ImageProcessing.readMatrix = function(image, width, height, defaultValue, colorA
 
     for(var x = 0; x < width; x++) {
         for(var y = 0; y < height; y++) {
-            hexColor = arrayToHex(data[x][y]);
+            hexColor = Color.fromArray(data[x][y]).toHex();
             if(colorAllocation.hasOwnProperty(hexColor)) {
                 matrix[x][y] = colorAllocation[hexColor];
             }
@@ -46,7 +46,7 @@ ImageProcessing.replaceColors = function(source, target, colorMap) {
 
     var rgb;
     for(var sourceColor in colorMap) {
-        rgb = hexToRGB(colorMap[sourceColor]);
+        rgb = Color.fromHex(colorMap[sourceColor]);
         colorMap[sourceColor] = rgb;
     }
 
@@ -65,7 +65,7 @@ ImageProcessing.replaceColors = function(source, target, colorMap) {
     for(var x = 0; x < width; x++) {
         for(var y = 0; y < height; y++) {
             i = ((y * width) + x) * 4;
-            hexColor = rgbToHex(data[i], data[i + 1], data[i + 2]);
+            hexColor = Color.fromRGB(data[i], data[i + 1], data[i + 2]).toHex();
             if(colorMap.hasOwnProperty(hexColor)) {
                 rgb = colorMap[hexColor];
                 data[i] = rgb.r;
@@ -95,9 +95,9 @@ ImageProcessing.replaceColorsWithImageMap = function(source, target, imageMap, c
 
     for(var y = 0; y < mapImage.height; y++) {
         var i = y * mapImage.width * 4;
-        var sourceColor = rgbToHex(data[i], data[i + 1], data[i + 2]);
+        var sourceColor = Color.fromRGB(data[i], data[i + 1], data[i + 2]).toHex();
         i += column * 4;
-        var targetColor = rgbToHex(data[i], data[i + 1], data[i + 2]);
+        var targetColor = Color.fromRGB(data[i], data[i + 1], data[i + 2]).toHex();
         colorMap[sourceColor] = targetColor;
     }
 

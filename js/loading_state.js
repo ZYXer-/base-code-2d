@@ -51,7 +51,7 @@ function LoadingState() {
             ((soundManagerPreloader.isLoaded() && soundPreloader.isLoaded()) || this.soundLoadingCountdown < 0)) {
             this.fakeLoadingCountdown -= timer.delta;
             if(this.fakeLoadingCountdown < 0) {
-                preloadingManager.customPreload();
+                CustomPreloading.preload();
                 game.setState("ingame");
             }
         }

@@ -91,6 +91,12 @@ function ParticleSystem() {
     };
 
 
+    this.reset = function() {
+        this.particles = {};
+        this.particleCounter = 0;
+    };
+
+
     this.draw = function() {
         if(!game.particlesOn) {
             this.particles = {};

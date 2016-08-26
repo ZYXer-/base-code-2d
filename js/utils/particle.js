@@ -60,17 +60,7 @@ function Particle() {
             this.life -= delta;
         }
 
-        // implement particle types here:
-        if(this.type == 1) {
-            var opacity = limit(this.life / 2.0, 0.0, 1.0);
-            c.fillStyle = "rgba(0, 0, 255, " + opacity + ")";
-            c.fillRect(this.pos.x - 20, this.pos.y - 20, 40, 40);
-
-        } else if(this.type == 2) {
-            var opacity = limit(this.life / 0.7, 0.0, 1.0);
-            c.fillStyle = "rgba(0, 127, 0, " + opacity + ")";
-            c.fillRect(this.pos.x - 10, this.pos.y - 10, 20, 20);
-        }
+        ParticleDrawable.draw(this);
     };
 
 }
