@@ -4,12 +4,12 @@ function ImageProcessing() {
 
 ImageProcessing.readData = function(image, width, height) {
 
-    var readCanvas = createCanvas(width, height);
-    var readContext = getContext(readCanvas);
+    var readCanvas = Utils.createCanvas(width, height);
+    var readContext = Utils.getContext(readCanvas);
     readContext.drawImage(img.get(image), 0, 0);
     var readData = readContext.getImageData(0, 0, width, height).data;
 
-    var data = createMatrix(width, height, [ 0, 0, 0, 0 ]);
+    var data = Utils.createMatrix(width, height, [ 0, 0, 0, 0 ]);
     var i;
 
     for(var x = 0; x < width; x++) {
@@ -26,7 +26,7 @@ ImageProcessing.readData = function(image, width, height) {
 ImageProcessing.readMatrix = function(image, width, height, defaultValue, colorAllocation) {
 
     var data = ImageProcessing.readData(image, width, height);
-    var matrix = createMatrix(width, height, defaultValue);
+    var matrix = Utils.createMatrix(width, height, defaultValue);
     var hexColor;
 
     for(var x = 0; x < width; x++) {
@@ -53,8 +53,8 @@ ImageProcessing.replaceColors = function(source, target, colorMap) {
     var sourceImage = img.get(source);
     var width = sourceImage.width;
     var height = sourceImage.height;
-    var sourceCanvas = createCanvas(width, height);
-    var sourceC = getContext(sourceCanvas);
+    var sourceCanvas = Utils.createCanvas(width, height);
+    var sourceC = Utils.getContext(sourceCanvas);
     sourceC.drawImage(sourceImage, 0, 0);
     var imageData = sourceC.getImageData(0, 0, width, height);
     var data = imageData.data;
@@ -75,8 +75,8 @@ ImageProcessing.replaceColors = function(source, target, colorMap) {
         }
     }
 
-    var targetCanvas = createCanvas(width, height);
-    var targetC = getContext(targetCanvas);
+    var targetCanvas = Utils.createCanvas(width, height);
+    var targetC = Utils.getContext(targetCanvas);
     targetC.putImageData(imageData, 0, 0);
 
     img.add(target, targetCanvas);
@@ -86,8 +86,8 @@ ImageProcessing.replaceColors = function(source, target, colorMap) {
 ImageProcessing.replaceColorsWithImageMap = function(source, target, imageMap, column) {
 
     var mapImage = img.get(imageMap);
-    var mapImageCanvas = createCanvas(mapImage.width, mapImage.height);
-    var mapImageC = getContext(mapImageCanvas);
+    var mapImageCanvas = Utils.createCanvas(mapImage.width, mapImage.height);
+    var mapImageC = Utils.getContext(mapImageCanvas);
     mapImageC.drawImage(mapImage, 0, 0);
     var data = mapImageC.getImageData(0, 0, mapImage.width, mapImage.height).data;
 
@@ -110,8 +110,8 @@ ImageProcessing.removeSemitransparent = function(source, target) {
     var sourceImage = img.get(source);
     var width = sourceImage.width;
     var height = sourceImage.height;
-    var sourceCanvas = createCanvas(width, height);
-    var sourceC = getContext(sourceCanvas);
+    var sourceCanvas = Utils.createCanvas(width, height);
+    var sourceC = Utils.getContext(sourceCanvas);
     sourceC.drawImage(sourceImage, 0, 0);
     var imageData = sourceC.getImageData(0, 0, width, height);
     var data = imageData.data;
@@ -128,8 +128,8 @@ ImageProcessing.removeSemitransparent = function(source, target) {
         }
     }
 
-    var targetCanvas = createCanvas(width, height);
-    var targetC = getContext(targetCanvas);
+    var targetCanvas = Utils.createCanvas(width, height);
+    var targetC = Utils.getContext(targetCanvas);
     targetC.putImageData(imageData, 0, 0);
 
     img.add(target, targetCanvas);
@@ -141,8 +141,8 @@ ImageProcessing.setOpacity = function(source, target, opacity) {
     var sourceImage = img.get(source);
     var width = sourceImage.width;
     var height = sourceImage.height;
-    var sourceCanvas = createCanvas(width, height);
-    var sourceC = getContext(sourceCanvas);
+    var sourceCanvas = Utils.createCanvas(width, height);
+    var sourceC = Utils.getContext(sourceCanvas);
     sourceC.drawImage(sourceImage, 0, 0);
     var imageData = sourceC.getImageData(0, 0, width, height);
     var data = imageData.data;
@@ -156,8 +156,8 @@ ImageProcessing.setOpacity = function(source, target, opacity) {
         }
     }
 
-    var targetCanvas = createCanvas(width, height);
-    var targetC = getContext(targetCanvas);
+    var targetCanvas = Utils.createCanvas(width, height);
+    var targetC = Utils.getContext(targetCanvas);
     targetC.putImageData(imageData, 0, 0);
 
     img.add(target, targetCanvas);
@@ -169,13 +169,13 @@ ImageProcessing.pixelate = function(source, target, scale) {
     var sourceImage = img.get(source);
     var width = sourceImage.width;
     var height = sourceImage.height;
-    var sourceCanvas = createCanvas(width, height);
-    var sourceC = getContext(sourceCanvas);
+    var sourceCanvas = Utils.createCanvas(width, height);
+    var sourceC = Utils.getContext(sourceCanvas);
     sourceC.drawImage(sourceImage, 0, 0);
     var data = sourceC.getImageData(0, 0, width, height).data;
 
-    var targetCanvas = createCanvas(width * scale, height * scale);
-    var targetC = getContext(targetCanvas);
+    var targetCanvas = Utils.createCanvas(width * scale, height * scale);
+    var targetC = Utils.getContext(targetCanvas);
     var targetImageData = targetC.getImageData(0, 0, width * scale, height * scale);
     var targetData = targetImageData.data;
 
@@ -217,8 +217,8 @@ ImageProcessing.isometricProjection = function(source, target, tileSize, scale, 
     var sourceImage = img.get(source);
     var width = sourceImage.width;
     var height = sourceImage.height;
-    var sourceCanvas = createCanvas(width, height);
-    var sourceC = getContext(sourceCanvas);
+    var sourceCanvas = Utils.createCanvas(width, height);
+    var sourceC = Utils.getContext(sourceCanvas);
     sourceC.drawImage(sourceImage, 0, 0);
     var data = sourceC.getImageData(0, 0, width, height).data;
 
@@ -233,8 +233,8 @@ ImageProcessing.isometricProjection = function(source, target, tileSize, scale, 
         targetHeight *= 1.5;
     }
 
-    var targetCanvas = createCanvas(targetWidth, targetHeight);
-    var targetC = getContext(targetCanvas);
+    var targetCanvas = Utils.createCanvas(targetWidth, targetHeight);
+    var targetC = Utils.getContext(targetCanvas);
     var targetImageData = targetC.getImageData(0, 0, targetWidth, targetHeight);
     var targetData = targetImageData.data;
 
@@ -303,8 +303,8 @@ ImageProcessing.isometricProjection = function(source, target, tileSize, scale, 
 
 ImageProcessing.outputImage = function(name) {
     var oImage = img.get(name);
-    var outputCanvas = createCanvas(oImage.width, oImage.height);
-    var context = getContext(outputCanvas);
+    var outputCanvas = Utils.createCanvas(oImage.width, oImage.height);
+    var context = Utils.getContext(outputCanvas);
     context.drawImage(oImage, 0, 0);
 
     var image = new Image();

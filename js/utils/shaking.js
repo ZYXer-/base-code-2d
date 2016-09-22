@@ -22,8 +22,8 @@ function Shaking() {
 
                 var maxShake = Math.ceil(this.amplitude * (1 - Math.sin(1.2 * (this.timerStart - this.timer) / this.timerStart)));
                 var minShake = Math.floor(maxShake * 0.7);
-                this.offsetX = rand(minShake, maxShake);
-                this.offsetY = rand(minShake, maxShake);
+                this.offsetX = Utils.rand(minShake, maxShake);
+                this.offsetY = Utils.rand(minShake, maxShake);
 
                 if(this.timer % 2 == 0) {
                     this.offsetX = -this.offsetX;

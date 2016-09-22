@@ -4,48 +4,51 @@ var PI = 3.141593;
 var TWO_PI = 6.283185;
 
 
-function rand(min, max) {
+function Utils() {}
+
+
+Utils.rand = function(min, max) {
     return min + Math.floor((1 + max - min) * Math.random());
-}
+};
 
 
-function randFloat(min, max) {
+Utils.randFloat = function(min, max) {
     return min + ((max - min) * Math.random());
-}
+};
 
 
-function uniqueId(length) {
+Utils.uniqueId = function(length) {
     var id = Math.random().toString(16).substr(2, 1);
     if(length > 1) {
-        id += uniqueId(length - 1);
+        id += Utils.uniqueId(length - 1);
     }
     return id;
-}
+};
 
 
-function zeroOrOne(probabilityOfOne) {
-    return randFloat(0.0, 1.0) < probabilityOfOne;
-}
+Utils.trueOrFalse = function(probabilityOfTrue) {
+    return Utils.randFloat(0.0, 1.0) < probabilityOfTrue;
+};
 
 
-function distance(x1, y1, x2, y2) {
+Utils.distance = function(x1, y1, x2, y2) {
     var dx = x2 - x1;
     var dy = y2 - y1;
     return Math.sqrt((dx * dx) + (dy * dy));
-}
+};
 
 
-function angle(x1, y1, x2, y2) {
+Utils.angle = function(x1, y1, x2, y2) {
     return Math.atan2(x1 - x2, y2 - y1);
-}
+};
 
 
-function toRad(degrees) {
+Utils.toRad = function(degrees) {
     return degrees * 0.0174532;
-}
+};
 
 
-function angleDelta(angleA, angleB) {
+Utils.angleDelta = function(angleA, angleB) {
     var angleDelta = angleB - angleA;
     while(angleDelta > PI) {
         angleDelta -= TWO_PI;
@@ -54,10 +57,10 @@ function angleDelta(angleA, angleB) {
         angleDelta += TWO_PI;
     }
     return angleDelta;
-}
+};
 
 
-function inPolygon(polygon, pointX, pointY) {
+Utils.inPolygon = function(polygon, pointX, pointY) {
     var inside = false;
     var j = (polygon.length - 1);
     for(var i = 0; i < polygon.length; i++) {
@@ -68,19 +71,19 @@ function inPolygon(polygon, pointX, pointY) {
         j = i;
     }
     return inside;
-}
+};
 
 
-function normalize(vector) {
+Utils.normalize = function(vector) {
     var length = Math.sqrt((vector.x * vector.x) + (vector.y * vector.y));
     if(length == 0) {
         return { x : 0, y : 0 };
     }
     return { x : (vector.x / length), y : (vector.y / length) };
-}
+};
 
 
-function limit(value, min, max) {
+Utils.limit = function(value, min, max) {
     if(value < min) {
         return min;
     }
@@ -88,46 +91,46 @@ function limit(value, min, max) {
         return max;
     }
     return value;
-}
+};
 
 
-function createMatrix(width, height, defaultValue) {
+Utils.createMatrix = function(width, height, defaultValue) {
     var matrix = [];
     for(var x = 0; x < width; x++) {
         matrix[x] = [];
         for(var y = 0; y < height; y++) {
             if(typeof defaultValue === "object") {
-                matrix[x][y] = shallowCopy(defaultValue);
+                matrix[x][y] = Utils.shallowCopy(defaultValue);
             } else {
                 matrix[x][y] = defaultValue;
             }
         }
     }
     return matrix;
-}
+};
 
 
-function createCanvas(width, height) {
+Utils.createCanvas = function(width, height) {
     var canvas = document.createElement("canvas");
     canvas.width = width;
     canvas.height = height;
     return canvas;
-}
+};
 
 
-function getContext(canvas) {
+Utils.getContext = function(canvas) {
     return canvas.getContext("2d");
-}
+};
 
 
-function drawCircle(c, x, y, radius) {
+Utils.drawCircle = function(c, x, y, radius) {
     c.beginPath();
     c.arc(x, y, radius, 0, TWO_PI);
     c.closePath();
-}
+};
 
 
-function drawEllipse(c, x, y, w, h) {
+Utils.drawEllipse = function(c, x, y, w, h) {
     var kappa = 0.5522848;
     var ox = (w / 2) * kappa;
     var oy = (h / 2) * kappa;
@@ -143,10 +146,10 @@ function drawEllipse(c, x, y, w, h) {
     c.bezierCurveTo(xe, ym + oy, xm + ox, ye, xm, ye);
     c.bezierCurveTo(xm - ox, ye, x, ym + oy, x, ym);
     c.closePath();
-}
+};
 
 
-function drawRoundedCornerRect(x, y, w, h, r) {
+Utils.drawRoundedCornerRect = function(x, y, w, h, r) {
     if(typeof r == "number") {
         r = [ r, r, r, r ];
     }
@@ -156,10 +159,10 @@ function drawRoundedCornerRect(x, y, w, h, r) {
     c.arc(x + w - r[2], y + h - r[2], r[2], 0, HALF_PI);
     c.arc(x + r[3], y + h - r[3], r[3], HALF_PI, PI);
     c.closePath();
-}
+};
 
 
-function parallaxCalculator(scale, pos, shift, textureWidth, tileWidth, screenWidth, overflow) {
+Utils.parallaxCalculator = function(scale, pos, shift, textureWidth, tileWidth, screenWidth, overflow) {
     pos *= scale;
     pos += shift;
     var startingTile = Math.floor(pos / tileWidth);
@@ -170,24 +173,38 @@ function parallaxCalculator(scale, pos, shift, textureWidth, tileWidth, screenWi
     var firstTileIndex = startingTile % numOfTilesInTex;
     var numOfTiles = endTile - startingTile;
     return { firstTileX : firstTileX, firstTileIndex : firstTileIndex, numOfTiles : numOfTiles };
-}
+};
 
 
-function shallowCopy(object) {
+Utils.shallowCopy = function(object) {
     return jQuery.extend({}, object);
-}
+};
 
 
-function deepCopy(object) {
+Utils.deepCopy = function(object) {
     return jQuery.extend(true, {}, object);
-}
+};
 
 
-function getArrowControls() {
-    var moveUpPressed = keyboard.isPressed(Keyboard.ARROW_UP) || keyboard.isPressed(Keyboard.W);
+Utils.removeFromArray = function(array, value) {
+    var i = array.indexOf(value);
+    if(i > -1) {
+        array.splice(i, 1);
+    }
+    return array;
+};
+
+
+Utils.isInArray = function(array, value) {
+    return array.indexOf(value) > -1;
+};
+
+
+Utils.getArrowControls = function() {
+    var moveUpPressed = keyboard.isPressed(Keyboard.ARROW_UP) || keyboard.isPressed(Keyboard.W) || keyboard.isPressed(Keyboard.Z);
     var moveRightPressed = keyboard.isPressed(Keyboard.ARROW_RIGHT) || keyboard.isPressed(Keyboard.D);
     var moveDownPressed = keyboard.isPressed(Keyboard.ARROW_DOWN) || keyboard.isPressed(Keyboard.S);
-    var moveLeftPressed = keyboard.isPressed(Keyboard.ARROW_LEFT) || keyboard.isPressed(Keyboard.A);
+    var moveLeftPressed = keyboard.isPressed(Keyboard.ARROW_LEFT) || keyboard.isPressed(Keyboard.A) || keyboard.isPressed(Keyboard.Q);
     var vector = { x : 0.0, y : 0.0 };
     if(moveUpPressed && !moveDownPressed) {
         vector.y -= 1.0;
@@ -199,5 +216,5 @@ function getArrowControls() {
     } else if(moveLeftPressed && !moveRightPressed) {
         vector.x -= 1.0;
     }
-    return normalize(vector);
-}
+    return Utils.normalize(vector);
+};

@@ -11,8 +11,8 @@ CustomPreloading.preload = function() {
 
     ImageProcessing.pixelate("test2recolored", "test2recoloredResized", 3);
 
-    var demoCanvas = createCanvas(150, 150);
-    var demoC = getContext(demoCanvas);
+    var demoCanvas = Utils.createCanvas(150, 150);
+    var demoC = Utils.getContext(demoCanvas);
     demoC.fillStyle = "#000";
     demoC.fillRect(0, 0, 150, 150);
     demoC.drawImage(img.get("test2recoloredResized"), 0, 0);

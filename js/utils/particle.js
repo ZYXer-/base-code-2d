@@ -1,16 +1,16 @@
 function Particle() {
 
-    this.type;
+    this.type = 0;
 
-    this.pos;
-    this.v;
+    this.pos = null;
+    this.v = null;
 
-    this.minA;
-    this.maxA;
+    this.minA = null;
+    this.maxA = null;
 
-    this.fric;
+    this.fric = null;
 
-    this.life;
+    this.life = 0.0;
 
 
     this.init = function(type, emitter, emitterSize, initMinV, initMaxV, initMinA, initMaxA, friction, lifeMin, lifeMax) {
@@ -19,27 +19,27 @@ function Particle() {
         this.pos = { x : emitter.x, y : emitter.y, z : emitter.z };
 
         if(emitterSize.x != 0.0) {
-            this.pos.x += randFloat(-emitterSize.x, emitterSize.x);
+            this.pos.x += Utils.randFloat(-emitterSize.x, emitterSize.x);
         }
         if(emitterSize.y != 0.0) {
-            this.pos.y += randFloat(-emitterSize.y, emitterSize.y);
+            this.pos.y += Utils.randFloat(-emitterSize.y, emitterSize.y);
         }
         if(emitterSize.z != 0.0) {
-            this.pos.z += randFloat(-emitterSize.z, emitterSize.z);
+            this.pos.z += Utils.randFloat(-emitterSize.z, emitterSize.z);
         }
 
         this.v = {
-            x : randFloat(initMinV.x, initMaxV.x),
-            y : randFloat(initMinV.y, initMaxV.y),
-            z : randFloat(initMinV.z, initMaxV.z)
-        }
+            x : Utils.randFloat(initMinV.x, initMaxV.x),
+            y : Utils.randFloat(initMinV.y, initMaxV.y),
+            z : Utils.randFloat(initMinV.z, initMaxV.z)
+        };
 
         this.minA = { x : initMinA.x, y : initMinA.y, z : initMinA.z };
         this.maxA = { x : initMaxA.x, y : initMaxA.y, z : initMaxA.z };
 
         this.fric = { x : friction.x, y : friction.y, z : friction.z };
 
-        this.life = randFloat(lifeMin, lifeMax);
+        this.life = Utils.randFloat(lifeMin, lifeMax);
 
     };
 

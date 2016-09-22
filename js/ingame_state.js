@@ -15,6 +15,10 @@ function IngameState() {
     this.demoImageX = 450;
     this.demoImageY = 300;
 
+    this.demoInterpolationPos = 0;
+    this.demoInterpolationVelocity = 0.0;
+    this.demoInterpolationTarget = 0;
+
 
     this.init = function() {
 
@@ -38,6 +42,7 @@ function IngameState() {
         this.demoParticleSystem2.setParticlesPerTick(50);
 
         this.demoShaking = new Shaking();
+
     };
 
 
@@ -60,6 +65,7 @@ function IngameState() {
                 game.state.demoParticleSystem2.burst();
                 game.state.demoShaking.shake(6, 18, 2);
                 sound.play("cannon");
+                game.state.demoInterpolationTarget = mouse.x;
             }
         });
 
@@ -99,6 +105,16 @@ function IngameState() {
         if(!game.paused) {
             this.demoImageRotation += 2.0 * timer.delta;
             timer.updateCallbacks();
+
+            var interpolate = Interpolate.accelerateToPos(
+                this.demoInterpolationPos,
+                this.demoInterpolationTarget,
+                this.demoInterpolationVelocity,
+                2000.0,
+                5000.0
+            );
+            this.demoInterpolationPos = interpolate.pos;
+            this.demoInterpolationVelocity = interpolate.velocity;
         }
     };
 
@@ -118,6 +134,9 @@ function IngameState() {
                 }
             }
         }
+
+        c.fillStyle = "#999";
+        c.fillRect(this.demoInterpolationPos, 0, 1, game.height);
 
         this.demoText.draw();
 

@@ -42,6 +42,7 @@ function Game() {
         performanceMonitor.init();
 
         keyboard.init();
+        keyboard.allowKey(Keyboard.F11);
         mouse.init();
 
         if(this.AUTO_RESIZE) {
@@ -178,6 +179,11 @@ function Game() {
         if(this.state != null && this.state.hasOwnProperty("resize")) {
             this.state.resize();
         }
+    };
+
+
+    this.makeFullScreen = function() {
+        screenfull.request(jQuery("html")[0]);
     };
 
 }
