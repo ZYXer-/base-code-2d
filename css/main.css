@@ -1,34 +1,34 @@
 body {
-    padding: 0px;
-    margin: 0px;
+    padding: 0;
+    margin: 0;
+    background: #eee;
 }
 
 form, table {
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
     border: none;
 }
 
 img {
-    border: 0px;
+    border: 0;
 }
 
 #game_box {
     position: relative;
     width: 900px;
     height: 600px;
-    margin: 10px auto 0px;
-    border: 1px solid #000;
+    margin: 0 auto;
     overflow: hidden;
 }
 
 #paused {
     display: none;
     position: absolute;
-    left: 0px;
-    top: 0px;
-    width: 900px;
-    height: 600px;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
     background: rgba(0, 0, 0, 0.5);
     line-height: 600px;
     text-align: center;
@@ -37,17 +37,17 @@ img {
 
 #loading {
     position: absolute;
-    left: 0px;
-    top: 0px;
-    width: 210px;
-    height: 50px;
-    padding: 275px 345px;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
     background: #ccc;
 }
 
 #loading_text {
     width: 210px;
     height: 30px;
+    margin: 345px auto 0;
     color: #000;
     text-align: center;
     line-height: 30px;
@@ -56,20 +56,21 @@ img {
 #loading_bar_box {
     width: 200px;
     height: 10px;
+    margin: 0 auto;
     padding: 4px;
     border: 1px solid #000;
 }
 
 #loading_bar {
-    width: 0px;
+    width: 0;
     height: 10px;
     background: #000;
 }
 
 #fps {
     position: absolute;
-    left: 0px;
-    bottom: 0px;
+    left: 0;
+    bottom: 0;
     background: #fff;
     color: #000;
     opacity: 0.3;

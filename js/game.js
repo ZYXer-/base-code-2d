@@ -3,13 +3,13 @@ function Game() {
     this.width = 900;
     this.height = 600;
 
-    this.AUTO_RESIZE = false;
+    this.AUTO_RESIZE = true;
 
     this.MIN_WIDTH = 900;
     this.MIN_HEIGHT = 600;
 
-    this.MAX_WIDTH = 900;
-    this.MAX_HEIGHT = 600;
+    this.MAX_WIDTH = 1920;
+    this.MAX_HEIGHT = 1080;
 
     this.centerX = 450;
     this.centerY = 300;

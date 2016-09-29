@@ -55,7 +55,7 @@ function IngameState() {
         });
 
         this.demoText = new Text();
-        this.demoText.pos(450, 20);
+        this.demoText.pos(game.centerX, 20);
         this.demoText.setAlignment(Text.CENTER);
         this.demoText.text("Hello World!");
 
