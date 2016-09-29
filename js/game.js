@@ -163,10 +163,10 @@ function Game() {
     this.resize = function() {
 
         this.width = jQuery(window).width();
-        this.width = limit(this.width, this.MIN_WIDTH, this.MAX_WIDTH);
+        this.width = Utils.limit(this.width, this.MIN_WIDTH, this.MAX_WIDTH);
 
         this.height = jQuery(window).height();
-        this.height = limit(this.height, this.MIN_HEIGHT, this.MAX_HEIGHT);
+        this.height = Utils.limit(this.height, this.MIN_HEIGHT, this.MAX_HEIGHT);
 
 
         jQuery("#game_box, #game").width(this.width).height(this.height);
