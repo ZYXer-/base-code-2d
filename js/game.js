@@ -1,189 +1,215 @@
-function Game() {
+function Game() {}
 
-    this.width = 900;
-    this.height = 600;
+Game.canvasWidth = Settings.Size.WIDTH;
+Game.canvasHeight = Settings.Size.HEIGHT;
 
-    this.AUTO_RESIZE = true;
+Game.width = Settings.Size.WIDTH;
+Game.height = Settings.Size.HEIGHT;
 
-    this.MIN_WIDTH = 900;
-    this.MIN_HEIGHT = 600;
+Game.centerX = Math.round(Game.width / 2.0);
+Game.centerY = Math.round(Game.height / 2.0);
 
-    this.MAX_WIDTH = 1920;
-    this.MAX_HEIGHT = 1080;
+Game.frameOffsetX = 0;
+Game.frameOffsetY = 0;
 
-    this.centerX = 450;
-    this.centerY = 300;
+Game.scaleX = 1.0;
+Game.scaleY = 1.0;
 
-    this.DEBUG = true;
+Game.interval = null;
 
-    this.TIME_PER_FRAME = 20;
+Game.state = null;
+Game.nextState = null;
 
-    this.STATES = {
-        "loading" : new LoadingState(),
-        "ingame" : new IngameState()
-    };
-
-    this.INITIAL_STATE = "loading";
-
-    this.interval = null;
-
-    this.state = null;
-    this.nextState = null;
-
-    this.paused = false;
-    this.particlesOn = true;
+Game.paused = false;
 
 
-    this.init = function() {
+Game.start = function() {
 
-        PageVisibility.init();
+    jQuery("#game_box, #game").width(Game.width).height(Game.height);
+    canvas.width = Game.width;
+    canvas.height = Game.height;
 
-        timer.init();
-        performanceMonitor.init();
-
-        keyboard.init();
-        keyboard.allowKey(Keyboard.F11);
-        mouse.init();
-
-        if(this.AUTO_RESIZE) {
-            jQuery(window).resize(function() {
-                game.resize();
-            });
-            this.resize();
-        }
-
-        keyboard.registerKeyUpHandler(Keyboard.P, function() {
-            game.pauseUnpause();
+    if(Settings.Size.AUTO_RESIZE) {
+        jQuery(window).resize(function() {
+            Game.resize();
         });
+        Game.resize();
+    }
 
-        keyboard.registerKeyUpHandler(Keyboard.M, function() {
-            sound.muteUnmute();
-        });
+    Keyboard.allowKey(Keyboard.F11);
 
-        keyboard.registerKeyUpHandler(Keyboard.Q, function() {
-            game.particlesOn = !game.particlesOn;
-        });
+    Keyboard.registerKeyUpHandler(Keyboard.P, function() {
+        Game.pauseUnpause();
+    });
 
+    Keyboard.registerKeyUpHandler(Keyboard.M, function() {
+        Sound.muteUnmute();
+    });
+
+    Keyboard.registerKeyUpHandler(Keyboard.Q, function() {
+        ParticleSystem.particlesOn = !ParticleSystem.particlesOn;
+    });
+
+    if(Settings.Game.PAUSE_ON_BLUR) {
         PageVisibility.registerBlurHandler("pause", function() {
-            game.pause();
+            Game.pause();
         });
+    }
 
-        for(var stateName in this.STATES) {
-            if(this.STATES[stateName].hasOwnProperty("init")) {
-                this.STATES[stateName].init();
+    Game.setState(Settings.States.INITIAL_STATE);
+    Game.startLoop();
+};
+
+
+Game.setState = function(state) {
+    if(Settings.States.STATES.hasOwnProperty(state)) {
+        this.nextState = Settings.States.STATES[state];
+    } else {
+        alert("ERROR: Could not find state: " + state);
+    }
+};
+
+
+Game.startLoop = function() {
+    this.interval = window.setInterval(function() {
+        Game.loop();
+    }, Settings.Game.TIME_PER_FRAME);
+};
+
+
+Game.loop = function() {
+    Game.initState();
+    Timer.update();
+    Mouse.update();
+    Game.update();
+    Game.draw();
+    PerformanceMonitor.update();
+};
+
+
+Game.initState = function() {
+
+    if(Game.state != Game.nextState) {
+
+        if(Game.state != null && Game.state.hasOwnProperty("hide")) {
+            Game.state.hide();
+        }
+
+        Game.state = Game.nextState;
+        if(Game.state.hasOwnProperty("show")) {
+            Game.state.show();
+            if(Settings.Size.AUTO_RESIZE) {
+                Game.resize();
             }
         }
-        this.setState(this.INITIAL_STATE);
-        this.startLoop();
-    };
+    }
+};
 
 
-    this.setState = function(state) {
-        if(this.STATES.hasOwnProperty(state)) {
-            this.nextState = this.STATES[state];
+Game.update = function() {
+    if(Game.state.hasOwnProperty("update")) {
+        Game.state.update();
+    }
+};
+
+
+Game.draw = function() {
+
+    if(Settings.Size.FIXED_ASPECT_RATIO) {
+        c.save();
+        c.translate(this.frameOffsetX, this.frameOffsetY);
+    }
+    if(Settings.Size.FIXED_SIZE_IN_UNITS) {
+        c.save();
+        c.scale(Game.scaleX, Game.scaleY);
+    }
+
+    if(Game.state.hasOwnProperty("draw")) {
+        Game.state.draw();
+    }
+
+    if(Settings.Size.FIXED_SIZE_IN_UNITS) {
+        c.restore();
+    }
+    if(Settings.Size.FIXED_ASPECT_RATIO) {
+        c.restore();
+
+        c.fillStyle = Settings.Size.FRAME_COLOR;
+
+        c.fillRect(-10, -10, Game.canvasWidth + 20, Game.frameOffsetY + 10);
+        c.fillRect(-10, -10, Game.frameOffsetX + 10, Game.canvasHeight + 20);
+        c.fillRect(Game.canvasWidth - Game.frameOffsetX, -10, Game.frameOffsetX + 10, Game.canvasHeight + 20);
+        c.fillRect(-10, Game.canvasHeight - Game.frameOffsetY, Game.canvasWidth + 20, Game.frameOffsetY + 10);
+    }
+};
+
+
+Game.pause = function() {
+    Game.paused = true;
+    jQuery("#paused").show();
+};
+
+
+Game.unpause = function() {
+    Game.paused = false;
+    jQuery("#paused").hide();
+};
+
+
+Game.pauseUnpause = function() {
+    if(Game.paused) {
+        Game.unpause();
+    } else {
+        Game.pause();
+    }
+};
+
+
+Game.resize = function() {
+
+    Game.canvasWidth = jQuery(window).width();
+    Game.canvasWidth = Utils.limit(Game.canvasWidth, Settings.Size.MIN_WIDTH, Settings.Size.MAX_WIDTH);
+
+    Game.canvasHeight = jQuery(window).height();
+    Game.canvasHeight = Utils.limit(Game.canvasHeight, Settings.Size.MIN_HEIGHT, Settings.Size.MAX_HEIGHT);
+
+    jQuery("#game_box, #game").width(Game.canvasWidth).height(Game.canvasHeight);
+    canvas.width = Game.canvasWidth;
+    canvas.height = Game.canvasHeight;
+
+    Game.width = Game.canvasWidth;
+    Game.height = Game.canvasHeight;
+
+    if(Settings.Size.FIXED_ASPECT_RATIO) {
+        var aspectRatio = Game.width / Game.height;
+        if(aspectRatio > Settings.Size.ASPECT_RATIO) {
+            this.frameOffsetX = 0.5 * (Game.width - (Game.height * Settings.Size.ASPECT_RATIO));
+            this.frameOffsetY = 0;
         } else {
-            alert("ERROR: Could not find state: " + state);
+            this.frameOffsetX = 0;
+            this.frameOffsetY = 0.5 * (Game.height - (Game.width / Settings.Size.ASPECT_RATIO));
         }
-    };
+        Game.width -= 2.0 * this.frameOffsetX;
+        Game.height -= 2.0 * this.frameOffsetY;
+    }
+
+    if(Settings.Size.FIXED_SIZE_IN_UNITS) {
+        Game.scaleX = (Game.canvasWidth - (2.0 * this.frameOffsetX)) / Settings.Size.WIDTH_IN_UNITS;
+        Game.scaleY = (Game.canvasHeight - (2.0 * this.frameOffsetY)) / Settings.Size.HEIGHT_IN_UNITS;
+
+        Game.width /= Game.scaleX;
+        Game.height /= Game.scaleY;
+    }
+
+    Game.centerX = Math.round(Game.width / 2.0);
+    Game.centerY = Math.round(Game.height / 2.0);
+
+    if(Game.state != null && Game.state.hasOwnProperty("resize")) {
+        Game.state.resize();
+    }
+};
 
 
-    this.startLoop = function() {
-        this.interval = window.setInterval(function() {
-            game.loop();
-        }, this.TIME_PER_FRAME);
-    };
-
-
-    this.loop = function() {
-        this.initState();
-        timer.update();
-        mouse.update();
-        this.update();
-        this.draw();
-        performanceMonitor.update();
-    };
-
-
-    this.initState = function() {
-
-        if(this.state != this.nextState) {
-
-            if(this.state != null) {
-                if(this.state.hasOwnProperty("hide")) {
-                    this.state.hide();
-                }
-            }
-
-            this.state = this.nextState;
-            if(this.state.hasOwnProperty("show")) {
-                this.state.show();
-                if(this.AUTO_RESIZE) {
-                    this.resize();
-                }
-            }
-        }
-    };
-
-
-    this.update = function() {
-        if(this.state.hasOwnProperty("update")) {
-            this.state.update();
-        }
-    };
-
-
-    this.draw = function() {
-        if(this.state.hasOwnProperty("draw")) {
-            this.state.draw();
-        }
-    };
-
-
-    this.pause = function() {
-        this.paused = true;
-        jQuery("#paused").show();
-    };
-
-
-    this.unpause = function() {
-        this.paused = false;
-        jQuery("#paused").hide();
-    };
-
-
-    this.pauseUnpause = function() {
-        if(this.paused) {
-            this.unpause();
-        } else {
-            this.pause();
-        }
-    };
-
-
-    this.resize = function() {
-
-        this.width = jQuery(window).width();
-        this.width = Utils.limit(this.width, this.MIN_WIDTH, this.MAX_WIDTH);
-
-        this.height = jQuery(window).height();
-        this.height = Utils.limit(this.height, this.MIN_HEIGHT, this.MAX_HEIGHT);
-
-
-        jQuery("#game_box, #game").width(this.width).height(this.height);
-        canvas.width = this.width;
-        canvas.height = this.height;
-
-        this.centerX = Math.round(this.width / 2.0);
-        this.centerY = Math.round(this.height / 2.0);
-
-        if(this.state != null && this.state.hasOwnProperty("resize")) {
-            this.state.resize();
-        }
-    };
-
-
-    this.makeFullScreen = function() {
-        screenfull.request(jQuery("html")[0]);
-    };
-
-}
+Game.makeFullScreen = function() {
+    screenfull.request(jQuery("html")[0]);
+};

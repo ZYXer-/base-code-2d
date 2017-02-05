@@ -1,187 +1,208 @@
-function Mouse() {
-
-    this.x = 0;
-    this.y = 0;
-
-    this.downAreas = {};
-    this.upAreas = {};
-    this.draggableAreas = {};
-
-    this.down = false;
-    this.downX = 0;
-    this.downY = 0;
-
-    this.dragging = false;
-    this.lastDragX = 0;
-    this.lastDragY = 0;
-    this.dragDeltaX = 0;
-    this.dragDeltaY = 0;
-    this.draggingCallback = null;
-    this.dropCallback = null;
+function Mouse() {}
 
 
-    this.init = function() {
+Mouse.pos = new Vec2(0, 0);
 
-        jQuery("body").attr("unselectable", "on").css("user-select", "none").on("selectstart", false);
+Mouse.downAreas = {};
+Mouse.upAreas = {};
+Mouse.draggableAreas = {};
+Mouse.wheelAreas = {};
 
-        jQuery("body").mousemove(function(event) {
-            mouse.updatePosition(event);
+Mouse.down = false;
+Mouse.downPos = new Vec2(0, 0);
 
-        }).mousedown(function(event) {
-            if(event.which == 1) {
+Mouse.dragging = false;
+Mouse.lastDrag = new Vec2(0, 0);
+Mouse.dragDelta = new Vec2(0, 0);
+Mouse.draggingCallback = null;
+Mouse.dropCallback = null;
 
-                mouse.down = true;
-                mouse.downX = mouse.x;
-                mouse.downY = mouse.y;
-                mouse.updatePosition(event);
 
-                for(var name in mouse.draggableAreas) {
-                    var area = mouse.draggableAreas[name];
-                    if(mouse.isOver(area.x, area.y, area.w, area.h)) {
+Mouse.init = function() {
 
-                        mouse.dragging = true;
-                        mouse.lastDragX = mouse.x;
-                        mouse.lastDragY = mouse.y;
-                        mouse.dragDeltaX = 0;
-                        mouse.dragDeltaY = 0;
+    jQuery("body")
+        .attr("unselectable", "on")
+        .css("user-select", "none")
+        .on("selectstart", false)
 
-                        mouse.draggingCallback = area.draggingCallback;
-                        mouse.dropCallback = area.dropCallback;
-                        if(area.downCallback != null) {
-                            area.downCallback();
-                        }
-                    }
-                }
+        .mousemove(function(event) {
 
-                for(var name in mouse.downAreas) {
-                    var area = mouse.downAreas[name];
-                    if(mouse.isOver(area.x, area.y, area.w, area.h)) {
-                        area.callback();
+        Mouse.updatePosition(event);
+
+    }).mousedown(function(event) {
+        if(event.which == 1) {
+
+            Mouse.down = true;
+            Mouse.downPos = Mouse.pos.copy();
+            Mouse.updatePosition(event);
+
+            for(var name in Mouse.draggableAreas) {
+                var area = Mouse.draggableAreas[name];
+                if(Mouse.isOver(area.x, area.y, area.w, area.h)) {
+
+                    Mouse.dragging = true;
+                    Mouse.lastDrag = Mouse.pos.copy();
+                    Mouse.dragDelta = new Vec2(0, 0);
+
+                    Mouse.draggingCallback = area.draggingCallback;
+                    Mouse.dropCallback = area.dropCallback;
+                    if(area.downCallback != null) {
+                        area.downCallback();
                     }
                 }
             }
 
-        }).mouseup(function(event) {
-            if(event.which == 1) {
-
-                mouse.down = false;
-                mouse.updatePosition(event);
-
-                if(mouse.dragging) {
-                    mouse.dragging = false;
-                    if(mouse.dropCallback != null) {
-                        mouse.dropCallback();
-                    }
-                }
-
-                for(var name in mouse.upAreas) {
-                    var area = mouse.upAreas[name];
-                    if(mouse.isOver(area.x, area.y, area.w, area.h)) {
-                        area.callback();
-                    }
+            for(var name in Mouse.downAreas) {
+                var area = Mouse.downAreas[name];
+                if(Mouse.isOver(area.x, area.y, area.w, area.h)) {
+                    area.callback();
                 }
             }
-        });
-    };
+        }
 
+    }).mouseup(function(event) {
+        if(event.which == 1) {
 
-    this.updatePosition = function(event) {
-        var offset = jQuery("#game").offset();
-        this.x = event.pageX - offset.left;
-        this.y = event.pageY - offset.top;
-    };
+            Mouse.down = false;
+            Mouse.updatePosition(event);
 
-
-    this.update = function() {
-        if(this.dragging) {
-            this.dragDeltaX = this.x - this.lastDragX;
-            this.dragDeltaY = this.y - this.lastDragY;
-            this.lastDragX = this.x;
-            this.lastDragY = this.y;
-            if(this.draggingCallback != null) {
-                this.draggingCallback();
+            if(Mouse.dragging) {
+                Mouse.dragging = false;
+                if(Mouse.dropCallback != null) {
+                    Mouse.dropCallback();
+                }
             }
-        } else {
-            this.dragDeltaX = 0;
-            this.dragDeltaY = 0;
+
+            for(var name in Mouse.upAreas) {
+                var area = Mouse.upAreas[name];
+                if(Mouse.isOver(area.x, area.y, area.w, area.h)) {
+                    area.callback();
+                }
+            }
         }
-    };
 
-
-    this.isOver = function(x, y, w, h) {
-        return (this.x >= x && this.x < x + w && this.y >= y && this.y < y + h);
-    };
-
-
-    this.registerDownArea = function(name, x, y, w, h, callback) {
-        this.downAreas[name] = {
-            name : name,
-            x : x,
-            y : y,
-            w : w,
-            h : h,
-            callback : callback
-        };
-    };
-
-
-    this.deleteDownArea = function(name) {
-        if(this.downAreas.hasOwnProperty(name)) {
-            delete this.downAreas[name];
+    }).on("mousewheel DOMMouseScroll", function(e) {
+        var delta = (e.originalEvent.detail == undefined ? e.originalEvent.wheelDelta : e.originalEvent.detail);
+        for(var name in Mouse.wheelAreas) {
+            var area = Mouse.wheelAreas[name];
+            if(Mouse.isOver(area.x, area.y, area.w, area.h)) {
+                area.callback(delta);
+            }
         }
-    };
+        e.preventDefault();
+    });
+};
 
 
-    this.registerUpArea = function(name, x, y, w, h, callback) {
-        this.upAreas[name] = {
-            name : name,
-            x : x,
-            y : y,
-            w : w,
-            h : h,
-            callback : callback
-        };
-    };
+Mouse.updatePosition = function(event) {
+    var offset = jQuery("#game").offset();
+    Mouse.pos.x = ((event.pageX - offset.left) - Game.frameOffsetX) / Game.scaleX;
+    Mouse.pos.y = ((event.pageY - offset.top) - Game.frameOffsetY) / Game.scaleY;
+};
 
 
-    this.deleteUpArea = function(name) {
-        if(this.upAreas.hasOwnProperty(name)) {
-            delete this.upAreas[name];
+Mouse.update = function() {
+    if(Mouse.dragging) {
+        Mouse.dragDelta = Mouse.pos.subtract(Mouse.lastDrag);
+        Mouse.lastDrag = Mouse.pos.copy();
+        if(Mouse.draggingCallback != null) {
+            Mouse.draggingCallback();
         }
+    } else {
+        Mouse.dragDelta = new Vec2(0, 0);
+    }
+};
+
+
+Mouse.isOver = function(x, y, w, h) {
+    return (Mouse.pos.x >= x && Mouse.pos.x < x + w && Mouse.pos.y >= y && Mouse.pos.y < y + h);
+};
+
+
+Mouse.registerDownArea = function(name, x, y, w, h, callback) {
+    Mouse.downAreas[name] = {
+        name : name,
+        x : x,
+        y : y,
+        w : w,
+        h : h,
+        callback : callback
     };
+};
 
 
-    this.registerDraggableArea = function(name, x, y, w, h, downCallback, draggingCallback, dropCallback) {
-        this.draggableAreas[name] = {
-            name : name,
-            x : x,
-            y : y,
-            w : w,
-            h : h,
-            downCallback : downCallback,
-            draggingCallback : draggingCallback,
-            dropCallback : dropCallback
-        };
+Mouse.deleteDownArea = function(name) {
+    if(Mouse.downAreas.hasOwnProperty(name)) {
+        delete Mouse.downAreas[name];
+    }
+};
+
+
+Mouse.registerUpArea = function(name, x, y, w, h, callback) {
+    Mouse.upAreas[name] = {
+        name : name,
+        x : x,
+        y : y,
+        w : w,
+        h : h,
+        callback : callback
     };
+};
 
 
-    this.deleteDraggableArea = function(name) {
-        if(this.draggableAreas.hasOwnProperty(name)) {
-            delete this.draggableAreas[name];
-        }
+Mouse.deleteUpArea = function(name) {
+    if(Mouse.upAreas.hasOwnProperty(name)) {
+        delete Mouse.upAreas[name];
+    }
+};
+
+
+Mouse.registerWheelArea = function(name, x, y, w, h, callback) {
+    Mouse.wheelAreas[name] = {
+        name : name,
+        x : x,
+        y : y,
+        w : w,
+        h : h,
+        callback : callback
     };
+};
 
 
-    this.startDragging = function(draggingCallback, dropCallback) {
+Mouse.deleteWheelArea = function(name) {
+    if(Mouse.wheelAreas.hasOwnProperty(name)) {
+        delete Mouse.wheelAreas[name];
+    }
+};
 
-        this.dragging = true;
-        this.lastDragX = mouse.x;
-        this.lastDragY = mouse.y;
-        this.dragDeltaX = 0;
-        this.dragDeltaY = 0;
 
-        this.draggingCallback = draggingCallback;
-        this.dropCallback = dropCallback;
+Mouse.registerDraggableArea = function(name, x, y, w, h, downCallback, draggingCallback, dropCallback) {
+    Mouse.draggableAreas[name] = {
+        name : name,
+        x : x,
+        y : y,
+        w : w,
+        h : h,
+        downCallback : downCallback,
+        draggingCallback : draggingCallback,
+        dropCallback : dropCallback
     };
+};
 
-}
+
+Mouse.deleteDraggableArea = function(name) {
+    if(Mouse.draggableAreas.hasOwnProperty(name)) {
+        delete Mouse.draggableAreas[name];
+    }
+};
+
+
+Mouse.startDragging = function(draggingCallback, dropCallback) {
+
+    Mouse.dragging = true;
+    Mouse.lastDrag = Mouse.pos.copy();
+    Mouse.dragDelta = new Vec2(0, 0);
+
+    Mouse.draggingCallback = draggingCallback;
+    Mouse.dropCallback = dropCallback;
+};

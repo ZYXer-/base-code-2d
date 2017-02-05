@@ -1,131 +1,241 @@
-function Text() {
+function Text(options) {
 
     this.x = 0;
+    if(options.hasOwnProperty("x")) {
+        this.x = options.x;
+    }
+
     this.y = 0;
+    if(options.hasOwnProperty("y")) {
+        this.y = options.y;
+    }
 
-    this.chars = [[]];
+    this.size = 16;
+    if(options.hasOwnProperty("size")) {
+        this.size = options.size;
+    }
 
-    this.alignment = Text.LEFT;
+    this.font = "";
+    if(options.hasOwnProperty("font")) {
+        this.font = options.font;
+    }
 
-    this.pixelFont = pixelFonts.get("black");
+    this.align = "left";
+    if(options.hasOwnProperty("align")) {
+        this.align = options.align;
+    }
 
-    this.lineHeight = this.pixelFont.charHeight;
+    this.color = "#000";
+    if(options.hasOwnProperty("color")) {
+        this.color = options.color;
+    }
 
-    this.maxLineWidth = 0;
+    this.text = "";
+    if(options.hasOwnProperty("text")) {
+        this.text = options.text;
+    }
 
+    this.maxWidth = 0;
+    if(options.hasOwnProperty("maxWidth")) {
+        this.maxWidth = options.maxWidth;
+    }
 
-    this.pos = function(x, y) {
-        this.x = x;
-        this.y = y;
-    };
+    this.lineHeight = 0;
+    if(options.hasOwnProperty("lineHeight")) {
+        this.lineHeight = options.lineHeight;
+    }
 
+    this.verticalAlign = "top";
+    if(options.hasOwnProperty("verticalAlign")) {
+        this.verticalAlign = options.verticalAlign;
+    }
 
-    this.text = function(text) {
-        this.chars = [[]];
+    this.appearCharPerSec = 0;
+    if(options.hasOwnProperty("appearCharPerSec")) {
+        this.appearCharPerSec = options.appearCharPerSec;
+    }
 
-        var currentLine = 0;
-        var lineWidths = [0];
-        var lastSpaceInLine = 0;
-
-        for(var i = 0; i < text.length; i++) {
-            var c = text.charCodeAt(i) - 32;
-
-            if(this.maxLineWidth > 0 && lineWidths[currentLine] > this.maxLineWidth) {
-
-                if(lastSpaceInLine > 0) {
-                    for(var j = lastSpaceInLine - 1; j < this.chars[currentLine].length; j++) {
-                        lineWidths[currentLine] -= this.chars[currentLine][j].w;
-                    }
-                    var goBack = this.chars[currentLine].length - lastSpaceInLine;
-                    i -= goBack;
-                    this.chars[currentLine] = this.chars[currentLine].splice(0, lastSpaceInLine - 1);
-                }
-                while(text.charCodeAt(i) == 32 && i < text.length - 1) {
-                    i++;
-                }
-                this.chars.push([]);
-                lineWidths.push(0);
-                currentLine++;
-                c = text.charCodeAt(i) - 32;
-            }
-
-            if(c == -22) {
-                this.chars.push([]);
-                lineWidths.push(0);
-                currentLine++;
-                lastSpaceInLine = 0;
-
-            } else {
-                var charWidth = this.pixelFont.charWidths[c] + this.pixelFont.charSpacing;
-                this.chars[currentLine].push({
-                    char : c,
-                    w : charWidth,
-                    x : this.x + lineWidths[currentLine],
-                    y : this.y + (this.lineHeight * currentLine)
-                });
-                lineWidths[currentLine] += charWidth;
-                if(c == 0) {
-                    lastSpaceInLine = this.chars[currentLine].length;
-                }
-            }
-        }
-
-        for(var currentLine = 0; currentLine < lineWidths.length; currentLine++) {
-            if(lineWidths[currentLine] > this.pixelFont.charSpacing) {
-                lineWidths[currentLine] -= this.pixelFont.charSpacing;
-            }
-            if(this.alignment == Text.CENTER) {
-                var halfWidth = Math.round(lineWidths[currentLine] / 2);
-                for(var i = 0; i < this.chars[currentLine].length; i++) {
-                    this.chars[currentLine][i].x -= halfWidth;
-                }
-            } else if(this.alignment == Text.RIGHT) {
-                var lineWidth = lineWidths[currentLine];
-                for(var i = 0; i < this.chars[currentLine].length; i++) {
-                    this.chars[currentLine][i].x -= lineWidth;
-                }
-            }
-        }
-    };
-
-
-    this.setFont = function(font) {
-        this.pixelFont = fonts.get(font);
-    };
-
-
-    this.setAlignment = function(alignment) {
-        this.alignment = alignment;
-    };
-
-
-    this.setLineHeight = function(lineHeight) {
-        this.lineHeight = lineHeight;
-    };
-
-
-    this.setMaxLineWidth = function(maxLineWidth) {
-        this.maxLineWidth = maxLineWidth;
-    };
-
-
-    this.draw = function() {
-        var h = this.pixelFont.charHeight;
-        for(var line = 0; line < this.chars.length; line++) {
-            for(var i = 0; i < this.chars[line].length; i++) {
-                var char = this.chars[line][i];
-                if(char.char > 0) {
-                    var sx = this.pixelFont.charOffsets[char.char] - 1;
-                    var w = char.w + 2;
-                    c.drawImage(this.pixelFont.file, sx, 0, w, h, char.x - 1, char.y, w, h);
-                }
-            }
-        }
-    };
+    this.lines = [""];
+    this.showLines = [""];
+    this.appearPos = 0;
+    this.appearChar = 0;
+    this.appearLine = 0;
+    this.finishedAppearing = true;
 
 }
 
 
-Text.LEFT = -1;
-Text.CENTER = 0;
-Text.RIGHT = 1;
+Text.prototype.setPos = function(x, y) {
+    this.x = x;
+    this.y = y;
+    return this;
+};
+
+
+Text.prototype.setSize = function(size) {
+    this.size = size;
+    return this;
+};
+
+
+Text.prototype.setFont = function(font) {
+    this.font = font;
+    return this;
+};
+
+
+Text.prototype.setAlign = function(align) {
+    this.align = align;
+    return this;
+};
+
+
+Text.prototype.setColor = function(color) {
+    this.color = color;
+    return this;
+};
+
+
+Text.prototype.setText = function(text) {
+    if(this.appearCharPerSec != 0 && this.text != text) {
+        this.resetAppear();
+    }
+    this.text = text;
+    this.applyMultiline();
+    return this;
+};
+
+
+Text.prototype.getWidth = function(text) {
+    c.font = this.size + "px \"" + this.font + "\"";
+    return c.measureText(text).width;
+};
+
+
+Text.prototype.multiline = function(maxWidth, lineHeight, verticalAlign) {
+    this.maxWidth = maxWidth;
+    this.lineHeight = lineHeight;
+    this.verticalAlign = verticalAlign;
+    return this;
+};
+
+
+Text.prototype.applyMultiline = function() {
+    if(this.maxWidth == 0) {
+        this.lines = this.text.split("\n");
+
+    } else {
+
+        c.font = this.size + "px \"" + this.font + "\"";
+        this.lines = [];
+
+        var tempLines = this.text.split("\n");
+        for(var tempLineI = 0; tempLineI < tempLines.length; tempLineI++) {
+            var words = tempLines[tempLineI].split(" ");
+
+            var currentLine = "";
+            for(var partI = 0; partI < words.length; partI++) {
+                var testLine = currentLine;
+                if(currentLine != "") {
+                    testLine += " ";
+                }
+                testLine += words[partI];
+                if(currentLine == "" || c.measureText(testLine).width <= this.maxWidth) {
+                    currentLine = testLine;
+                } else {
+                    this.lines.push(currentLine);
+                    currentLine = words[partI];
+                }
+            }
+            if(currentLine != "" || tempLineI < tempLines.length) {
+                this.lines.push(currentLine);
+            }
+        }
+    }
+};
+
+
+Text.prototype.resetAppear = function() {
+    this.showLines = [""];
+    this.appearPos = 0;
+    this.appearChar = 0;
+    this.appearLine = 0;
+    this.finishedAppearing = false;
+};
+
+
+Text.prototype.updateAppear = function() {
+    this.appearPos += Timer.delta * this.appearCharPerSec;
+    while(this.appearPos > 1.0) {
+        this.appearPos -= 1.0;
+        this.appearChar++;
+        while(this.appearChar > this.lines[this.appearLine].length) {
+            this.appearLine++;
+            this.appearChar = 1;
+            if(this.appearLine >= this.lines.length) {
+                this.finishedAppearing = true;
+                return;
+            } else {
+                this.showLines.push("");
+            }
+        }
+        this.showLines[this.appearLine] += this.lines[this.appearLine].substring(this.appearChar - 1, this.appearChar);
+    }
+};
+
+
+Text.prototype.draw = function() {
+    if(this.lines.length == 0) {
+        this.applyMultiline();
+    }
+    if(!this.finishedAppearing) {
+        this.updateAppear();
+    }
+    c.fillStyle = this.color;
+    c.font = this.size + "px \"" + this.font + "\"";
+    c.textAlign = this.align;
+
+    var y = 0;
+    if(this.verticalAlign == "bottom") {
+        y -= this.lineHeight * (this.lines.length - 1);
+    } else if(this.verticalAlign == "center") {
+        y -= this.lineHeight * 0.5 * (this.lines.length - 1);
+    }
+    if(this.finishedAppearing) {
+        for(var i = 0; i < this.lines.length; i++) {
+            c.fillText(this.lines[i], this.x, this.y + y);
+            y += this.lineHeight;
+        }
+    } else {
+        for(var i = 0; i < this.showLines.length; i++) {
+            c.fillText(this.showLines[i], this.x, this.y + y);
+            y += this.lineHeight;
+        }
+    }
+};
+
+
+Text.prototype.drawText = function(text) {
+    this.setText(text);
+    this.draw();
+};
+
+
+Text.prototype.drawPosText = function(x, y, text) {
+    this.setPos(x, y);
+    this.setText(text);
+    this.draw();
+};
+
+
+Text.draw = function(x, y, size, font, align, color, text) {
+    (new Text({
+        x : x,
+        y : y,
+        size : size,
+        font : font,
+        align : align,
+        color : color,
+        text : text
+    })).draw();
+};

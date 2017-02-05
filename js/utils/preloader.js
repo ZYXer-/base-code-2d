@@ -1,155 +1,173 @@
-function Preloader() {
+function Preloader() {}
 
-    this.sources;
+Preloader.prototype.sources;
 
-    this.loadedAssets = 0;
-    this.totalAssets = 0;
+Preloader.prototype.loadedAssets = 0;
+Preloader.prototype.totalAssets = 0;
 
-    this.fractionLoaded = 0;
-    this.loaded = false;
+Preloader.prototype.fractionLoaded = 0;
+Preloader.prototype.loaded = false;
 
-    this.endCallback = null;
+Preloader.prototype.endCallback = null;
 
 
-    this.loadImages = function(sources) {
-        this.sources = sources;
-        this.totalAssets = Object.keys(this.sources).length;
-        var preloader = this;
+Preloader.prototype.setEndCallback = function(callback) {
+    this.endCallback = callback;
+};
 
-        if(this.totalAssets == 0) {
-            this.totalAssets = 1;
-            this.reportAssetLoaded();
-            return;
+
+Preloader.prototype.reportAssetLoaded = function() {
+    this.loadedAssets++;
+    this.fractionLoaded = this.loadedAssets / this.totalAssets;
+    if(this.loadedAssets == this.totalAssets) {
+        this.loaded = true;
+        if(this.endCallback != null) {
+            this.endCallback();
         }
+    }
+};
 
-        for(var name in this.sources) {
-            img.assets[name] = new Image();
-            img.assets[name].onload = function() {
-                preloader.reportAssetLoaded();
-            };
-            img.assets[name].src = this.sources[name];
+
+Preloader.prototype.getFractionLoaded = function() {
+    return this.fractionLoaded;
+};
+
+
+Preloader.prototype.isLoaded = function() {
+    return this.loaded;
+};
+
+
+function SoundManagerPreloader() {}
+SoundManagerPreloader.prototype = Object.create(Preloader.prototype);
+
+
+SoundManagerPreloader.prototype.load = function() {
+    this.totalAssets = 1;
+    var preloader = this;
+
+    soundManager.setup({
+        debugMode : Settings.Game.DEBUG,
+        url : "swf/",
+        onready : function() {
+            preloader.reportAssetLoaded();
+        },
+        ontimeout : function() {
+            alert("Cannot play sound!");
+            preloader.reportAssetLoaded();
         }
-    };
+    });
+};
 
 
-    this.loadSoundManager = function() {
+function SoundPreloader() {}
+SoundPreloader.prototype = Object.create(Preloader.prototype);
+
+
+SoundPreloader.prototype.load = function(sources) {
+    this.sources = sources;
+    Object.keys(this.sources).length;
+    for(var name in this.sources) {
+        this.totalAssets += this.sources[name].instances;
+    }
+    var preloader = this;
+
+    if(this.totalAssets == 0) {
         this.totalAssets = 1;
-        var preloader = this;
+        this.reportAssetLoaded();
+        return;
+    }
 
-        soundManager.setup({
-            debugMode : game.DEBUG,
-            url : "swf/",
-            onready : function() {
-                preloader.reportAssetLoaded();
-            },
-            ontimeout : function() {
-                alert("Cannot play sound!");
-                preloader.reportAssetLoaded();
-            }
-        });
-    };
-
-
-    this.loadSounds = function(sources) {
-        this.sources = sources;
-        Object.keys(this.sources).length;
-        for(var name in this.sources) {
-            this.totalAssets += this.sources[name].instances;
-        }
-        var preloader = this;
-
-        if(this.totalAssets == 0) {
-            this.totalAssets = 1;
-            this.reportAssetLoaded();
-            return;
-        }
-
-        for(var name in this.sources) {
-            for(var i = 0; i < this.sources[name].instances; i++) {
-                soundManager.createSound({
-                    id : name + "_instance_" + i,
-                    url : this.sources[name].source,
-                    autoLoad : true,
-                    volume : 50,
-                    multiShot : false,
-                    onload : function() {
-                        preloader.reportAssetLoaded();
-                    }
-                });
-            }
-            sound.assets[name] = { position : 0, count : this.sources[name].instances };
-        }
-    };
-
-
-    this.loadPixelFonts = function(sources) {
-        this.sources = sources;
-        this.totalAssets = Object.keys(this.sources).length;
-
-        if(this.totalAssets == 0) {
-            this.totalAssets = 1;
-            this.reportAssetLoaded();
-            return;
-        }
-
-        for(var name in this.sources) {
-            var source = this.sources[name];
-            pixelFonts.create(name, img.get(source["file"]), source["minCharSpacingInFile"], source["printCharSpacing"], source["printSpaceWidth"], source["glyphDetectionThresholds"], source["manualSpacing"]);
-            this.reportAssetLoaded();
-        }
-    };
-
-
-    this.loadWebFonts = function(sources) {
-        this.sources = sources;
-        this.totalAssets = this.sources.length;
-
-        if(this.totalAssets == 0) {
-            this.totalAssets = 1;
-            this.reportAssetLoaded();
-            return;
-        }
-
-        var preloader = this;
-        for(var i = 0; i < this.totalAssets; i++) {
-            var font = this.sources[i];
-            var fontObserver = new FontFaceObserver(font);
-            jQuery("body").append("<div id=\"webfont_preload_" + font + "\" style=\"display: none; font-family: " + font + "\">" + font + "</div>");
-            fontObserver.load().then(function() {
-                jQuery("#webfont_preload_" + font).remove();
-                preloader.reportAssetLoaded();
-            }, function() {
-                jQuery("#webfont_preload_" + font).remove();
-                preloader.reportAssetLoaded();
+    for(var name in this.sources) {
+        for(var i = 0; i < this.sources[name].instances; i++) {
+            soundManager.createSound({
+                id : name + "_instance_" + i,
+                url : this.sources[name].source,
+                autoLoad : true,
+                volume : 50,
+                multiShot : false,
+                onload : function() {
+                    preloader.reportAssetLoaded();
+                }
             });
         }
-    };
+        Sound.assets[name] = { position : 0, count : this.sources[name].instances };
+    }
+};
 
 
-    this.setEndCallback = function(callback) {
-        this.endCallback = callback;
-    };
+function ImagePreloader() {}
+ImagePreloader.prototype = Object.create(Preloader.prototype);
 
 
-    this.reportAssetLoaded = function() {
-        this.loadedAssets++;
-        this.fractionLoaded = this.loadedAssets / this.totalAssets;
-        if(this.loadedAssets == this.totalAssets) {
-            this.loaded = true;
-            if(this.endCallback != null) {
-                this.endCallback();
-            }
-        }
-    };
+ImagePreloader.prototype.load = function(sources) {
+    this.sources = sources;
+    this.totalAssets = Object.keys(this.sources).length;
+    var preloader = this;
+
+    if(this.totalAssets == 0) {
+        this.totalAssets = 1;
+        this.reportAssetLoaded();
+        return;
+    }
+
+    for(var name in this.sources) {
+        Img.assets[name] = new Image();
+        Img.assets[name].onload = function() {
+            preloader.reportAssetLoaded();
+        };
+        Img.assets[name].src = this.sources[name];
+    }
+};
 
 
-    this.getFractionLoaded = function() {
-        return this.fractionLoaded;
-    };
+function PixelFontPreloader() {}
+PixelFontPreloader.prototype = Object.create(Preloader.prototype);
 
 
-    this.isLoaded = function() {
-        return this.loaded;
-    };
+PixelFontPreloader.prototype.load = function(sources) {
+    this.sources = sources;
+    this.totalAssets = Object.keys(this.sources).length;
 
-}
+    if(this.totalAssets == 0) {
+        this.totalAssets = 1;
+        this.reportAssetLoaded();
+        return;
+    }
+
+    for(var name in this.sources) {
+        var source = this.sources[name];
+        PixelFonts.create(name, Img.get(source["file"]), source["minCharSpacingInFile"], source["printCharSpacing"], source["printSpaceWidth"], source["glyphDetectionThresholds"], source["manualSpacing"]);
+        this.reportAssetLoaded();
+    }
+};
+
+
+function WebFontPreloader() {}
+WebFontPreloader.prototype = Object.create(Preloader.prototype);
+
+
+WebFontPreloader.prototype.load = function(sources) {
+    this.sources = sources;
+    this.totalAssets = this.sources.length;
+
+    if(this.totalAssets == 0) {
+        this.totalAssets = 1;
+        this.reportAssetLoaded();
+        return;
+    }
+
+    var preloader = this;
+    for(var i = 0; i < this.totalAssets; i++) {
+        var font = this.sources[i];
+        var fontObserver = new FontFaceObserver(font);
+        jQuery("body").append("<div id=\"webfont_preload_" + font + "\" style=\"display: none; font-family: " + font + "\">" + font + "</div>");
+        fontObserver.load().then(function() {
+            jQuery("#webfont_preload_" + font).remove();
+            preloader.reportAssetLoaded();
+        }, function() {
+            jQuery("#webfont_preload_" + font).remove();
+            preloader.reportAssetLoaded();
+        });
+    }
+};

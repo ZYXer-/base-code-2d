@@ -1,30 +1,91 @@
-function PreloadingManager() {
+function PreloadingManager() {}
 
-    this.soundManagerPreloader;
-    this.imagePreloader;
-    this.soundPreloader;
-    this.pixelFontPreloader;
-    this.webFontPreloader;
+PreloadingManager.soundManagerPreloader;
+PreloadingManager.imagePreloader;
+PreloadingManager.soundPreloader;
+PreloadingManager.pixelFontPreloader;
+PreloadingManager.webFontPreloader;
+
+PreloadingManager.fakeLoadingCountdown = 0.0;
+PreloadingManager.soundLoadingCountdown = 0.0;
 
 
-    this.preload = function() {
+PreloadingManager.preload = function() {
 
-        this.soundManagerPreloader = new Preloader();
-        this.imagePreloader = new Preloader();
-        this.soundPreloader = new Preloader();
-        this.pixelFontPreloader = new Preloader();
-        this.webFontPreloader = new Preloader();
+    PreloadingManager.fakeLoadingCountdown = Settings.Loading.FAKE_LOADING_TIME;
+    PreloadingManager.soundLoadingCountdown = Settings.Loading.TIME_BEFORE_SOUND_LOADING_FAIL;
 
-        this.soundManagerPreloader.setEndCallback(function() {
-            preloadingManager.soundPreloader.loadSounds(resources.sounds);
-        });
-        this.soundManagerPreloader.loadSoundManager();
+    PreloadingManager.soundManagerPreloader = new SoundManagerPreloader();
+    PreloadingManager.soundPreloader = new SoundPreloader();
+    PreloadingManager.imagePreloader = new ImagePreloader();
+    PreloadingManager.pixelFontPreloader = new PixelFontPreloader();
+    PreloadingManager.webFontPreloader = new WebFontPreloader();
 
-        this.imagePreloader.setEndCallback(function() {
-            preloadingManager.pixelFontPreloader.loadPixelFonts(resources.pixelFonts);
-        });
-        this.imagePreloader.loadImages(resources.images);
+    PreloadingManager.soundManagerPreloader.setEndCallback(function() {
+        PreloadingManager.soundPreloader.load(Resources.sounds);
+    });
+    PreloadingManager.soundManagerPreloader.load();
 
-        this.webFontPreloader.loadWebFonts(resources.webFonts);
-    };
-}
+    PreloadingManager.imagePreloader.setEndCallback(function() {
+        PreloadingManager.pixelFontPreloader.load(Resources.pixelFonts);
+    });
+    PreloadingManager.imagePreloader.load(Resources.images);
+
+    PreloadingManager.webFontPreloader.load(Resources.webFonts);
+};
+
+
+PreloadingManager.update = function() {
+
+    if(PreloadingManager.imagePreloader.isLoaded()
+        && PreloadingManager.pixelFontPreloader.isLoaded()
+        && PreloadingManager.webFontPreloader.isLoaded()
+        && ((PreloadingManager.soundManagerPreloader.isLoaded()
+        && PreloadingManager.soundPreloader.isLoaded())
+        || this.soundLoadingCountdown < 0)) {
+
+        this.fakeLoadingCountdown -= Timer.delta;
+        if(this.fakeLoadingCountdown < 0) {
+            CustomPreloading.preload();
+            Game.setState(Settings.States.STATE_AFTER_LOADING);
+        }
+    }
+
+    if(PreloadingManager.imagePreloader.isLoaded()
+        && PreloadingManager.pixelFontPreloader.isLoaded()
+        && PreloadingManager.webFontPreloader.isLoaded()
+        && !PreloadingManager.soundPreloader.isLoaded()) {
+
+        this.soundLoadingCountdown -= Timer.delta;
+    }
+};
+
+
+PreloadingManager.getPercentageLoaded = function() {
+
+    var soundManagerPercentage = PreloadingManager.soundManagerPreloader.getFractionLoaded();
+    soundManagerPercentage *= Settings.Loading.SOUND_MANAGER_PERCENTAGE;
+
+    var imagePercentage = PreloadingManager.imagePreloader.getFractionLoaded();
+    imagePercentage *= Settings.Loading.IMAGE_PERCENTAGE;
+
+    var soundPercentage = PreloadingManager.soundPreloader.getFractionLoaded();
+    soundPercentage *= Settings.Loading.SOUND_PERCENTAGE;
+
+    var pixelFontPercentage = PreloadingManager.pixelFontPreloader.getFractionLoaded();
+    pixelFontPercentage *= Settings.Loading.PIXEL_FONT_PERCENTAGE;
+
+    var webFontPercentage = PreloadingManager.webFontPreloader.getFractionLoaded();
+    webFontPercentage *= Settings.Loading.WEB_FONT_PERCENTAGE;
+
+    var fakeLoadingPercentage = (1.0 - (this.fakeLoadingCountdown / Settings.Loading.FAKE_LOADING_TIME));
+    fakeLoadingPercentage *= Settings.Loading.FAKE_PERCENTAGE;
+
+    var percentage = soundManagerPercentage;
+    percentage += imagePercentage;
+    percentage += soundPercentage;
+    percentage += pixelFontPercentage;
+    percentage += webFontPercentage;
+    percentage += fakeLoadingPercentage;
+    return percentage;
+};

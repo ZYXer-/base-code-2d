@@ -1,83 +1,78 @@
-function Timer() {
-
-    this.lastTime = 0;
-
-    this.delta = 0.00001;
-
-    this.callbacks = {};
-    this.callbackCounter = 0;
+function Timer() {}
 
 
-    this.init = function() {
-        var d = new Date();
-        this.lastTime = (1000 * d.getSeconds()) + d.getMilliseconds();
-    };
+Timer.lastTime = 0;
+
+Timer.delta = 0.00001;
+
+Timer.callbacks = {};
+Timer.callbackCounter = 0;
 
 
-    this.update = function() {
-        var d = new Date();
-        var now = (1000 * d.getSeconds()) + d.getMilliseconds();
-        if(now < this.lastTime) {
-            this.lastTime -= 60000;
+Timer.init = function() {
+    var d = new Date();
+    Timer.lastTime = (1000 * d.getSeconds()) + d.getMilliseconds();
+};
+
+
+Timer.update = function() {
+    var d = new Date();
+    var now = (1000 * d.getSeconds()) + d.getMilliseconds();
+    if(now < Timer.lastTime) {
+        Timer.lastTime -= 60000;
+    }
+    Timer.delta = (now - Timer.lastTime) / 1000;
+    if(Timer.delta < 0.00001) {
+        Timer.delta = 0.00001;
+    }
+    if(Timer.delta > 0.25) {
+        Timer.delta = 0.25;
+    }
+    Timer.lastTime = now;
+};
+
+
+Timer.countdown = function(time, callback) {
+    var timerCallback = new TimerCallback(time, null, callback, false);
+    Timer.callbacks[Timer.callbackCounter] = timerCallback;
+    Timer.callbackCounter++;
+    return timerCallback;
+};
+
+
+Timer.doFor = function(time, callback) {
+    var timerCallback = new TimerCallback(time, callback, null, false);
+    Timer.callbacks[Timer.callbackCounter] = timerCallback;
+    Timer.callbackCounter++;
+    return timerCallback;
+};
+
+
+Timer.doForCountdown = function(time, updateCallback, endCallback) {
+    var timerCallback = new TimerCallback(time, updateCallback, endCallback, false);
+    Timer.callbacks[Timer.callbackCounter] = timerCallback;
+    Timer.callbackCounter++;
+    return timerCallback;
+};
+
+
+Timer.repeatEvery = function(interval, callback, skipFirst) {
+    var timerCallback = new TimerCallback(interval, null, callback, true);
+    if(typeof skipFirst === "undefined" || !skipFirst) {
+        timerCallback.life = 0.0;
+    }
+    Timer.callbacks[Timer.callbackCounter] = timerCallback;
+    Timer.callbackCounter++;
+    return timerCallback;
+};
+
+
+Timer.updateCallbacks = function() {
+    for(var callbackId in Timer.callbacks) {
+        if(Timer.callbacks[callbackId].killed) {
+            delete Timer.callbacks[callbackId];
+        } else {
+            Timer.callbacks[callbackId].update();
         }
-        this.delta = (now - this.lastTime) / 1000;
-        if(this.delta < 0.00001) {
-            this.delta = 0.00001;
-        }
-        if(this.delta > 0.25) {
-            this.delta = 0.25;
-        }
-        this.lastTime = now;
-    };
-
-
-    this.countdown = function(time, callback) {
-        var timerCallback = new TimerCallback();
-        timerCallback.init(time, null, callback, false);
-        this.callbacks[this.callbackCounter] = timerCallback;
-        this.callbackCounter++;
-        return timerCallback;
-    };
-
-
-    this.doFor = function(time, callback) {
-        var timerCallback = new TimerCallback();
-        timerCallback.init(time, callback, null, false);
-        this.callbacks[this.callbackCounter] = timerCallback;
-        this.callbackCounter++;
-        return timerCallback;
-    };
-
-
-    this.doForCountdown = function(time, updateCallback, endCallback) {
-        var timerCallback = new TimerCallback();
-        timerCallback.init(time, updateCallback, endCallback, false);
-        this.callbacks[this.callbackCounter] = timerCallback;
-        this.callbackCounter++;
-        return timerCallback;
-    };
-
-
-    this.repeatEvery = function(interval, callback, skipFirst) {
-        var timerCallback = new TimerCallback();
-        timerCallback.init(interval, null, callback, true);
-        if(typeof skipFirst === "undefined" || !skipFirst) {
-            timerCallback.life = 0.0;
-        }
-        this.callbacks[this.callbackCounter] = timerCallback;
-        this.callbackCounter++;
-        return timerCallback;
-    };
-
-
-    this.updateCallbacks = function() {
-        for(var callbackId in this.callbacks) {
-            if(this.callbacks[callbackId].killed) {
-                delete this.callbacks[callbackId];
-            } else {
-                this.callbacks[callbackId].update();
-            }
-        }
-    };
-
-}
+    }
+};

@@ -1,29 +1,44 @@
-function Sound() {
+function Sound() {}
 
 
-    this.muted = false;
+Sound.muted = false;
+Sound.assets = {};
 
-    this.assets = {};
 
-
-    this.play = function(name, attributes) { // attributes example: { volume : 100, onfinish : foo(), loops : 3 }
-        if(this.assets.hasOwnProperty(name)) {
-            soundManager.play(name + "_instance_" + this.assets[name].position, attributes);
-            this.assets[name].position++;
-            if(this.assets[name].position >= this.assets[name].count) {
-                this.assets[name].position = 0;
-            }
+Sound.play = function(name, attributes) { // attributes example: { volume : 100, onfinish : foo(), loops : 3 }
+    if(Sound.assets.hasOwnProperty(name)) {
+        soundManager.play(name + "_instance_" + Sound.assets[name].position, attributes);
+        Sound.assets[name].position++;
+        if(Sound.assets[name].position >= Sound.assets[name].count) {
+            Sound.assets[name].position = 0;
         }
-    };
+    }
+};
 
 
-    this.muteUnmute = function() {
-        this.muted = !this.muted;
-        if(this.muted) {
-            soundManager.mute();
-        } else {
-            soundManager.unmute();
-        }
-    };
+Sound.stop = function(name) {
+    var position = Sound.assets[name].position - 1;
+    if(position < 0) {
+        position = Sound.assets[name].count - 1;
+    }
+    soundManager.stop(name + "_instance_" + position);
+};
 
-}
+
+Sound.setVolume = function(name, volume) { // volume : 0 - 100
+    var position = Sound.assets[name].position - 1;
+    if(position < 0) {
+        position = Sound.assets[name].count - 1;
+    }
+    soundManager.setVolume(name + "_instance_" + position, volume);
+};
+
+
+Sound.muteUnmute = function() {
+    Sound.muted = !Sound.muted;
+    if(Sound.muted) {
+        soundManager.mute();
+    } else {
+        soundManager.unmute();
+    }
+};

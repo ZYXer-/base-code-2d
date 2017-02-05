@@ -1,4 +1,5 @@
 
+var QUART_PI = 0.785398;
 var HALF_PI = 1.570796;
 var PI = 3.141593;
 var TWO_PI = 6.283185;
@@ -60,12 +61,12 @@ Utils.angleDelta = function(angleA, angleB) {
 };
 
 
-Utils.inPolygon = function(polygon, pointX, pointY) {
+Utils.inPolygon = function(polygon, point) {
     var inside = false;
     var j = (polygon.length - 1);
     for(var i = 0; i < polygon.length; i++) {
-        if(((polygon[i].y > pointY) != (polygon[j].y > pointY)) &&
-                (pointX < (polygon[j].x - polygon[i].x) * (pointY - polygon[i].y) / (polygon[j].y - polygon[i].y) + polygon[i].x)) {
+        if(((polygon[i].y > point.y) != (polygon[j].y > point.y)) &&
+                (point.x < (polygon[j].x - polygon[i].x) * (point.y - polygon[i].y) / (polygon[j].y - polygon[i].y) + polygon[i].x)) {
             inside = !inside;
         }
         j = i;
@@ -74,19 +75,26 @@ Utils.inPolygon = function(polygon, pointX, pointY) {
 };
 
 
-Utils.normalize = function(vector) {
-    var length = Math.sqrt((vector.x * vector.x) + (vector.y * vector.y));
-    if(length == 0) {
-        return { x : 0, y : 0 };
-    }
-    return { x : (vector.x / length), y : (vector.y / length) };
-};
-
-
 Utils.limit = function(value, min, max) {
     if(value < min) {
         return min;
     }
+    if(value > max) {
+        return max;
+    }
+    return value;
+};
+
+
+Utils.min = function(value, min) {
+    if(value < min) {
+        return min;
+    }
+    return value;
+};
+
+
+Utils.max = function(value, max) {
     if(value > max) {
         return max;
     }
@@ -201,11 +209,11 @@ Utils.isInArray = function(array, value) {
 
 
 Utils.getArrowControls = function() {
-    var moveUpPressed = keyboard.isPressed(Keyboard.ARROW_UP) || keyboard.isPressed(Keyboard.W) || keyboard.isPressed(Keyboard.Z);
-    var moveRightPressed = keyboard.isPressed(Keyboard.ARROW_RIGHT) || keyboard.isPressed(Keyboard.D);
-    var moveDownPressed = keyboard.isPressed(Keyboard.ARROW_DOWN) || keyboard.isPressed(Keyboard.S);
-    var moveLeftPressed = keyboard.isPressed(Keyboard.ARROW_LEFT) || keyboard.isPressed(Keyboard.A) || keyboard.isPressed(Keyboard.Q);
-    var vector = { x : 0.0, y : 0.0 };
+    var moveUpPressed = Keyboard.isPressed(Keyboard.ARROW_UP) || Keyboard.isPressed(Keyboard.W) || Keyboard.isPressed(Keyboard.Z);
+    var moveRightPressed = Keyboard.isPressed(Keyboard.ARROW_RIGHT) || Keyboard.isPressed(Keyboard.D);
+    var moveDownPressed = Keyboard.isPressed(Keyboard.ARROW_DOWN) || Keyboard.isPressed(Keyboard.S);
+    var moveLeftPressed = Keyboard.isPressed(Keyboard.ARROW_LEFT) || Keyboard.isPressed(Keyboard.A) || Keyboard.isPressed(Keyboard.Q);
+    var vector = new Vec2(0.0, 0.0);
     if(moveUpPressed && !moveDownPressed) {
         vector.y -= 1.0;
     } else if(moveDownPressed && !moveUpPressed) {
@@ -216,5 +224,12 @@ Utils.getArrowControls = function() {
     } else if(moveLeftPressed && !moveRightPressed) {
         vector.x -= 1.0;
     }
-    return Utils.normalize(vector);
+    return vector.normalize();
+};
+
+
+Utils.pad = function(number, length) {
+    number = number.toString();
+    var pad = "00000000";
+    return pad.substring(0, pad.length - number.length) + number;
 };

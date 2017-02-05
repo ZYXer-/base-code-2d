@@ -1,50 +1,46 @@
-function PerformanceMonitor() {
-
-    this.lastTime = 0;
-
-    this.fps = 0;
-
-    this.MEASUREMENT_TICK_INTERVAL = 10;
-
-    this.measurementCountdown = 0;
+function PerformanceMonitor() {}
 
 
-    this.init = function() {
-        if(game.DEBUG) {
+PerformanceMonitor.lastTime = 0;
+PerformanceMonitor.fps = 0;
+PerformanceMonitor.MEASUREMENT_TICK_INTERVAL = 10;
+PerformanceMonitor.measurementCountdown = 0;
+
+
+PerformanceMonitor.init = function() {
+    if(Settings.Game.DEBUG) {
+        var d = new Date();
+        PerformanceMonitor.lastTime = (1000 * d.getSeconds()) + d.getMilliseconds();
+        jQuery("#game_box").after("<div id=\"fps\"></div>");
+        PerformanceMonitor.measurementCountdown = PerformanceMonitor.MEASUREMENT_TICK_INTERVAL;
+    }
+};
+
+
+PerformanceMonitor.update = function() {
+    if(Settings.Game.DEBUG) {
+
+        PerformanceMonitor.measurementCountdown--;
+        if(PerformanceMonitor.measurementCountdown <= 0) {
+            PerformanceMonitor.measurementCountdown = PerformanceMonitor.MEASUREMENT_TICK_INTERVAL;
+
             var d = new Date();
-            this.lastTime = (1000 * d.getSeconds()) + d.getMilliseconds();
-            jQuery("#game_box").after("<div id=\"fps\"></div>");
-            this.measurementCountdown = this.MEASUREMENT_TICK_INTERVAL;
-        }
-    };
+            var now = (1000 * d.getSeconds()) + d.getMilliseconds();
+            if(now < PerformanceMonitor.lastTime) {
+                PerformanceMonitor.lastTime -= 60000;
+            }
+            var delta = (now - PerformanceMonitor.lastTime);
+            PerformanceMonitor.lastTime = now;
 
-
-    this.update = function() {
-        if(game.DEBUG) {
-
-            this.measurementCountdown--;
-            if(this.measurementCountdown <= 0) {
-                this.measurementCountdown = this.MEASUREMENT_TICK_INTERVAL;
-
-                var d = new Date();
-                var now = (1000 * d.getSeconds()) + d.getMilliseconds();
-                if(now < this.lastTime) {
-                    this.lastTime -= 60000;
-                }
-                var delta = (now - this.lastTime);
-                this.lastTime = now;
-
-                if(delta > 0) {
-                    this.fps = this.MEASUREMENT_TICK_INTERVAL * 1000 / delta;
-                    this.printFps();
-                }
+            if(delta > 0) {
+                PerformanceMonitor.fps = PerformanceMonitor.MEASUREMENT_TICK_INTERVAL * 1000 / delta;
+                PerformanceMonitor.printFps();
             }
         }
-    };
+    }
+};
 
 
-    this.printFps = function() {
-        jQuery("#fps").html("FPS: " + this.fps.toFixed(1));
-    };
-
-}
+PerformanceMonitor.printFps = function() {
+    jQuery("#fps").html("FPS: " + PerformanceMonitor.fps.toFixed(1));
+};

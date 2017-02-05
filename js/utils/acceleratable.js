@@ -1,0 +1,153 @@
+function Acceleratable(dimensionMode, pos, propulsionA, frictionA, maxV, angleMode) {
+
+    this.dimensionMode = dimensionMode;
+
+    this.pos = pos;
+
+    this.v = new Vec2(0.0, 0.0);
+    if(this.dimensionMode == Acceleratable.DIM_MODE_3D) {
+        this.v = new Vec3(0.0, 0.0, 0.0);
+    }
+
+
+    this.propulsionA = propulsionA;
+    this.frictionA = frictionA;
+
+    this.maxV = maxV;
+
+    this.angleMode = angleMode;
+
+    this.angle = 0;
+
+}
+
+
+Acceleratable.prototype.setPos = function(pos) {
+    this.pos = pos;
+};
+
+
+Acceleratable.prototype.setV = function(v) {
+    this.v = v;
+};
+
+
+Acceleratable.prototype.setPropulsionA = function(propulsionA) {
+    this.propulsionA = propulsionA;
+};
+
+
+Acceleratable.prototype.setFrictionA = function(frictionA) {
+    this.frictionA = frictionA;
+};
+
+
+Acceleratable.prototype.setMaxV = function(maxV) {
+    this.maxV = maxV;
+};
+
+
+Acceleratable.prototype.update = function(propulsionDir) {
+
+    propulsionDir = propulsionDir.normalize();
+
+    var negSign;
+    var sign;
+
+    if(propulsionDir.x == 0.0) {
+        if(this.v.x != 0.0) {
+            negSign = this.getSign(-this.v.x);
+            this.v.x += negSign * this.frictionA.x * Timer.delta;
+            if(negSign * this.v.x > 0.0) {
+                this.v.x = 0.0;
+            }
+        }
+    } else {
+        this.v.x += this.propulsionA.x * propulsionDir.x * Timer.delta;
+        sign = this.getSign(propulsionDir.x);
+        this.v.x = sign * Utils.max(sign * this.v.x, sign * this.maxV.x * propulsionDir.x);
+    }
+
+    if(propulsionDir.y == 0.0) {
+        if(this.v.y != 0.0) {
+            negSign = this.getSign(-this.v.y);
+            this.v.y += negSign * this.frictionA.y * Timer.delta;
+            if(negSign * this.v.y > 0.0) {
+                this.v.y = 0.0;
+            }
+        }
+    } else {
+        this.v.y += this.propulsionA.y * propulsionDir.y * Timer.delta;
+        sign = this.getSign(propulsionDir.y);
+        this.v.y = sign * Utils.max(sign * this.v.y, sign * this.maxV.y * propulsionDir.y);
+    }
+
+    if(this.dimensionMode == Acceleratable.DIM_MODE_3D) {
+        if(propulsionDir.z == 0.0) {
+            if(this.v.z != 0.0) {
+                negSign = this.getSign(-this.v.z);
+                this.v.z += negSign * this.frictionA.z * Timer.delta;
+                if(negSign * this.v.z > 0.0) {
+                    this.v.z = 0.0;
+                }
+            }
+        } else {
+            this.v.z += this.propulsionA.z * propulsionDir.z * Timer.delta;
+            sign = this.getSign(propulsionDir.z);
+            this.v.z = sign * Utils.max(sign * this.v.z, sign * this.maxV.z * propulsionDir.z);
+        }
+    }
+
+    this.pos = this.pos.add(this.v.multiply(Timer.delta));
+
+    if(this.v.norm() > 0) {
+
+        if(this.angleMode == Acceleratable.ANGLE_MODE_4WAY) {
+            if(Math.abs(this.v.x) > Math.abs(this.v.y)) {
+                this.angle = (this.v.x > 0 ? 3 : 1);
+            } else {
+                this.angle = (this.v.y > 0 ? 0 : 2);
+            }
+
+        } else if(this.angleMode == Acceleratable.ANGLE_MODE_8WAY) {
+            if(this.v.x == 0 && this.v.y > 0) {
+                this.angle = 0;
+            } else if(this.v.x < 0 && this.v.y > 0) {
+                this.angle = 1;
+            } else if(this.v.x < 0 && this.v.y == 0) {
+                this.angle = 2;
+            } else if(this.v.x < 0 && this.v.y < 0) {
+                this.angle = 3;
+            } else if(this.v.x == 0 && this.v.y < 0) {
+                this.angle = 4;
+            } else if(this.v.x > 0 && this.v.y < 0) {
+                this.angle = 5;
+            } else if(this.v.x > 0 && this.v.y == 0) {
+                this.angle = 6;
+            } else if(this.v.x > 0 && this.v.y > 0) {
+                this.angle = 7;
+            }
+
+        } else {
+            this.angle = this.v.angle();
+        }
+    }
+};
+
+
+Acceleratable.prototype.getSign = function(val) {
+    if(val > 0) {
+        return 1;
+    } else if(val < 0) {
+        return -1;
+    }
+    return 0;
+};
+
+
+Acceleratable.DIM_MODE_2D = 0;
+Acceleratable.DIM_MODE_3D = 1;
+
+Acceleratable.ANGLE_MODE_4WAY = 0;
+Acceleratable.ANGLE_MODE_8WAY = 1;
+Acceleratable.ANGLE_MODE_ANGLE = 2;

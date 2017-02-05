@@ -1,89 +1,89 @@
-function Keyboard() {
-
-    this.allowDefault = false;
-    this.allowKeys = [];
-
-    this.keyPressed = {};
-
-    this.keyDownHandlers = {};
-    this.keyUpHandlers = {};
+function Keyboard() {}
 
 
-    this.init = function() {
-        jQuery(window).keydown(function(event) {
-            if(!keyboard.allowDefault && keyboard.allowKeys.indexOf(event.which) == -1) {
-                event.preventDefault();
-                keyboard.keyPressed[event.which] = true;
-                if(keyboard.keyDownHandlers.hasOwnProperty(event.which)) {
-                    keyboard.keyDownHandlers[event.which].callback();
-                }
+Keyboard.allowDefault = false;
+Keyboard.allowKeys = [];
+
+Keyboard.keyPressed = {};
+
+Keyboard.keyDownHandlers = {};
+Keyboard.keyUpHandlers = {};
+
+
+Keyboard.init = function() {
+    jQuery(window).keydown(function(event) {
+        if(!Keyboard.allowDefault && Keyboard.allowKeys.indexOf(event.which) == -1) {
+            event.preventDefault();
+            Keyboard.keyPressed[event.which] = true;
+            if(Keyboard.keyDownHandlers.hasOwnProperty(event.which)) {
+                Keyboard.keyDownHandlers[event.which].callback();
             }
+        }
 
-        }).keyup(function(event) {
-            if(!keyboard.allowDefault && keyboard.allowKeys.indexOf(event.which) == -1) {
-                event.preventDefault();
-                keyboard.keyPressed[event.which] = false;
-                if(keyboard.keyUpHandlers.hasOwnProperty(event.which)) {
-                    keyboard.keyUpHandlers[event.which].callback();
-                }
+    }).keyup(function(event) {
+        if(!Keyboard.allowDefault && Keyboard.allowKeys.indexOf(event.which) == -1) {
+            event.preventDefault();
+            Keyboard.keyPressed[event.which] = false;
+            if(Keyboard.keyUpHandlers.hasOwnProperty(event.which)) {
+                Keyboard.keyUpHandlers[event.which].callback();
             }
-        });
-    };
-
-
-    this.isPressed = function(key) {
-        if(!this.keyPressed.hasOwnProperty(key)) {
-            return false;
         }
-        return this.keyPressed[key];
-    };
+    });
+};
 
 
-    this.registerKeyDownHandler = function(key, callback) {
-        this.keyDownHandlers[key] = { key : key, callback : callback };
-    };
+Keyboard.isPressed = function(key) {
+    if(!Keyboard.keyPressed.hasOwnProperty(key)) {
+        return false;
+    }
+    return Keyboard.keyPressed[key];
+};
 
 
-    this.deleteKeyDownHandler = function(key) {
-        if(this.keyDownHandlers.hasOwnProperty(key)) {
-            delete this.keyDownHandlers[key];
-        }
-    };
+Keyboard.registerKeyDownHandler = function(key, callback) {
+    Keyboard.keyDownHandlers[key] = { key : key, callback : callback };
+};
 
 
-    this.registerKeyUpHandler = function(key, callback) {
-        this.keyUpHandlers[key] = { key : key, callback : callback };
-    };
+Keyboard.deleteKeyDownHandler = function(key) {
+    if(Keyboard.keyDownHandlers.hasOwnProperty(key)) {
+        delete Keyboard.keyDownHandlers[key];
+    }
+};
 
 
-    this.deleteKeyUpHandler = function(key) {
-        if(this.keyUpHandlers.hasOwnProperty(key)) {
-            delete this.keyUpHandlers[key];
-        }
-    };
+Keyboard.registerKeyUpHandler = function(key, callback) {
+    Keyboard.keyUpHandlers[key] = { key : key, callback : callback };
+};
 
 
-    this.setAllowDefault = function(allowDefault) {
-        this.allowDefault = allowDefault;
-    };
+Keyboard.deleteKeyUpHandler = function(key) {
+    if(Keyboard.keyUpHandlers.hasOwnProperty(key)) {
+        delete Keyboard.keyUpHandlers[key];
+    }
+};
 
 
-    this.allowKey = function(key) {
-        var i = this.allowKeys.indexOf(key);
-        if(i == -1) {
-            this.allowKeys.push(key);
-        }
-    };
+Keyboard.setAllowDefault = function(allowDefault) {
+    Keyboard.allowDefault = allowDefault;
+};
 
 
-    this.preventKey = function(key) {
-        var i = this.allowKeys.indexOf(key);
-        if(i > -1) {
-            this.allowKeys.splice(i, 1);
-        }
-    };
+Keyboard.allowKey = function(key) {
+    var i = Keyboard.allowKeys.indexOf(key);
+    if(i == -1) {
+        Keyboard.allowKeys.push(key);
+    }
+};
 
-}
+
+Keyboard.preventKey = function(key) {
+    var i = Keyboard.allowKeys.indexOf(key);
+    if(i > -1) {
+        Keyboard.allowKeys.splice(i, 1);
+    }
+};
+
 
 Keyboard.ARROW_LEFT = 37;
 Keyboard.ARROW_UP = 38;

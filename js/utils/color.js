@@ -1,22 +1,21 @@
 function Color(r, g, b) {
 
-
     this.r = r;
     this.g = g;
     this.b = b;
 
-
-    this.toHex = function() {
-        var hex = ((this.r * 65536) + (this.g * 256) + this.b).toString(16);
-        return "#" + ("000000".substring(0, 6 - hex.length)) + hex;
-    };
-
-
-    this.clone = function() {
-        return new Color(this.r, this.g, this.b);
-    };
-
 }
+
+
+Color.prototype.toHex = function() {
+    var hex = ((this.r * 65536) + (this.g * 256) + this.b).toString(16);
+    return "#" + ("000000".substring(0, 6 - hex.length)) + hex;
+};
+
+
+Color.prototype.clone = function() {
+    return new Color(this.r, this.g, this.b);
+};
 
 
 Color.fromRGB = function(r, g, b) {
@@ -76,4 +75,3 @@ Color.hueToRGB = function(p, q, t) {
         return p;
     }
 };
-

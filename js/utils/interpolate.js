@@ -79,10 +79,10 @@ Interpolate.accelerateToPos = function(currentPos, targetPos, velocity, accelera
                 a = acceleration;
             }
         }
-        newVelocity += a * timer.delta;
+        newVelocity += a * Timer.delta;
         newVelocity = Utils.limit(newVelocity, -maxV, maxV);
-        newPos += newVelocity * timer.delta;
-        var threshold = Math.abs(newVelocity * timer.delta);
+        newPos += newVelocity * Timer.delta;
+        var threshold = Math.abs(newVelocity * Timer.delta);
         if(newPos > targetPos - threshold && newPos < targetPos + threshold) {
             newPos = targetPos;
             newVelocity = 0;
