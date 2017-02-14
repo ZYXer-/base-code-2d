@@ -102,7 +102,7 @@ ProceduralGeneration.createIsland = function(map, mapSizeX, mapSizeY, posX, posY
     var endY = Utils.limit(posY + (radius + amplitude), 0, mapSizeY - 1);
 
     var possibleFrequencies = [3, 5, 7, 9, 11];
-    var frequency = possibleFrequencies[rand(0, Math.ceil(radius / 3.0))];
+    var frequency = possibleFrequencies[Utils.rand(0, Math.ceil(radius / 3.0))];
     var offset = Utils.randFloat(0.1, 2.5);
 
     for(var x = startX; x <= endX; x++) {

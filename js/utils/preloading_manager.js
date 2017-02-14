@@ -79,6 +79,7 @@ PreloadingManager.getPercentageLoaded = function() {
     webFontPercentage *= Settings.Loading.WEB_FONT_PERCENTAGE;
 
     var fakeLoadingPercentage = (1.0 - (this.fakeLoadingCountdown / Settings.Loading.FAKE_LOADING_TIME));
+    fakeLoadingPercentage = Utils.limit(fakeLoadingPercentage, 0.0, 1.0);
     fakeLoadingPercentage *= Settings.Loading.FAKE_PERCENTAGE;
 
     var percentage = soundManagerPercentage;
