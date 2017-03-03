@@ -36,7 +36,9 @@ Game.start = function() {
         Game.resize();
     }
 
-    Keyboard.allowKey(Keyboard.F11);
+    Keyboard.registerKeyUpHandler(Keyboard.F11, function() {
+        Game.toggleFullScreen();
+    });
 
     Keyboard.registerKeyUpHandler(Keyboard.P, function() {
         Game.pauseUnpause();
@@ -210,6 +212,6 @@ Game.resize = function() {
 };
 
 
-Game.makeFullScreen = function() {
-    screenfull.request(jQuery("html")[0]);
+Game.toggleFullScreen = function() {
+    screenfull.toggle(jQuery("html")[0]);
 };

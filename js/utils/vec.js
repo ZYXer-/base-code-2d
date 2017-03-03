@@ -36,6 +36,11 @@ Vec2.prototype.multiply = function(s) {
 };
 
 
+Vec2.prototype.round = function() {
+    return new Vec2(Math.round(this.x), Math.round(this.y));
+};
+
+
 Vec2.prototype.norm = function() {
     return Math.sqrt((this.x * this.x) + (this.y * this.y));
 };
@@ -119,6 +124,11 @@ Vec3.prototype.subtract = function(t) {
 
 Vec3.prototype.multiply = function(s) {
     return new Vec3(this.x * s, this.y * s, this.z * s);
+};
+
+
+Vec3.prototype.round = function() {
+    return new Vec3(Math.round(this.x), Math.round(this.y), Math.round(this.z));
 };
 
 
