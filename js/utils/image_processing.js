@@ -120,8 +120,7 @@ ImageProcessing.removeSemitransparent = function(source, target) {
     for(var x = 0; x < width; x++) {
         for(var y = 0; y < height; y++) {
             i = ((y * width) + x) * 4;
-            if(data[i] == 0 && data[i + 1] == 0 && data[i + 2] == 0 &&
-                data[i + 3] > 0 && data[i + 3] < 255) {
+            if(data[i + 3] > 0 && data[i + 3] < 255) {
                 data[i + 3] = 0;
             }
         }

@@ -4,6 +4,11 @@ function Img() {}
 Img.assets = {};
 
 
+Img.add = function(name, image) {
+    Img.assets[name] = image;
+};
+
+
 Img.get = function(name) {
     return Img.assets[name];
 };
@@ -44,6 +49,18 @@ Img.drawCustom = function(name, sourceX, sourceY, sourceWidth, sourceHeight, tar
 };
 
 
-Img.add = function(name, image) {
-    Img.assets[name] = image;
+Img.drawIn = function(context, name, x, y) {
+    context.drawImage(Img.assets[name], x, y);
 };
+
+
+Img.drawSpriteIn = function(context, name, x, y, w, h, posX, posY) {
+    context.drawImage(Img.assets[name], w * posX, h * posY, w, h, x, y, w, h);
+};
+
+
+Img.drawCustomIn = function(context, name, sourceX, sourceY, sourceWidth, sourceHeight, targetX, targetY, targetWidth, targetHeight) {
+    context.drawImage(Img.get(name), sourceX, sourceY, sourceWidth, sourceHeight, targetX, targetY, targetWidth, targetHeight);
+};
+
+
