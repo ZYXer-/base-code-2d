@@ -61,6 +61,27 @@ Utils.angleDelta = function(angleA, angleB) {
 };
 
 
+Utils.intersectLines = function(line1point1, line1point2, line2point1, line2point2) {
+    var x1 = line1point1.x;
+    var y1 = line1point1.y;
+    var x2 = line1point2.x;
+    var y2 = line1point2.y;
+    var x3 = line2point1.x;
+    var y3 = line2point1.y;
+    var x4 = line2point2.x;
+    var y4 = line2point2.y;
+    var demon = ((x1 - x2) * (y3 - y4)) - ((y1 - y2) * (x3 - x4));
+    if(demon == 0) {
+        return null; // parallel
+    }
+    var x = (((x1 * y2) - (y1 * x2)) * (x3 - x4)) - ((x1 - x2) * ((x3 * y4) - (y3 * x4)));
+    x /= demon;
+    var y = (((x1 * y2) - (y1 * x2)) * (y3 - y4)) - ((y1 - y2) * ((x3 * y4) - (y3 * x4)));
+    y /= demon;
+    return new Vec2(x, y);
+};
+
+
 Utils.inPolygon = function(polygon, point) {
     var inside = false;
     var j = (polygon.length - 1);
@@ -208,6 +229,21 @@ Utils.isInArray = function(array, value) {
 };
 
 
+Utils.arrayShuffle = function(array) {
+    var i = array.length;
+    var temp;
+    var randI;
+    while (0 !== i) {
+        randI = Math.floor(Math.random() * i);
+        i -= 1;
+        temp = array[i];
+        array[i] = array[randI];
+        array[randI] = temp;
+    }
+    return array;
+};
+
+
 Utils.getArrowControls = function() {
     var moveUpPressed = Keyboard.isPressed(Keyboard.ARROW_UP) || Keyboard.isPressed(Keyboard.W) || Keyboard.isPressed(Keyboard.Z);
     var moveRightPressed = Keyboard.isPressed(Keyboard.ARROW_RIGHT) || Keyboard.isPressed(Keyboard.D);
@@ -232,4 +268,11 @@ Utils.pad = function(number, length) {
     number = number.toString();
     var pad = "00000000";
     return pad.substring(0, pad.length - number.length) + number;
+};
+
+
+Utils.titleCase = function(string) {
+    return string.split(" ").map(function(word) {
+        return word.charAt(0).toUpperCase() + word.substr(1);
+    }).join(" ");
 };

@@ -191,8 +191,14 @@ Demo.prototype.draw = function() {
     c.translate(this.demoPawn.pos.x, this.demoPawn.pos.y);
     c.rotate(this.demoPawn.angle * QUART_PI);
 
-    c.fillStyle = "#c00";
-    Utils.drawCircle(c, 0, 0, 10);
+    // Check if mouse is hovering over pawn
+    if(Mouse.isOverCircle(this.demoPawn.pos.x, this.demoPawn.pos.y, 12)) {
+        c.fillStyle = "#f00";
+    } else {
+        c.fillStyle = "#c00";
+    }
+
+    Utils.drawCircle(c, 0, 0, 12);
     c.fill();
 
     c.fillStyle = "#fff";
@@ -210,4 +216,5 @@ Demo.prototype.draw = function() {
 
     // Draw web-font-based text (logo in bottom right)
     this.demoText.drawPosText(Game.width - 20, Game.height - 20, "ZYXer's Base Code");
+
 };

@@ -119,6 +119,13 @@ Mouse.isOver = function(x, y, w, h) {
 };
 
 
+Mouse.isOverCircle = function(x, y, r) {
+    var deltaX = Mouse.pos.x - x;
+    var deltaY = Mouse.pos.y - y;
+    return (deltaX * deltaX) + (deltaY * deltaY) < r * r;
+};
+
+
 Mouse.registerDownArea = function(name, x, y, w, h, callback) {
     Mouse.downAreas[name] = {
         name : name,

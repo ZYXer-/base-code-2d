@@ -30,10 +30,12 @@ function Text(options) {
         this.color = options.color;
     }
 
-    this.text = "";
-    if(options.hasOwnProperty("text")) {
-        this.text = options.text;
-    }
+    this.lines = [""];
+    this.showLines = [""];
+    this.appearPos = 0;
+    this.appearChar = 0;
+    this.appearLine = 0;
+    this.finishedAppearing = true;
 
     this.maxWidth = 0;
     if(options.hasOwnProperty("maxWidth")) {
@@ -55,13 +57,10 @@ function Text(options) {
         this.appearCharPerSec = options.appearCharPerSec;
     }
 
-    this.lines = [""];
-    this.showLines = [""];
-    this.appearPos = 0;
-    this.appearChar = 0;
-    this.appearLine = 0;
-    this.finishedAppearing = true;
-
+    this.text = "";
+    if(options.hasOwnProperty("text")) {
+        this.setText(options.text);
+    }
 }
 
 
@@ -106,9 +105,34 @@ Text.prototype.setText = function(text) {
 };
 
 
-Text.prototype.getWidth = function(text) {
+Text.prototype.measureWidth = function(text) {
     c.font = this.size + "px \"" + this.font + "\"";
     return c.measureText(text).width;
+};
+
+
+Text.prototype.getWidth = function() {
+    var max = 0;
+    for(var i = 0; i < this.lines.length; i++) {
+        var lineWidth = this.measureWidth(this.lines[i]);
+        if(max < lineWidth) {
+            max = lineWidth;
+        }
+    }
+    return max;
+};
+
+
+Text.prototype.getNumOfLines = function() {
+    if(this.lines.length == 0) {
+        this.applyMultiline();
+    }
+    return this.lines.length;
+};
+
+
+Text.prototype.getHeight = function() {
+    return this.getNumOfLines() * this.lineHeight;
 };
 
 

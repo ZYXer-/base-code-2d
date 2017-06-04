@@ -35,10 +35,21 @@ Sound.setVolume = function(name, volume) { // volume : 0 - 100
 
 
 Sound.muteUnmute = function() {
-    Sound.muted = !Sound.muted;
     if(Sound.muted) {
-        soundManager.mute();
+        Sound.unmute();
     } else {
-        soundManager.unmute();
+        Sound.mute();
     }
+};
+
+
+Sound.mute = function() {
+    Sound.muted = true;
+    soundManager.mute();
+};
+
+
+Sound.unmute = function() {
+    Sound.muted = false;
+    soundManager.unmute();
 };
