@@ -21,13 +21,8 @@ Timer.update = function() {
     if(now < Timer.lastTime) {
         Timer.lastTime -= 60000;
     }
-    Timer.delta = (now - Timer.lastTime) / 1000;
-    if(Timer.delta < 0.00001) {
-        Timer.delta = 0.00001;
-    }
-    if(Timer.delta > 0.25) {
-        Timer.delta = 0.25;
-    }
+    Timer.delta = Settings.Game.TIME_MULTIPLIER * (now - Timer.lastTime) / 1000;
+    Timer.delta = Utils.limit(Timer.delta, 0.00001, Settings.Game.MAX_TIME_PER_FRAME);
     Timer.lastTime = now;
 };
 

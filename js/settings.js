@@ -5,8 +5,10 @@ function Settings() {}
 // General Settings
 Settings.Game = function() {};
 
+Settings.Game.MAX_TIME_PER_FRAME = 0.1;
+Settings.Game.TIME_MULTIPLIER = 1.0;
+
 Settings.Game.DEBUG = true;
-Settings.Game.TIME_PER_FRAME = 20;
 Settings.Game.PAUSE_ON_BLUR = false;
 
 

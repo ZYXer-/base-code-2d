@@ -37,6 +37,7 @@ Game.start = function() {
     }
 
     Keyboard.allowKey(Keyboard.F5);
+    Keyboard.allowKey(Keyboard.F12);
     Keyboard.registerKeyUpHandler(Keyboard.F11, function() {
         Game.toggleFullScreen();
     });
@@ -60,7 +61,7 @@ Game.start = function() {
     }
 
     Game.setState(Settings.States.INITIAL_STATE);
-    Game.startLoop();
+    Game.loop();
 };
 
 
@@ -73,14 +74,14 @@ Game.setState = function(state) {
 };
 
 
-Game.startLoop = function() {
-    this.interval = window.setInterval(function() {
-        Game.loop();
-    }, Settings.Game.TIME_PER_FRAME);
-};
-
-
 Game.loop = function() {
+
+    var requestAnimationFrame = window.requestAnimationFrame
+        || window.mozRequestAnimationFrame
+        || window.webkitRequestAnimationFrame
+        || window.msRequestAnimationFrame;
+    requestAnimationFrame(Game.loop);
+
     Game.initState();
     Timer.update();
     Mouse.update();
@@ -186,11 +187,11 @@ Game.resize = function() {
     if(Settings.Size.FIXED_ASPECT_RATIO) {
         var aspectRatio = Game.width / Game.height;
         if(aspectRatio > Settings.Size.ASPECT_RATIO) {
-            this.frameOffsetX = 0.5 * (Game.width - (Game.height * Settings.Size.ASPECT_RATIO));
+            this.frameOffsetX = Math.round(0.5 * (Game.width - (Game.height * Settings.Size.ASPECT_RATIO)));
             this.frameOffsetY = 0;
         } else {
             this.frameOffsetX = 0;
-            this.frameOffsetY = 0.5 * (Game.height - (Game.width / Settings.Size.ASPECT_RATIO));
+            this.frameOffsetY = Math.round(0.5 * (Game.height - (Game.width / Settings.Size.ASPECT_RATIO)));
         }
         Game.width -= 2.0 * this.frameOffsetX;
         Game.height -= 2.0 * this.frameOffsetY;
