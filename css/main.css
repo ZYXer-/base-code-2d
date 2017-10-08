@@ -14,57 +14,21 @@ img {
     border: 0;
 }
 
+#noscript {
+    display: block;
+    padding: 20px;
+    background: #fff;
+    text-align: center;
+    color: #e00;
+    font-weight: bold;
+}
+
 #game_box {
     position: relative;
     width: 900px;
     height: 600px;
     margin: 0 auto;
     overflow: hidden;
-}
-
-#paused {
-    display: none;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    line-height: 600px;
-    text-align: center;
-    color: #fff;
-}
-
-#loading {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    background: #ccc;
-}
-
-#loading_text {
-    width: 210px;
-    height: 30px;
-    margin: 345px auto 0;
-    color: #000;
-    text-align: center;
-    line-height: 30px;
-}
-
-#loading_bar_box {
-    width: 200px;
-    height: 10px;
-    margin: 0 auto;
-    padding: 4px;
-    border: 1px solid #000;
-}
-
-#loading_bar {
-    width: 0;
-    height: 10px;
-    background: #000;
 }
 
 #fps {

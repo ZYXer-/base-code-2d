@@ -3,6 +3,7 @@
 <head>
     <title>My Game</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
     <link rel="stylesheet" type="text/css" href="css/fontface.css"/>
     <link rel="stylesheet" type="text/css" href="css/main.css"/>
     <script type="text/javascript" src="js/utils/jquery-3.1.1.min.js"></script>
@@ -21,6 +22,7 @@
     <script type="text/javascript" src="js/utils/timer_callback.js"></script>
     <script type="text/javascript" src="js/utils/timer.js"></script>
     <script type="text/javascript" src="js/utils/mouse.js"></script>
+    <script type="text/javascript" src="js/utils/mouse_button.js"></script>
     <script type="text/javascript" src="js/utils/keyboard.js"></script>
     <script type="text/javascript" src="js/utils/page_visibility.js"></script>
     <script type="text/javascript" src="js/utils/fontfaceobserver.js"></script>
@@ -35,6 +37,7 @@
     <script type="text/javascript" src="js/utils/particle_system.js"></script>
     <script type="text/javascript" src="js/utils/acceleratable.js"></script>
     <script type="text/javascript" src="js/utils/image_processing.js"></script>
+    <script type="text/javascript" src="js/utils/integer_scaling.js"></script>
     <script type="text/javascript" src="js/particle_drawable.js"></script>
     <script type="text/javascript" src="js/resources.js"></script>
     <script type="text/javascript" src="js/custom_preloading.js"></script>
@@ -46,18 +49,12 @@
     <script type="text/javascript" src="js/demo.js"></script>
 </head>
 <body>
+<noscript><div id="noscript">Sorry, JavaScript is not enabled in your browser. Enable JavaScript to play the game.</div></noscript>
 	<div id="game_box">
 	    <canvas id="game" width="900" height="600">
 	        Your browser doesn't support the &lt;canvas&gt; tag. Please install the newest version of Mozilla Firefox,
 	        Google Chrome or Microsoft Internet Explorer.
 	    </canvas>
-        <div id="paused">Paused &ndash; Press P to unpause</div>
-	    <div id="loading">
-	        <div id="loading_text">&nbsp;</div>
-	        <div id="loading_bar_box">
-	            <div id="loading_bar">&nbsp;</div>
-	        </div>
-	    </div>
 	</div>
 </body>
 </html>

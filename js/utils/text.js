@@ -30,6 +30,21 @@ function Text(options) {
         this.color = options.color;
     }
 
+    this.borderWidth = 0;
+    if(options.hasOwnProperty("borderWidth")) {
+        this.borderWidth = options.borderWidth;
+    }
+
+    this.borderColor = "#000";
+    if(options.hasOwnProperty("borderColor")) {
+        this.borderColor = options.borderColor;
+    }
+
+    this.borderLineJoin = "round";
+    if(options.hasOwnProperty("borderLineJoin")) {
+        this.borderLineJoin = options.borderLineJoin;
+    }
+
     this.lines = [""];
     this.showLines = [""];
     this.appearPos = 0;
@@ -50,6 +65,11 @@ function Text(options) {
     this.verticalAlign = "top";
     if(options.hasOwnProperty("verticalAlign")) {
         this.verticalAlign = options.verticalAlign;
+    }
+
+    this.letterSpacing = 0;
+    if(options.hasOwnProperty("letterSpacing")) {
+        this.letterSpacing = options.letterSpacing;
     }
 
     this.appearCharPerSec = 0;
@@ -95,6 +115,13 @@ Text.prototype.setColor = function(color) {
 };
 
 
+Text.prototype.setBorder = function(borderWidth, borderColor, borderLineJoin) {
+    this.borderWidth = borderWidth;
+    this.borderColor = borderColor;
+    this.borderLineJoin = borderLineJoin;
+};
+
+
 Text.prototype.setText = function(text) {
     if(this.appearCharPerSec != 0 && this.text != text) {
         this.resetAppear();
@@ -107,7 +134,7 @@ Text.prototype.setText = function(text) {
 
 Text.prototype.measureWidth = function(text) {
     c.font = this.size + "px \"" + this.font + "\"";
-    return c.measureText(text).width;
+    return c.measureText(text).width + (this.letterSpacing * (text.length - 1));
 };
 
 
@@ -217,8 +244,25 @@ Text.prototype.draw = function() {
     }
     c.fillStyle = this.color;
     c.font = this.size + "px \"" + this.font + "\"";
-    c.textAlign = this.align;
+    if(this.letterSpacing == 0) {
+        c.textAlign = this.align;
+    } else {
+        c.textAlign = "left";
+    }
 
+    if(this.borderWidth > 0) {
+        c.lineWidth = this.borderWidth * 2;
+        c.strokeStyle = this.borderColor;
+        c.lineJoin = this.borderLineJoin;
+        this.drawLines(true);
+        c.lineJoin = "miter";
+    }
+
+    this.drawLines(false);
+};
+
+
+Text.prototype.drawLines = function(drawBorder) {
     var y = 0;
     if(this.verticalAlign == "bottom") {
         y -= this.lineHeight * (this.lines.length - 1);
@@ -227,15 +271,47 @@ Text.prototype.draw = function() {
     }
     if(this.finishedAppearing) {
         for(var i = 0; i < this.lines.length; i++) {
-            c.fillText(this.lines[i], this.x, this.y + y);
+            this.drawLine(this.lines[i], this.x, this.y + y, drawBorder);
             y += this.lineHeight;
         }
     } else {
         for(var i = 0; i < this.showLines.length; i++) {
-            c.fillText(this.showLines[i], this.x, this.y + y);
+            this.drawLine(this.showLines[i], this.x, this.y + y, drawBorder);
             y += this.lineHeight;
         }
     }
+};
+
+
+Text.prototype.drawLine = function(line, x, y, drawBorder) {
+    if(this.letterSpacing == 0) {
+        if(drawBorder) {
+            c.strokeText(line, x, y);
+        } else {
+            c.fillText(line, x, y);
+        }
+    } else {
+        var offsetX = 0;
+        if(this.align == "center") {
+            offsetX = -this.measureWidth(line) / 2;
+        } else if(this.align == "right") {
+            offsetX = -this.measureWidth(line);
+        }
+        for(var i = 0; i < line.length; i++) {
+            if(drawBorder) {
+                c.strokeText(line[i], x + offsetX, y);
+            } else {
+                c.fillText(line[i], x + offsetX, y);
+            }
+            offsetX += this.measureWidth(line[i]) + this.letterSpacing;
+        }
+    }
+};
+
+
+Text.prototype.drawPos = function(x, y) {
+    this.setPos(x, y);
+    this.draw();
 };
 
 

@@ -2,6 +2,7 @@ function Resources() {}
 
 
 Resources.images = {
+    loading : "img/loading.png",
     test : "img/test.png",
     test2 : "img/test2.png",
     fontBlack : "img/font_black.png",

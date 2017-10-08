@@ -45,10 +45,13 @@ function Demo() {
         size : 40,
         font : "komika",
         align : "right",
-        color : "rgba(0, 0, 0, 0.5)",
+        color : "#fff",
+        borderWidth : 5,
+        borderColor : "#000",
         maxWidth : 250,
         lineHeight : 50,
         verticalAlign : "bottom",
+        letterSpacing : 3,
         appearCharPerSec : 10
     });
 
@@ -66,6 +69,10 @@ function Demo() {
         new Vec2(100.0, 100.0),
         Acceleratable.ANGLE_MODE_8WAY
     );
+
+    // Setup scale full integer, load images
+    this.demoIntegerScaling = new IntegerScaling(2, 5, 360, 202);
+    this.demoIntegerScaling.addScalableImage("demoData");
 }
 
 
@@ -76,7 +83,7 @@ Demo.prototype.show = function() {
 
     // Register mouse click event so that when you click, you trigger a birst of the second particle system,
     // trigger the screen shake, play the cannon sound and set the new position of the interpolating line.
-    Mouse.registerUpArea("demoFire", 0, 0, Game.width, Game.height, function() {
+    Mouse.left.registerUpArea("demoFire", 0, 0, Game.width, Game.height, function() {
         if(!Game.paused) {
             demo.demoParticleSystem2.setEmitter(Mouse.pos);
             demo.demoParticleSystem2.burst();
@@ -87,10 +94,10 @@ Demo.prototype.show = function() {
     });
 
     // Make the rotating image (black square with cross) draggable
-    Mouse.registerDraggableArea("demoDragAndDrop", 420, 270, 60, 60, function() {
+    Mouse.left.registerDraggableArea("demoDragAndDrop", 420, 270, 60, 60, function() {
         console.log("started dragging.");
     }, function() {
-        demo.demoImagePos = demo.demoImagePos.add(Mouse.dragDelta);
+        demo.demoImagePos = demo.demoImagePos.add(Mouse.left.dragDelta);
     }, function() {
         console.log("end dragging.");
     });
@@ -119,6 +126,16 @@ Demo.prototype.hide = function() {
 
     // Remove key stroke listener for 'C' key
     Keyboard.deleteKeyUpHandler(Keyboard.C);
+};
+
+
+/*
+ This is called when the window is rescaled
+ */
+Demo.prototype.resize = function() {
+
+    // Update integer are scaling
+    this.demoIntegerScaling.resize();
 };
 
 
@@ -211,10 +228,32 @@ Demo.prototype.draw = function() {
 
     c.restore();
 
+    // Draw pixelated scaled image
+    this.demoIntegerScaling.apply(
+        new Vec2(0, Game.height),
+        new Vec2(-8, 8)
+    );
+    this.demoIntegerScaling.draw("demoData", -5, -5);
+    this.demoIntegerScaling.restore();
+
+    // Draw integer scaled mask
+    this.demoIntegerScaling.drawMask(-7, -193, 358, 200, "rgba(255, 0, 0, 0.1)");
+
     // Remove screen shake
     this.demoShaking.remove();
 
     // Draw web-font-based text (logo in bottom right)
     this.demoText.drawPosText(Game.width - 20, Game.height - 20, "ZYXer's Base Code");
 
+};
+
+
+/*
+ This is called if the game is paused in the in-game state
+ */
+Demo.prototype.drawPausedScreen = function() {
+    c.fillStyle = "rgba(0, 0, 0, 0.8)";
+    c.fillRect(0, 0, Game.width, Game.height);
+
+    Text.draw(Game.centerX, 100, 16, "komika", "center", "#fff", "Paused - Press P to unpause");
 };

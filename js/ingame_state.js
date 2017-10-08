@@ -19,6 +19,14 @@ IngameState.hide = function() {
 };
 
 
+IngameState.resize = function() {
+
+    // do stuff when window is resized, example:
+
+    demo.resize();
+};
+
+
 IngameState.update = function() {
 
     // update stuff here:
@@ -37,4 +45,8 @@ IngameState.draw = function() {
     // draw stuff here, examples:
 
     demo.draw();
+
+    if(Game.paused) {
+        demo.drawPausedScreen();
+    }
 };

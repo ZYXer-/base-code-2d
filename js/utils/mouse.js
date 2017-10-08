@@ -3,22 +3,24 @@ function Mouse() {}
 
 Mouse.pos = new Vec2(0, 0);
 
-Mouse.downAreas = {};
-Mouse.upAreas = {};
-Mouse.draggableAreas = {};
+Mouse.left = null;
+Mouse.middle = null;
+Mouse.right = null;
+
 Mouse.wheelAreas = {};
-
-Mouse.down = false;
-Mouse.downPos = new Vec2(0, 0);
-
-Mouse.dragging = false;
-Mouse.lastDrag = new Vec2(0, 0);
-Mouse.dragDelta = new Vec2(0, 0);
-Mouse.draggingCallback = null;
-Mouse.dropCallback = null;
 
 
 Mouse.init = function() {
+
+    Mouse.left = new MouseButton();
+    Mouse.middle = new MouseButton();
+    Mouse.right = new MouseButton();
+
+    jQuery(document).bind("contextmenu", function(event) {
+        if(Settings.Game.PREVENT_CONTEXT_MENU) {
+            event.preventDefault();
+        }
+    });
 
     jQuery("body")
         .attr("unselectable", "on")
@@ -26,91 +28,89 @@ Mouse.init = function() {
         .on("selectstart", false)
 
         .mousemove(function(event) {
-
-        Mouse.updatePosition(event);
-
-    }).mousedown(function(event) {
-        if(event.which == 1) {
-
-            Mouse.down = true;
-            Mouse.downPos = Mouse.pos.copy();
-            Mouse.updatePosition(event);
-
-            for(var name in Mouse.draggableAreas) {
-                var area = Mouse.draggableAreas[name];
-                if(Mouse.isOver(area.x, area.y, area.w, area.h)) {
-
-                    Mouse.dragging = true;
-                    Mouse.lastDrag = Mouse.pos.copy();
-                    Mouse.dragDelta = new Vec2(0, 0);
-
-                    Mouse.draggingCallback = area.draggingCallback;
-                    Mouse.dropCallback = area.dropCallback;
-                    if(area.downCallback != null) {
-                        area.downCallback();
-                    }
-                }
+            Mouse.updatePosition(Mouse.getPositionFromMouseEvent(event));
+        })
+        .bind("touchmove", function(event) {
+            Mouse.updatePosition(Mouse.getPositionFromTouchEvent(event));
+            event.preventDefault();
+        })
+        .mousedown(function(event) {
+            Mouse.updatePosition(Mouse.getPositionFromMouseEvent(event));
+            if(event.which == 1) {
+                Mouse.left.triggerDown();
+            } else if(event.which == 2) {
+                Mouse.middle.triggerDown();
+            } else if(event.which == 3) {
+                Mouse.right.triggerDown();
             }
-
-            for(var name in Mouse.downAreas) {
-                var area = Mouse.downAreas[name];
-                if(Mouse.isOver(area.x, area.y, area.w, area.h)) {
-                    area.callback();
-                }
+            event.preventDefault();
+        })
+        .bind("touchstart", function(event) {
+            Mouse.left.triggerDown(Mouse.getPositionFromTouchEvent(event));
+            event.preventDefault();
+        })
+        .mouseup(function(event) {
+            Mouse.updatePosition(Mouse.getPositionFromMouseEvent(event));
+            if(event.which == 1) {
+                Mouse.left.triggerUp();
+            } else if(event.which == 2) {
+                Mouse.middle.triggerUp();
+            } else if(event.which == 3) {
+                Mouse.right.triggerUp();
             }
-        }
-
-    }).mouseup(function(event) {
-        if(event.which == 1) {
-
-            Mouse.down = false;
-            Mouse.updatePosition(event);
-
-            if(Mouse.dragging) {
-                Mouse.dragging = false;
-                if(Mouse.dropCallback != null) {
-                    Mouse.dropCallback();
-                }
-            }
-
-            for(var name in Mouse.upAreas) {
-                var area = Mouse.upAreas[name];
-                if(Mouse.isOver(area.x, area.y, area.w, area.h)) {
-                    area.callback();
-                }
-            }
-        }
-
-    }).on("mousewheel DOMMouseScroll", function(e) {
-        var delta = (e.originalEvent.detail == undefined ? e.originalEvent.wheelDelta : e.originalEvent.detail);
-        for(var name in Mouse.wheelAreas) {
-            var area = Mouse.wheelAreas[name];
-            if(Mouse.isOver(area.x, area.y, area.w, area.h)) {
-                area.callback(delta);
-            }
-        }
-        e.preventDefault();
-    });
+            event.preventDefault();
+        })
+        .bind("touchend touchleave touchcancel", function(event) {
+            Mouse.left.triggerUp(Mouse.getPositionFromTouchEvent(event));
+            event.preventDefault();
+        })
+        .on("mousewheel DOMMouseScroll", function(event) {
+            Mouse.triggerScroll(event);
+        });
 };
 
 
-Mouse.updatePosition = function(event) {
-    var offset = jQuery("#game").offset();
-    Mouse.pos.x = ((event.pageX - offset.left) - Game.frameOffsetX) / Game.scaleX;
-    Mouse.pos.y = ((event.pageY - offset.top) - Game.frameOffsetY) / Game.scaleY;
+Mouse.getPositionFromMouseEvent = function(event) {
+    return { x : event.pageX, y : event.pageY };
+};
+
+
+Mouse.getPositionFromTouchEvent = function(event) {
+    if(event.originalEvent.touches.length > 0) {
+        var touch = event.originalEvent.touches[0];
+        return { x : touch.pageX, y : touch.pageY };
+    } else {
+        return null;
+    }
+};
+
+
+Mouse.triggerScroll = function(event) {
+    var delta = (event.originalEvent.detail == undefined ? event.originalEvent.wheelDelta : event.originalEvent.detail);
+    for(var name in Mouse.wheelAreas) {
+        var area = Mouse.wheelAreas[name];
+        if(Mouse.isOver(area.x, area.y, area.w, area.h)) {
+            area.callback(delta);
+        }
+    }
+    event.preventDefault();
+};
+
+
+Mouse.updatePosition = function(pos) {
+    if(pos != null) {
+        var offset = jQuery("#game").offset();
+        var ratio = window.devicePixelRatio || 1;
+        Mouse.pos.x = ((ratio * (pos.x - offset.left)) - Game.frameOffsetX) / Game.scaleX;
+        Mouse.pos.y = ((ratio * (pos.y - offset.top)) - Game.frameOffsetY) / Game.scaleY;
+    }
 };
 
 
 Mouse.update = function() {
-    if(Mouse.dragging) {
-        Mouse.dragDelta = Mouse.pos.subtract(Mouse.lastDrag);
-        Mouse.lastDrag = Mouse.pos.copy();
-        if(Mouse.draggingCallback != null) {
-            Mouse.draggingCallback();
-        }
-    } else {
-        Mouse.dragDelta = new Vec2(0, 0);
-    }
+    Mouse.left.update();
+    Mouse.middle.update();
+    Mouse.right.update();
 };
 
 
@@ -123,44 +123,6 @@ Mouse.isOverCircle = function(x, y, r) {
     var deltaX = Mouse.pos.x - x;
     var deltaY = Mouse.pos.y - y;
     return (deltaX * deltaX) + (deltaY * deltaY) < r * r;
-};
-
-
-Mouse.registerDownArea = function(name, x, y, w, h, callback) {
-    Mouse.downAreas[name] = {
-        name : name,
-        x : x,
-        y : y,
-        w : w,
-        h : h,
-        callback : callback
-    };
-};
-
-
-Mouse.deleteDownArea = function(name) {
-    if(Mouse.downAreas.hasOwnProperty(name)) {
-        delete Mouse.downAreas[name];
-    }
-};
-
-
-Mouse.registerUpArea = function(name, x, y, w, h, callback) {
-    Mouse.upAreas[name] = {
-        name : name,
-        x : x,
-        y : y,
-        w : w,
-        h : h,
-        callback : callback
-    };
-};
-
-
-Mouse.deleteUpArea = function(name) {
-    if(Mouse.upAreas.hasOwnProperty(name)) {
-        delete Mouse.upAreas[name];
-    }
 };
 
 
@@ -180,36 +142,4 @@ Mouse.deleteWheelArea = function(name) {
     if(Mouse.wheelAreas.hasOwnProperty(name)) {
         delete Mouse.wheelAreas[name];
     }
-};
-
-
-Mouse.registerDraggableArea = function(name, x, y, w, h, downCallback, draggingCallback, dropCallback) {
-    Mouse.draggableAreas[name] = {
-        name : name,
-        x : x,
-        y : y,
-        w : w,
-        h : h,
-        downCallback : downCallback,
-        draggingCallback : draggingCallback,
-        dropCallback : dropCallback
-    };
-};
-
-
-Mouse.deleteDraggableArea = function(name) {
-    if(Mouse.draggableAreas.hasOwnProperty(name)) {
-        delete Mouse.draggableAreas[name];
-    }
-};
-
-
-Mouse.startDragging = function(draggingCallback, dropCallback) {
-
-    Mouse.dragging = true;
-    Mouse.lastDrag = Mouse.pos.copy();
-    Mouse.dragDelta = new Vec2(0, 0);
-
-    Mouse.draggingCallback = draggingCallback;
-    Mouse.dropCallback = dropCallback;
 };

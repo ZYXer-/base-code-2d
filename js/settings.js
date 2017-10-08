@@ -11,6 +11,8 @@ Settings.Game.TIME_MULTIPLIER = 1.0;
 Settings.Game.DEBUG = true;
 Settings.Game.PAUSE_ON_BLUR = false;
 
+Settings.Game.PREVENT_CONTEXT_MENU = true;
+
 
 
 // Game Window Size

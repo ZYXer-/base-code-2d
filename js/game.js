@@ -60,6 +60,10 @@ Game.start = function() {
         });
     }
 
+    PageVisibility.registerFocusHandler("resize", function() {
+        Game.resize();
+    });
+
     Game.setState(Settings.States.INITIAL_STATE);
     Game.loop();
 };
@@ -150,13 +154,11 @@ Game.draw = function() {
 
 Game.pause = function() {
     Game.paused = true;
-    jQuery("#paused").show();
 };
 
 
 Game.unpause = function() {
     Game.paused = false;
-    jQuery("#paused").hide();
 };
 
 
@@ -171,13 +173,22 @@ Game.pauseUnpause = function() {
 
 Game.resize = function() {
 
-    Game.canvasWidth = jQuery(window).width();
+    var devicePixelRatio = window.devicePixelRatio || 1;
+
+    var cssWidth = jQuery(window).width();
+    var cssHeight = jQuery(window).height();
+
+    cssWidth = Utils.limit(cssWidth, Settings.Size.MIN_WIDTH / devicePixelRatio, Settings.Size.MAX_WIDTH / devicePixelRatio);
+    cssHeight = Utils.limit(cssHeight, Settings.Size.MIN_HEIGHT / devicePixelRatio, Settings.Size.MAX_HEIGHT / devicePixelRatio);
+
+    jQuery("#game_box, #game").width(cssWidth).height(cssHeight);
+
+    Game.canvasWidth = cssWidth * devicePixelRatio;
     Game.canvasWidth = Utils.limit(Game.canvasWidth, Settings.Size.MIN_WIDTH, Settings.Size.MAX_WIDTH);
 
-    Game.canvasHeight = jQuery(window).height();
+    Game.canvasHeight = cssHeight * devicePixelRatio;
     Game.canvasHeight = Utils.limit(Game.canvasHeight, Settings.Size.MIN_HEIGHT, Settings.Size.MAX_HEIGHT);
 
-    jQuery("#game_box, #game").width(Game.canvasWidth).height(Game.canvasHeight);
     canvas.width = Game.canvasWidth;
     canvas.height = Game.canvasHeight;
 

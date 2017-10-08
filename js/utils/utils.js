@@ -108,7 +108,7 @@ Utils.limit = function(value, min, max) {
 
 
 Utils.min = function(value, min) {
-    if(value < min) {
+    if(value > min) {
         return min;
     }
     return value;
@@ -116,7 +116,7 @@ Utils.min = function(value, min) {
 
 
 Utils.max = function(value, max) {
-    if(value > max) {
+    if(value < max) {
         return max;
     }
     return value;
@@ -241,6 +241,11 @@ Utils.arrayShuffle = function(array) {
         array[randI] = temp;
     }
     return array;
+};
+
+
+Utils.mergeArrays = function(array1, array2) {
+    return array1.concat(array2);
 };
 
 

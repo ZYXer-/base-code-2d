@@ -10,7 +10,6 @@ LoadingState.show = function() {
 
 
 LoadingState.hide = function() {
-    jQuery("#loading").hide();
 };
 
 
@@ -21,6 +20,19 @@ LoadingState.update = function() {
 
 
 LoadingState.draw = function() {
-    jQuery("#loading_text").text(Math.ceil(LoadingState.percentage) + "%");
-    jQuery("#loading_bar").width(jQuery("#loading_bar_box").width() * (LoadingState.percentage / 100.0));
+
+    c.fillStyle = "#ccc";
+    c.fillRect(0, 0, Game.width, Game.height);
+
+    if(Img.isLoaded("loading")) {
+        Img.draw("loading", Game.centerX - 150, Game.centerY - 100);
+    }
+
+    c.fillStyle = "#fff";
+    c.fillRect(Game.centerX - 100, Game.height - 60, 200, 10);
+
+    c.fillStyle = "#000";
+    c.fillRect(Game.centerX - 100, Game.height - 60, 200 * (LoadingState.percentage / 100.0), 10);
+
+    Text.draw(Game.centerX, Game.height - 70, 16, "sans-serif", "center", "#000", Math.ceil(LoadingState.percentage) + "%");
 };
