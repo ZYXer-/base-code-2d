@@ -67,7 +67,7 @@ Acceleratable.prototype.update = function(propulsionDir) {
         } else {
             this.v += this.propulsionA * propulsionDir * Timer.delta;
             sign = this.getSign(propulsionDir);
-            this.v = sign * Utils.max(sign * this.v, sign * this.maxV * propulsionDir);
+            this.v = sign * Utils.min(sign * this.v, sign * this.maxV * propulsionDir);
         }
 
         this.pos += this.v * Timer.delta;
@@ -94,7 +94,7 @@ Acceleratable.prototype.update = function(propulsionDir) {
         } else {
             this.v.x += this.propulsionA.x * propulsionDir.x * Timer.delta;
             sign = this.getSign(propulsionDir.x);
-            this.v.x = sign * Utils.max(sign * this.v.x, sign * this.maxV.x * propulsionDir.x);
+            this.v.x = sign * Utils.min(sign * this.v.x, sign * this.maxV.x * propulsionDir.x);
         }
 
         if(propulsionDir.y == 0.0) {
@@ -108,7 +108,7 @@ Acceleratable.prototype.update = function(propulsionDir) {
         } else {
             this.v.y += this.propulsionA.y * propulsionDir.y * Timer.delta;
             sign = this.getSign(propulsionDir.y);
-            this.v.y = sign * Utils.max(sign * this.v.y, sign * this.maxV.y * propulsionDir.y);
+            this.v.y = sign * Utils.min(sign * this.v.y, sign * this.maxV.y * propulsionDir.y);
         }
 
         if(this.dimensionMode == Acceleratable.DIM_MODE_3D) {
@@ -123,7 +123,7 @@ Acceleratable.prototype.update = function(propulsionDir) {
             } else {
                 this.v.z += this.propulsionA.z * propulsionDir.z * Timer.delta;
                 sign = this.getSign(propulsionDir.z);
-                this.v.z = sign * Utils.max(sign * this.v.z, sign * this.maxV.z * propulsionDir.z);
+                this.v.z = sign * Utils.min(sign * this.v.z, sign * this.maxV.z * propulsionDir.z);
             }
         }
 

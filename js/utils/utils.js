@@ -71,7 +71,7 @@ Utils.intersectLines = function(line1point1, line1point2, line2point1, line2poin
     var x4 = line2point2.x;
     var y4 = line2point2.y;
     var demon = ((x1 - x2) * (y3 - y4)) - ((y1 - y2) * (x3 - x4));
-    if(demon == 0) {
+    if(demon === 0) {
         return null; // parallel
     }
     var x = (((x1 * y2) - (y1 * x2)) * (x3 - x4)) - ((x1 - x2) * ((x3 * y4) - (y3 * x4)));
@@ -86,7 +86,7 @@ Utils.inPolygon = function(polygon, point) {
     var inside = false;
     var j = (polygon.length - 1);
     for(var i = 0; i < polygon.length; i++) {
-        if(((polygon[i].y > point.y) != (polygon[j].y > point.y)) &&
+        if(((polygon[i].y > point.y) !== (polygon[j].y > point.y)) &&
                 (point.x < (polygon[j].x - polygon[i].x) * (point.y - polygon[i].y) / (polygon[j].y - polygon[i].y) + polygon[i].x)) {
             inside = !inside;
         }
@@ -120,6 +120,23 @@ Utils.max = function(value, max) {
         return max;
     }
     return value;
+};
+
+
+Utils.scale0to1 = function(value, min, max, reverse)
+{
+    reverse = (typeof reverse !== "undefined" ? reverse : false);
+    if(min === max) {
+        return 0.0;
+    }
+    value = (value - min) / (max - min);
+    value = Utils.limit(value, 0.0, 1.0);
+
+    if(reverse) {
+        return (1.0 - value);
+    } else {
+        return value;
+    }
 };
 
 
@@ -179,7 +196,7 @@ Utils.drawEllipse = function(c, x, y, w, h) {
 
 
 Utils.drawRoundedCornerRect = function(x, y, w, h, r) {
-    if(typeof r == "number") {
+    if(typeof r === "number") {
         r = [ r, r, r, r ];
     }
     c.beginPath();
@@ -246,6 +263,44 @@ Utils.arrayShuffle = function(array) {
 
 Utils.mergeArrays = function(array1, array2) {
     return array1.concat(array2);
+};
+
+
+Utils.stopwatch = function(stopwatchTime, speed, min, max, callbacks) {
+
+    var lastTime = stopwatchTime;
+    stopwatchTime += speed * Timer.delta;
+    stopwatchTime = Utils.limit(stopwatchTime, min, max);
+
+    if(stopwatchTime === min) {
+        if(lastTime > min && callbacks.hasOwnProperty("reachMin")) {
+            callbacks.reachMin();
+        }
+        if(callbacks.hasOwnProperty("atMin")) {
+            callbacks.atMin();
+        }
+    }
+
+    if(stopwatchTime === max) {
+        if(lastTime < max && callbacks.hasOwnProperty("reachMax")) {
+            callbacks.reachMax();
+        }
+        if(callbacks.hasOwnProperty("atMax")) {
+            callbacks.atMax();
+        }
+    }
+
+    if(stopwatchTime < max && callbacks.hasOwnProperty("exceptMax")) {
+        callbacks.exceptMax();
+    }
+    if(stopwatchTime > min && callbacks.hasOwnProperty("exceptMin")) {
+        callbacks.exceptMin();
+    }
+    if(stopwatchTime > min && stopwatchTime < max && callbacks.hasOwnProperty("exceptMinMax")) {
+        callbacks.exceptMinMax();
+    }
+
+    return stopwatchTime;
 };
 
 

@@ -11,8 +11,21 @@ function IntegerScaling(minScale, maxScale, minUnitsPerWidth, minUnitsPerHeight)
     this.unscaledPivot = new Vec2(0, 0);
     this.scaledPivot = new Vec2(0, 0);
 
+    this.gameWidth = 0.0;
+    this.gameHeight = 0.0;
+
     this.resize();
+
+    if(Settings.Size.FIXED_SIZE_IN_UNITS) {
+        console.warn("Do not use FIXED_SIZE_IN_UNITS and IntegerScaling at the same time, as this might lead to unexpected results.");
+    }
 }
+
+
+IntegerScaling.prototype.setPivotPoints = function(unscaledPivot, scaledPivot) {
+    this.unscaledPivot = unscaledPivot;
+    this.scaledPivot = scaledPivot;
+};
 
 
 IntegerScaling.prototype.addScalableImage = function(name) {
@@ -33,16 +46,27 @@ IntegerScaling.prototype.resize = function() {
     }
 
     this.s = Utils.limit(this.s, this.minScale, this.maxScale);
+
+    this.gameWidth = Game.width / this.s;
+    this.gameHeight = Game.height / this.s;
+};
+
+
+IntegerScaling.prototype.screenToWorld = function(point) {
+    return point.subtract(this.unscaledPivot).multiply(1.0 / this.s).add(this.scaledPivot);
+};
+
+
+IntegerScaling.prototype.worldToScreen = function(point) {
+    return point.subtract(this.scaledPivot).multiply(this.s).add(this.unscaledPivot);
 };
 
 
 IntegerScaling.prototype.apply = function(unscaledPivot, scaledPivot) {
-    this.unscaledPivot = unscaledPivot;
-    this.scaledPivot = scaledPivot;
     c.save();
-    c.translate(unscaledPivot.x, unscaledPivot.y);
+    c.translate(this.unscaledPivot.x, this.unscaledPivot.y);
     c.scale(this.s, this.s);
-    c.translate(-scaledPivot.x, -scaledPivot.y);
+    c.translate(-this.scaledPivot.x, -this.scaledPivot.y);
 };
 
 
@@ -79,7 +103,7 @@ IntegerScaling.prototype.draw = function(name, x, y) {
 
 IntegerScaling.prototype.drawSprite = function(name, x, y, w, h, posX, posY) {
     var img = this.get(name);
-    c.drawImage(img, posX * w * this.s, posY * h * this.s, w, h, x, y, w, h);
+    c.drawImage(img, posX * w * this.s, posY * h * this.s, w * this.s, h * this.s, x, y, w, h);
 };
 
 
@@ -117,7 +141,7 @@ IntegerScaling.prototype.drawIn = function(context, name, x, y) {
 
 IntegerScaling.prototype.drawSpriteIn = function(context, name, x, y, w, h, posX, posY) {
     var img = this.get(name);
-    context.drawImage(img, posX * w * this.s, posY * h * this.s, w, h, x, y, w, h);
+    context.drawImage(img, posX * w * this.s, posY * h * this.s, w * this.s, h * this.s, x, y, w, h);
 };
 
 

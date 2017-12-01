@@ -73,6 +73,7 @@ function Demo() {
     // Setup scale full integer, load images
     this.demoIntegerScaling = new IntegerScaling(2, 5, 360, 202);
     this.demoIntegerScaling.addScalableImage("demoData");
+    this.demoIntegerScaling.setPivotPoints(new Vec2(0, Game.height), new Vec2(-8, 8));
 }
 
 
@@ -229,10 +230,7 @@ Demo.prototype.draw = function() {
     c.restore();
 
     // Draw pixelated scaled image
-    this.demoIntegerScaling.apply(
-        new Vec2(0, Game.height),
-        new Vec2(-8, 8)
-    );
+    this.demoIntegerScaling.apply();
     this.demoIntegerScaling.draw("demoData", -5, -5);
     this.demoIntegerScaling.restore();
 
