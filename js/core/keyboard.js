@@ -12,7 +12,7 @@ Keyboard.keyUpHandlers = {};
 
 Keyboard.init = function() {
     jQuery(window).keydown(function(event) {
-        if(!Keyboard.allowDefault && Keyboard.allowKeys.indexOf(event.which) == -1) {
+        if(!Keyboard.allowDefault && Keyboard.allowKeys.indexOf(event.which) === -1) {
             event.preventDefault();
             Keyboard.keyPressed[event.which] = true;
             if(Keyboard.keyDownHandlers.hasOwnProperty(event.which)) {
@@ -21,7 +21,7 @@ Keyboard.init = function() {
         }
 
     }).keyup(function(event) {
-        if(!Keyboard.allowDefault && Keyboard.allowKeys.indexOf(event.which) == -1) {
+        if(!Keyboard.allowDefault && Keyboard.allowKeys.indexOf(event.which) === -1) {
             event.preventDefault();
             Keyboard.keyPressed[event.which] = false;
             if(Keyboard.keyUpHandlers.hasOwnProperty(event.which)) {
@@ -71,7 +71,7 @@ Keyboard.setAllowDefault = function(allowDefault) {
 
 Keyboard.allowKey = function(key) {
     var i = Keyboard.allowKeys.indexOf(key);
-    if(i == -1) {
+    if(i === -1) {
         Keyboard.allowKeys.push(key);
     }
 };

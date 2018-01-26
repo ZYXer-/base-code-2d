@@ -42,7 +42,7 @@ PixelText.prototype.text = function(text) {
                 i -= goBack;
                 this.chars[currentLine] = this.chars[currentLine].splice(0, lastSpaceInLine - 1);
             }
-            while(text.charCodeAt(i) == 32 && i < text.length - 1) {
+            while(text.charCodeAt(i) === 32 && i < text.length - 1) {
                 i++;
             }
             this.chars.push([]);
@@ -51,7 +51,7 @@ PixelText.prototype.text = function(text) {
             c = text.charCodeAt(i) - 32;
         }
 
-        if(c == -22) {
+        if(c === -22) {
             this.chars.push([]);
             lineWidths.push(0);
             currentLine++;
@@ -66,7 +66,7 @@ PixelText.prototype.text = function(text) {
                 y : (this.lineHeight * currentLine)
             });
             lineWidths[currentLine] += charWidth;
-            if(c == 0) {
+            if(c === 0) {
                 lastSpaceInLine = this.chars[currentLine].length;
             }
         }
@@ -76,12 +76,12 @@ PixelText.prototype.text = function(text) {
         if(lineWidths[currentLine] > this.pixelFont.charSpacing) {
             lineWidths[currentLine] -= this.pixelFont.charSpacing;
         }
-        if(this.alignment == Text.CENTER) {
+        if(this.alignment === Text.CENTER) {
             var halfWidth = Math.round(lineWidths[currentLine] / 2);
             for(var i = 0; i < this.chars[currentLine].length; i++) {
                 this.chars[currentLine][i].x -= halfWidth;
             }
-        } else if(this.alignment == Text.RIGHT) {
+        } else if(this.alignment === Text.RIGHT) {
             var lineWidth = lineWidths[currentLine];
             for(var i = 0; i < this.chars[currentLine].length; i++) {
                 this.chars[currentLine][i].x -= lineWidth;

@@ -21,8 +21,10 @@ MouseButton.prototype.triggerDown = function() {
     this.down = true;
     this.downPos = Mouse.pos.copy();
 
-    for(var name in this.draggableAreas) {
-        var area = this.draggableAreas[name];
+    var name;
+    var area;
+    for(name in this.draggableAreas) {
+        area = this.draggableAreas[name];
         if(Mouse.isOver(area.x, area.y, area.w, area.h)) {
 
             this.dragging = true;
@@ -31,14 +33,17 @@ MouseButton.prototype.triggerDown = function() {
 
             this.draggingCallback = area.draggingCallback;
             this.dropCallback = area.dropCallback;
-            if(area.downCallback != null) {
+            if(area.downCallback !== null) {
                 area.downCallback();
             }
         }
     }
-
-    for(var name in this.downAreas) {
-        var area = this.downAreas[name];
+    for(name in this.downCallbacks) {
+        var callback = this.downCallbacks[name];
+        callback.callback();
+    }
+    for(name in this.downAreas) {
+        area = this.downAreas[name];
         if(Mouse.isOver(area.x, area.y, area.w, area.h)) {
             area.callback();
         }
@@ -51,11 +56,16 @@ MouseButton.prototype.triggerUp = function() {
 
     if(this.dragging) {
         this.dragging = false;
-        if(this.dropCallback != null) {
+        if(this.dropCallback !== null) {
             this.dropCallback();
         }
     } else {
-        for(var name in this.upAreas) {
+        var name;
+        for(name in this.upCallbacks) {
+            var callback = this.upCallbacks[name];
+            callback.callback();
+        }
+        for(name in this.upAreas) {
             var area = this.upAreas[name];
             if(Mouse.isOver(area.x, area.y, area.w, area.h)) {
                 area.callback();
@@ -69,7 +79,7 @@ MouseButton.prototype.update = function() {
     if(this.dragging) {
         this.dragDelta = Mouse.pos.subtract(this.lastDrag);
         this.lastDrag = Mouse.pos.copy();
-        if(this.draggingCallback != null) {
+        if(this.draggingCallback !== null) {
             this.draggingCallback();
         }
     } else {

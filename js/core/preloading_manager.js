@@ -47,7 +47,7 @@ PreloadingManager.update = function() {
         this.fakeLoadingCountdown -= Timer.delta;
         if(this.fakeLoadingCountdown < 0) {
             CustomPreloading.preload();
-            Game.setState(Settings.States.STATE_AFTER_LOADING);
+            SceneManager.changeScene(SceneManager.SCENE_AFTER_LOADING);
         }
     }
 

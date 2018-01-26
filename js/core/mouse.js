@@ -36,11 +36,11 @@ Mouse.init = function() {
         })
         .mousedown(function(event) {
             Mouse.updatePosition(Mouse.getPositionFromMouseEvent(event));
-            if(event.which == 1) {
+            if(event.which === 1) {
                 Mouse.left.triggerDown();
-            } else if(event.which == 2) {
+            } else if(event.which === 2) {
                 Mouse.middle.triggerDown();
-            } else if(event.which == 3) {
+            } else if(event.which === 3) {
                 Mouse.right.triggerDown();
             }
             event.preventDefault();
@@ -51,11 +51,11 @@ Mouse.init = function() {
         })
         .mouseup(function(event) {
             Mouse.updatePosition(Mouse.getPositionFromMouseEvent(event));
-            if(event.which == 1) {
+            if(event.which === 1) {
                 Mouse.left.triggerUp();
-            } else if(event.which == 2) {
+            } else if(event.which === 2) {
                 Mouse.middle.triggerUp();
-            } else if(event.which == 3) {
+            } else if(event.which === 3) {
                 Mouse.right.triggerUp();
             }
             event.preventDefault();
@@ -86,7 +86,7 @@ Mouse.getPositionFromTouchEvent = function(event) {
 
 
 Mouse.triggerScroll = function(event) {
-    var delta = (event.originalEvent.detail == undefined ? event.originalEvent.wheelDelta : event.originalEvent.detail);
+    var delta = (event.originalEvent.detail === undefined ? event.originalEvent.wheelDelta : event.originalEvent.detail);
     for(var name in Mouse.wheelAreas) {
         var area = Mouse.wheelAreas[name];
         if(Mouse.isOver(area.x, area.y, area.w, area.h)) {
@@ -98,7 +98,7 @@ Mouse.triggerScroll = function(event) {
 
 
 Mouse.updatePosition = function(pos) {
-    if(pos != null) {
+    if(pos !== null) {
         var offset = jQuery("#game").offset();
         var ratio = window.devicePixelRatio || 1;
         Mouse.pos.x = ((ratio * (pos.x - offset.left)) - Game.frameOffsetX) / Game.scaleX;
@@ -122,7 +122,7 @@ Mouse.isOver = function(x, y, w, h) {
 Mouse.isOverCircle = function(x, y, r) {
     var deltaX = Mouse.pos.x - x;
     var deltaY = Mouse.pos.y - y;
-    return (deltaX * deltaX) + (deltaY * deltaY) < r * r;
+    return (deltaX * deltaX) + (deltaY * deltaY) <= r * r;
 };
 
 

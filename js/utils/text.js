@@ -123,7 +123,7 @@ Text.prototype.setBorder = function(borderWidth, borderColor, borderLineJoin) {
 
 
 Text.prototype.setText = function(text) {
-    if(this.appearCharPerSec != 0 && this.text != text) {
+    if(this.appearCharPerSec !== 0 && this.text !== text) {
         this.resetAppear();
     }
     this.text = text;
@@ -151,7 +151,7 @@ Text.prototype.getWidth = function() {
 
 
 Text.prototype.getNumOfLines = function() {
-    if(this.lines.length == 0) {
+    if(this.lines.length === 0) {
         this.applyMultiline();
     }
     return this.lines.length;
@@ -172,7 +172,7 @@ Text.prototype.multiline = function(maxWidth, lineHeight, verticalAlign) {
 
 
 Text.prototype.applyMultiline = function() {
-    if(this.maxWidth == 0) {
+    if(this.maxWidth === 0) {
         this.lines = this.text.split("\n");
 
     } else {
@@ -187,18 +187,18 @@ Text.prototype.applyMultiline = function() {
             var currentLine = "";
             for(var partI = 0; partI < words.length; partI++) {
                 var testLine = currentLine;
-                if(currentLine != "") {
+                if(currentLine !== "") {
                     testLine += " ";
                 }
                 testLine += words[partI];
-                if(currentLine == "" || c.measureText(testLine).width <= this.maxWidth) {
+                if(currentLine === "" || c.measureText(testLine).width <= this.maxWidth) {
                     currentLine = testLine;
                 } else {
                     this.lines.push(currentLine);
                     currentLine = words[partI];
                 }
             }
-            if(currentLine != "" || tempLineI < tempLines.length) {
+            if(currentLine !== "" || tempLineI < tempLines.length) {
                 this.lines.push(currentLine);
             }
         }
@@ -236,7 +236,7 @@ Text.prototype.updateAppear = function() {
 
 
 Text.prototype.draw = function() {
-    if(this.lines.length == 0) {
+    if(this.lines.length === 0) {
         this.applyMultiline();
     }
     if(!this.finishedAppearing) {
@@ -244,7 +244,7 @@ Text.prototype.draw = function() {
     }
     c.fillStyle = this.color;
     c.font = this.size + "px \"" + this.font + "\"";
-    if(this.letterSpacing == 0) {
+    if(this.letterSpacing === 0) {
         c.textAlign = this.align;
     } else {
         c.textAlign = "left";
@@ -264,9 +264,9 @@ Text.prototype.draw = function() {
 
 Text.prototype.drawLines = function(drawBorder) {
     var y = 0;
-    if(this.verticalAlign == "bottom") {
+    if(this.verticalAlign === "bottom") {
         y -= this.lineHeight * (this.lines.length - 1);
-    } else if(this.verticalAlign == "center") {
+    } else if(this.verticalAlign === "center") {
         y -= this.lineHeight * 0.5 * (this.lines.length - 1);
     }
     if(this.finishedAppearing) {
@@ -284,7 +284,7 @@ Text.prototype.drawLines = function(drawBorder) {
 
 
 Text.prototype.drawLine = function(line, x, y, drawBorder) {
-    if(this.letterSpacing == 0) {
+    if(this.letterSpacing === 0) {
         if(drawBorder) {
             c.strokeText(line, x, y);
         } else {
@@ -292,9 +292,9 @@ Text.prototype.drawLine = function(line, x, y, drawBorder) {
         }
     } else {
         var offsetX = 0;
-        if(this.align == "center") {
+        if(this.align === "center") {
             offsetX = -this.measureWidth(line) / 2;
-        } else if(this.align == "right") {
+        } else if(this.align === "right") {
             offsetX = -this.measureWidth(line);
         }
         for(var i = 0; i < line.length; i++) {

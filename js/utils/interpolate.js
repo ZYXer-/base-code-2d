@@ -61,7 +61,7 @@ Interpolate.cubeIn = function(x) {
 Interpolate.accelerateToPos = function(currentPos, targetPos, velocity, acceleration, maxV) {
     var newPos = currentPos;
     var newVelocity = velocity;
-    if(currentPos != targetPos) {
+    if(currentPos !== targetPos) {
         var dstToTarget = targetPos - currentPos;
 
         var neededBrakingA = velocity * velocity / (2.0 * dstToTarget);

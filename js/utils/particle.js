@@ -4,13 +4,13 @@ function Particle(type, emitter, emitterSize, initV, initA, friction, life) {
 
     this.pos = { x : emitter.x, y : emitter.y, z : emitter.z };
 
-    if(emitterSize.x != 0.0) {
+    if(emitterSize.x !== 0.0) {
         this.pos.x += Utils.randFloat(-emitterSize.x, emitterSize.x);
     }
-    if(emitterSize.y != 0.0) {
+    if(emitterSize.y !== 0.0) {
         this.pos.y += Utils.randFloat(-emitterSize.y, emitterSize.y);
     }
-    if(emitterSize.z != 0.0) {
+    if(emitterSize.z !== 0.0) {
         this.pos.z += Utils.randFloat(-emitterSize.z, emitterSize.z);
     }
 

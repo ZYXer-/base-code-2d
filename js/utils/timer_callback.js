@@ -17,15 +17,15 @@ TimerCallback.prototype.update = function() {
         this.life -= Timer.delta;
     }
     if(this.life > 0.0) {
-        if(this.updateCallback != null) {
+        if(this.updateCallback !== null) {
             var progress = 1.0;
-            if(this.fullLife != 0.0) {
+            if(this.fullLife !== 0.0) {
                 progress = 1.0 - (this.life / this.fullLife);
             }
             this.updateCallback(progress);
         }
     } else {
-        if(this.endCallback != null) {
+        if(this.endCallback !== null) {
             this.endCallback();
         }
         if(this.repeat) {

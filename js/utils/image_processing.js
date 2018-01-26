@@ -225,7 +225,7 @@ ImageProcessing.isometricProjection = function(source, target, tileSize, scale, 
 
     var targetWidth = width * scale;
     var targetHeight = height * scale;
-    if(side == "top") {
+    if(side === "top") {
         targetWidth *= 2;
     } else {
         targetHeight *= 1.5;
@@ -248,7 +248,7 @@ ImageProcessing.isometricProjection = function(source, target, tileSize, scale, 
                     var b = data[i + 2];
                     var a = data[i + 3];
 
-                    if(side == "top") {
+                    if(side === "top") {
                         var midX = ((tileX * tileSize * 2) + tileSize + x - y) * scale;
                         var midY = ((tileY * tileSize * 2) + x + y + 1) * scale / 2;
                         for(var cX = -scale; cX < scale; cX++) {
@@ -263,7 +263,7 @@ ImageProcessing.isometricProjection = function(source, target, tileSize, scale, 
                             }
                         }
 
-                    } else if(side == "left") {
+                    } else if(side === "left") {
                         var cornerX = ((tileX * tileSize) + x) * scale;
                         var cornerY = ((tileY * tileSize * 1.5) + y + (x * 0.5)) * scale;
                         for(var cX = 0; cX < scale; cX++) {
@@ -276,7 +276,7 @@ ImageProcessing.isometricProjection = function(source, target, tileSize, scale, 
                             }
                         }
 
-                    } else if(side == "right") {
+                    } else if(side === "right") {
                         var cornerX = ((tileX * tileSize) + x) * scale;
                         var cornerY = ((tileY * tileSize * 1.5) + (tileSize * 0.5) + y - (x * 0.5)) * scale;
                         for(var cX = 0; cX < scale; cX++) {

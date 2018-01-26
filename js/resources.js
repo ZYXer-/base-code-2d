@@ -11,7 +11,8 @@ Resources.images = {
 
 
 Resources.webFonts = [
-    "komika"
+    "komika",
+    "opensans"
 ];
 
 

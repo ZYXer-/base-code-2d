@@ -26,7 +26,7 @@ Shaking.prototype.apply = function() {
             this.offset.x = Utils.rand(minShake, maxShake);
             this.offset.y = Utils.rand(minShake, maxShake);
 
-            if(this.timer % 2 == 0) {
+            if(this.timer % 2 === 0) {
                 this.offset.x = -this.offset.x;
             }
             if(this.timer % 4 < 1) {

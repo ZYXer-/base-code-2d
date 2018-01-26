@@ -24,7 +24,7 @@ DrawQueue.prototype.add = function(element) {
 
 DrawQueue.prototype.remove = function(element) {
     for(var i = 0; i < this.elements.length; i++) {
-        if(this.elements[i] == element) {
+        if(this.elements[i] === element) {
             this.elements.splice(i, 1);
             break;
         }

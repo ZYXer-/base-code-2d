@@ -38,9 +38,9 @@ PathFinding.prototype.find = function(start, end, directions, isFreeCallback) { 
 
         var currentNode = nodeQueue.pop();
 
-        if(currentNode.x == this.end.x && currentNode.y == this.end.y) {
+        if(currentNode.x === this.end.x && currentNode.y === this.end.y) {
             var path = [];
-            while(currentNode.parent != null) {
+            while(currentNode.parent !== null) {
                 path.push({ x : (currentNode.x + this.gridMinX), y : (currentNode.y + this.gridMinY) });
                 currentNode = currentNode.parent;
             }
@@ -139,7 +139,7 @@ PathFinding.prototype.getNeighbors = function(node, directions) {
 
     var neighbors = [];
 
-    if(directions == 6) {
+    if(directions === 6) {
 
         for(var dir = 0; dir < directions; dir++) {
 

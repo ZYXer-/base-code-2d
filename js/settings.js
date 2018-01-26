@@ -37,19 +37,6 @@ Settings.Size.HEIGHT_IN_UNITS = 1080;
 
 
 
-// States
-Settings.States = function() {};
-
-Settings.States.STATES = {
-    "loading" : LoadingState,
-    "ingame" : IngameState
-};
-
-Settings.States.INITIAL_STATE = "loading";
-Settings.States.STATE_AFTER_LOADING = "ingame";
-
-
-
 // Loading Settings
 Settings.Loading = function() {};
 

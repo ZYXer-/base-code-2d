@@ -19,9 +19,9 @@ Preloader.prototype.setEndCallback = function(callback) {
 Preloader.prototype.reportAssetLoaded = function() {
     this.loadedAssets++;
     this.fractionLoaded = this.loadedAssets / this.totalAssets;
-    if(this.loadedAssets == this.totalAssets) {
+    if(this.loadedAssets === this.totalAssets) {
         this.loaded = true;
-        if(this.endCallback != null) {
+        if(this.endCallback !== null) {
             this.endCallback();
         }
     }
@@ -72,7 +72,7 @@ SoundPreloader.prototype.load = function(sources) {
     }
     var preloader = this;
 
-    if(this.totalAssets == 0) {
+    if(this.totalAssets === 0) {
         this.totalAssets = 1;
         this.reportAssetLoaded();
         return;
@@ -105,7 +105,7 @@ ImagePreloader.prototype.load = function(sources) {
     this.totalAssets = Object.keys(this.sources).length;
     var preloader = this;
 
-    if(this.totalAssets == 0) {
+    if(this.totalAssets === 0) {
         this.totalAssets = 1;
         this.reportAssetLoaded();
         return;
@@ -129,7 +129,7 @@ PixelFontPreloader.prototype.load = function(sources) {
     this.sources = sources;
     this.totalAssets = Object.keys(this.sources).length;
 
-    if(this.totalAssets == 0) {
+    if(this.totalAssets === 0) {
         this.totalAssets = 1;
         this.reportAssetLoaded();
         return;
@@ -151,7 +151,7 @@ WebFontPreloader.prototype.load = function(sources) {
     this.sources = sources;
     this.totalAssets = this.sources.length;
 
-    if(this.totalAssets == 0) {
+    if(this.totalAssets === 0) {
         this.totalAssets = 1;
         this.reportAssetLoaded();
         return;

@@ -37,9 +37,9 @@ PriorityQueue.prototype.pop = function() {
 PriorityQueue.prototype.remove = function(node) {
     var length = this.elements.length;
     for(var i = 0; i < length; i++) {
-        if(this.elements[i] == node) {
+        if(this.elements[i] === node) {
             var end = this.elements.pop();
-            if(i != length - 1) {
+            if(i !== length - 1) {
                 this.elements[i] = end;
                 this.bubbleUp(i);
                 this.sinkDown(i);
@@ -53,7 +53,7 @@ PriorityQueue.prototype.remove = function(node) {
 PriorityQueue.prototype.rescore = function(node) {
     var length = this.elements.length;
     for(var i = 0; i < length; i++) {
-        if(this.elements[i] == node) {
+        if(this.elements[i] === node) {
             this.bubbleUp(i);
             this.sinkDown(i);
             break;
@@ -119,7 +119,7 @@ PriorityQueue.prototype.sinkDown = function(n) {
                 n = child1n;
             }
         }
-        if(n == oldN) {
+        if(n === oldN) {
             break;
         }
     }

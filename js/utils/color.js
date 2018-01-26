@@ -37,7 +37,7 @@ Color.fromHex = function(hex) {
 
 
 Color.fromHSL = function(h, s, l) { // h, s and l are all values from 0.0 to 1.0
-    if(s == 0) {
+    if(s === 0) {
         return { r : Math.round(l * 255), g : Math.round(l * 255), b : Math.round(l * 255) };
     }
 

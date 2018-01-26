@@ -36,8 +36,18 @@ Vec2.prototype.multiply = function(s) {
 };
 
 
+Vec2.prototype.floor = function() {
+    return new Vec2(Math.floor(this.x), Math.floor(this.y));
+};
+
+
 Vec2.prototype.round = function() {
     return new Vec2(Math.round(this.x), Math.round(this.y));
+};
+
+
+Vec2.prototype.ceil = function() {
+    return new Vec2(Math.ceil(this.x), Math.ceil(this.y));
 };
 
 
@@ -53,7 +63,7 @@ Vec2.prototype.angle = function() {
 
 Vec2.prototype.normalize = function() {
     var length = this.norm();
-    if(length == 0) {
+    if(length === 0) {
         return new Vec2(0.0, 0.0);
     }
     return new Vec2(this.x / length, this.y / length);
@@ -127,8 +137,18 @@ Vec3.prototype.multiply = function(s) {
 };
 
 
+Vec3.prototype.floor = function() {
+    return new Vec3(Math.floor(this.x), Math.floor(this.y), Math.floor(this.z));
+};
+
+
 Vec3.prototype.round = function() {
     return new Vec3(Math.round(this.x), Math.round(this.y), Math.round(this.z));
+};
+
+
+Vec3.prototype.ceil = function() {
+    return new Vec3(Math.ceil(this.x), Math.ceil(this.y), Math.ceil(this.z));
 };
 
 
@@ -139,7 +159,7 @@ Vec3.prototype.norm = function() {
 
 Vec3.prototype.normalize = function() {
     var length = this.norm();
-    if(length == 0) {
+    if(length === 0) {
         return new Vec3(0.0, 0.0, 0.0);
     }
     return new Vec3(this.x / length, this.y / length, this.z / length);

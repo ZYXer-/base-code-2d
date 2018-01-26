@@ -14,6 +14,8 @@ function IntegerScaling(minScale, maxScale, minUnitsPerWidth, minUnitsPerHeight)
     this.gameWidth = 0.0;
     this.gameHeight = 0.0;
 
+    this.mousePos = new Vec2(0, 0);
+
     this.resize();
 
     if(Settings.Size.FIXED_SIZE_IN_UNITS) {
@@ -62,11 +64,12 @@ IntegerScaling.prototype.worldToScreen = function(point) {
 };
 
 
-IntegerScaling.prototype.apply = function(unscaledPivot, scaledPivot) {
+IntegerScaling.prototype.apply = function() {
     c.save();
     c.translate(this.unscaledPivot.x, this.unscaledPivot.y);
     c.scale(this.s, this.s);
     c.translate(-this.scaledPivot.x, -this.scaledPivot.y);
+    this.mousePos = this.screenToWorld(Mouse.pos);
 };
 
 
@@ -87,6 +90,18 @@ IntegerScaling.prototype.drawMask = function(x, y, w, h, color) {
     c.fillRect(-10, -10, maskL + 10, Game.height + 20);
     c.fillRect(maskR, -10, Game.width + 10 - maskR, Game.height + 20);
     c.fillRect(-10, maskB, Game.width + 20, Game.height + 10 - maskB);
+};
+
+
+IntegerScaling.prototype.mouseIsOver = function(x, y, w, h) {
+    return (this.mousePos.x >= x && this.mousePos.x < x + w && this.mousePos.y >= y && this.mousePos.y < y + h);
+};
+
+
+IntegerScaling.prototype.mouseIsOverCircle = function(x, y, r) {
+    var deltaX = this.mousePos.x - x;
+    var deltaY = this.mousePos.y - y;
+    return (deltaX * deltaX) + (deltaY * deltaY) <= r * r;
 };
 
 

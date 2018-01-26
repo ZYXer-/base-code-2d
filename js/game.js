@@ -17,9 +17,6 @@ Game.scaleY = 1.0;
 
 Game.interval = null;
 
-Game.state = null;
-Game.nextState = null;
-
 Game.paused = false;
 
 
@@ -29,12 +26,12 @@ Game.start = function() {
     canvas.width = Game.width;
     canvas.height = Game.height;
 
-    if(Settings.Size.AUTO_RESIZE) {
-        jQuery(window).resize(function() {
+    jQuery(window).ready(function() {
+        window.onresize = function() {
             Game.resize();
-        });
+        };
         Game.resize();
-    }
+    });
 
     Keyboard.allowKey(Keyboard.F5);
     Keyboard.allowKey(Keyboard.F12);
@@ -64,17 +61,9 @@ Game.start = function() {
         Game.resize();
     });
 
-    Game.setState(Settings.States.INITIAL_STATE);
+    SceneManager.init();
+    SceneManager.changeScene(SceneManager.INITIAL_SCENE);
     Game.loop();
-};
-
-
-Game.setState = function(state) {
-    if(Settings.States.STATES.hasOwnProperty(state)) {
-        this.nextState = Settings.States.STATES[state];
-    } else {
-        alert("ERROR: Could not find state: " + state);
-    }
 };
 
 
@@ -86,7 +75,7 @@ Game.loop = function() {
         || window.msRequestAnimationFrame;
     requestAnimationFrame(Game.loop);
 
-    Game.initState();
+    SceneManager.update();
     Timer.update();
     Mouse.update();
     Game.update();
@@ -95,28 +84,9 @@ Game.loop = function() {
 };
 
 
-Game.initState = function() {
-
-    if(Game.state != Game.nextState) {
-
-        if(Game.state != null && Game.state.hasOwnProperty("hide")) {
-            Game.state.hide();
-        }
-
-        Game.state = Game.nextState;
-        if(Game.state.hasOwnProperty("show")) {
-            Game.state.show();
-            if(Settings.Size.AUTO_RESIZE) {
-                Game.resize();
-            }
-        }
-    }
-};
-
-
 Game.update = function() {
-    if(Game.state.hasOwnProperty("update")) {
-        Game.state.update();
+    if(SceneManager.scene.hasOwnProperty("update")) {
+        SceneManager.scene.update();
     }
 };
 
@@ -132,8 +102,8 @@ Game.draw = function() {
         c.scale(Game.scaleX, Game.scaleY);
     }
 
-    if(Game.state.hasOwnProperty("draw")) {
-        Game.state.draw();
+    if(SceneManager.scene.hasOwnProperty("draw")) {
+        SceneManager.scene.draw();
     }
 
     if(Settings.Size.FIXED_SIZE_IN_UNITS) {
@@ -219,8 +189,8 @@ Game.resize = function() {
     Game.centerX = Math.round(Game.width / 2.0);
     Game.centerY = Math.round(Game.height / 2.0);
 
-    if(Game.state != null && Game.state.hasOwnProperty("resize")) {
-        Game.state.resize();
+    if(SceneManager.scene !== null && SceneManager.scene.hasOwnProperty("resize")) {
+        SceneManager.scene.resize();
     }
 };
 

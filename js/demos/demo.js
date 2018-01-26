@@ -84,7 +84,7 @@ Demo.prototype.show = function() {
 
     // Register mouse click event so that when you click, you trigger a birst of the second particle system,
     // trigger the screen shake, play the cannon sound and set the new position of the interpolating line.
-    Mouse.left.registerUpArea("demoFire", 0, 0, Game.width, Game.height, function() {
+    Mouse.left.registerUpCallback("demoFire", function() {
         if(!Game.paused) {
             demo.demoParticleSystem2.setEmitter(Mouse.pos);
             demo.demoParticleSystem2.burst();
@@ -120,10 +120,10 @@ Demo.prototype.show = function() {
 Demo.prototype.hide = function() {
 
     // Remove the mouse event listener
-    Mouse.deleteUpArea("demoFire");
+    Mouse.left.deleteUpCallback("demoFire");
 
     // Remove draggable area listener
-    Mouse.deleteDraggableArea("demoDragAndDrop");
+    Mouse.left.deleteDraggableArea("demoDragAndDrop");
 
     // Remove key stroke listener for 'C' key
     Keyboard.deleteKeyUpHandler(Keyboard.C);
@@ -176,7 +176,7 @@ Demo.prototype.draw = function() {
     // Draw the matrix we loaded from an image
     for(var x = 0; x < 10; x++) {
         for(var y = 0; y < 10; y++) {
-            if(this.demoMatrixFromImage[x][y] == "full") {
+            if(this.demoMatrixFromImage[x][y] === "full") {
                 c.fillStyle = "#ddd";
                 c.fillRect(x * 20, y * 20, 20, 20);
             }

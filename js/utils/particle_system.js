@@ -140,7 +140,7 @@ ParticleSystem.prototype.draw = function() {
         return;
     }
     if(this.isOn && !Game.paused) {
-        if(this.mode == ParticleSystem.CONTINUOUS_MODE || (this.mode == ParticleSystem.BURST_MODE && this.burstNow)) {
+        if(this.mode === ParticleSystem.CONTINUOUS_MODE || (this.mode === ParticleSystem.BURST_MODE && this.burstNow)) {
             this.burstNow = false;
             for(var i = 0; i < this.particlesPerTick; i++) {
                 this.particles[this.particleCounter] = new Particle(this.type, this.emitter, this.emitterSize, this.initV, this.initA, this.friction, this.life);

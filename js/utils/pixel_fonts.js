@@ -37,7 +37,7 @@ PixelFonts.create = function(name, file, minCharSpacingInFile, printCharSpacing,
         while(x < fileWidth && PixelFonts.columnIsEmpty(x, data, fileWidth, fileHeight)) {
             x++;
         }
-        if(x == fileWidth) {
+        if(x === fileWidth) {
             var char = String.fromCharCode(i + 32);
             console.log("Couldn't find the glyph '" + char + "' for font '" + name + "'.");
         }
@@ -114,9 +114,9 @@ PixelFonts.create = function(name, file, minCharSpacingInFile, printCharSpacing,
 
 PixelFonts.columnIsEmpty = function(column, data, fileWidth, fileHeight) {
     for(var i = 0; i < fileHeight; i++) {
-        if(data[(4 * ((fileWidth * i) + column))] != PixelFonts.EMPTY_R ||
-            data[(4 * ((fileWidth * i) + column)) + 1] != PixelFonts.EMPTY_G ||
-            data[(4 * ((fileWidth * i) + column)) + 2] != PixelFonts.EMPTY_B) {
+        if(data[(4 * ((fileWidth * i) + column))] !== PixelFonts.EMPTY_R ||
+            data[(4 * ((fileWidth * i) + column)) + 1] !== PixelFonts.EMPTY_G ||
+            data[(4 * ((fileWidth * i) + column)) + 2] !== PixelFonts.EMPTY_B) {
             return false;
         }
     }
