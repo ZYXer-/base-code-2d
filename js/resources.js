@@ -29,5 +29,6 @@ Resources.pixelFonts = {
 
 
 Resources.sounds = {
-    cannon : { source : ["audio/cannon.wav", "audio/cannon.mp3"], instances : 3 }
+    cannon : { source : ["audio/cannon.wav", "audio/cannon.mp3"], instances : 3 },
+    soundtrack : { source : ["audio/soundtrack.ogg", "audio/soundtrack.mp3"], instances : 1 }
 };

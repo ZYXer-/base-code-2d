@@ -1,6 +1,6 @@
-function Particle(type, emitter, emitterSize, initV, initA, friction, life) {
+function Particle(drawFunction, emitter, emitterSize, initV, initA, friction, life) {
 
-    this.type = type;
+    this.drawFunction = drawFunction;
 
     this.pos = { x : emitter.x, y : emitter.y, z : emitter.z };
 
@@ -48,5 +48,5 @@ Particle.prototype.draw = function() {
         this.life -= delta;
     }
 
-    ParticleDrawable.draw(this);
+    this.drawFunction(this);
 };

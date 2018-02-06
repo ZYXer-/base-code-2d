@@ -1,7 +1,7 @@
 
 var QUART_PI = 0.785398;
 var HALF_PI = 1.570796;
-var PI = 3.141593;
+var PI = 3.141592;
 var TWO_PI = 6.283185;
 
 
@@ -191,6 +191,30 @@ Utils.drawEllipse = function(c, x, y, w, h) {
     c.bezierCurveTo(xm + ox, y, xe, ym - oy, xe, ym);
     c.bezierCurveTo(xe, ym + oy, xm + ox, ye, xm, ye);
     c.bezierCurveTo(xm - ox, ye, x, ym + oy, x, ym);
+    c.closePath();
+};
+
+
+Utils.drawRing = function(c, x, y, innerRadius, outerRadius) {
+    c.beginPath();
+    c.arc(x, y, outerRadius, 0, TWO_PI, false);
+    c.arc(x, y, innerRadius, TWO_PI, 0, true);
+    c.closePath();
+};
+
+
+Utils.drawCircleSegment = function(c, x, y, radius, startAngle, endAngle) {
+    c.beginPath();
+    c.lineTo(x, y);
+    c.arc(x, y, radius, startAngle, endAngle);
+    c.closePath();
+};
+
+
+Utils.drawRingSegment = function(c, x, y, innerRadius, outerRadius, startAngle, endAngle) {
+    c.beginPath();
+    c.arc(x, y, outerRadius, startAngle, endAngle, false);
+    c.arc(x, y, innerRadius, endAngle, startAngle, true);
     c.closePath();
 };
 

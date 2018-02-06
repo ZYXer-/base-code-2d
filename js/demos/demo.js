@@ -5,22 +5,32 @@ function Demo() {
 
 
     // This is the constant (blue) particle system
-    this.demoParticleSystem1 = new ParticleSystem(1, {
+    this.demoParticleSystem1 = new ParticleSystem({
         emitter : new Vec3(225, 300, 0),
         emitterSize : { x : 40.0, y : 10.0, z : 0.0 },
         v : { x : { min : -50.0, max : 50.0 }, y : { min : -250.0, max : -200.0 }, z : { min : 0.0, max : 0.0 }},
         a : { x : { min : -10.0, max : 10.0 }, y : { min : 0.0, max : 0.0 }, z : { min : 0.0, max : 0.0 }},
         friction : { x : 0.0, y : 100.0, z : 0.0 },
-        life : { min : 1.0, max : 2.0 }
+        life : { min : 1.0, max : 2.0 },
+        draw : function(particle) {
+            var opacity = Utils.limit(particle.life / 2.0, 0.0, 1.0);
+            c.fillStyle = "rgba(0, 0, 255, " + opacity + ")";
+            c.fillRect(particle.pos.x - 20, particle.pos.y - 20, 40, 40);
+        }
     });
 
     // This is the (green) burst particle system
-    this.demoParticleSystem2 = new ParticleSystem(2, {
+    this.demoParticleSystem2 = new ParticleSystem({
         mode : ParticleSystem.BURST_MODE,
         v : { x : { min : -240.0, max : 240.0 }, y : { min : -240.0, max : 240.0 }, z : { min : 0.0, max : 0.0 }},
         a : { x : { min : -6.0, max : 6.0 }, y : { min : -6.0, max : 6.0 }, z : { min : 0.0, max : 0.0 }},
         life : { min : 0.5, max : 0.7 },
-        particlesPerTick : 50
+        particlesPerTick : 50,
+        draw : function(particle) {
+            var opacity = Utils.limit(particle.life / 0.7, 0.0, 1.0);
+            c.fillStyle = "rgba(0, 127, 0, " + opacity + ")";
+            c.fillRect(particle.pos.x - 10, particle.pos.y - 10, 20, 20);
+        }
     });
 
     // Reads data from an image and saves it a two-dimensional array
@@ -111,6 +121,10 @@ Demo.prototype.show = function() {
             demo.demoPixelText.text("Hello World!");
         });
     });
+
+
+
+    this.demoSound = Sound.play("soundtrack");
 };
 
 
@@ -145,6 +159,8 @@ Demo.prototype.resize = function() {
  */
 Demo.prototype.update = function() {
 
+    var oldRotation = this.demoImageRotation;
+
     // Rotate rotating image (black square with cross)
     this.demoImageRotation += 2.0 * Timer.delta;
 
@@ -165,6 +181,22 @@ Demo.prototype.update = function() {
     // Get arrow key inputs and apply it to arrow-key-controlled pawn
     var arrowKeys = Utils.getArrowControls();
     this.demoPawn.update(arrowKeys);
+
+    if(oldRotation < 3.0 && this.demoImageRotation >= 3.0) {
+        this.demoSound.fadeOut(2.0);
+    }
+
+    if(oldRotation < 8.0 && this.demoImageRotation >= 8.0) {
+        this.demoSound.fadeIn(2.0);
+    }
+
+    if(oldRotation < 15.0 && this.demoImageRotation >= 15.0) {
+        this.demoSound.fadeTo(1.0, 100);
+    }
+
+    if(oldRotation < 20.0 && this.demoImageRotation >= 20.0) {
+        this.demoSound.stop();
+    }
 };
 
 
@@ -198,8 +230,12 @@ Demo.prototype.draw = function() {
     Img.drawRotated("test", this.demoImagePos.x, this.demoImagePos.y, 38, 38, this.demoImageRotation);
 
     // Draw both particle systems
+    // PerformanceMonitor.startStopwatch(3);
     this.demoParticleSystem1.draw();
+    // PerformanceMonitor.stopStopwatch(3);
+    // PerformanceMonitor.startStopwatch(4);
     this.demoParticleSystem2.draw();
+    // PerformanceMonitor.stopStopwatch(4);
 
     // Draw texture we generated in custom_preloading.js
     Img.draw("demoGeneratedTexture", 740, 440);

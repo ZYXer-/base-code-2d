@@ -1,6 +1,4 @@
-function ParticleSystem(type, options) {
-
-    this.type = type;
+function ParticleSystem(options) {
 
     this.mode = ParticleSystem.CONTINUOUS_MODE;
     if(options.hasOwnProperty("mode")) {
@@ -47,6 +45,11 @@ function ParticleSystem(type, options) {
     this.particlesPerTick = 1;
     if(options.hasOwnProperty("particlesPerTick")) {
         this.particlesPerTick = options.particlesPerTick;
+    }
+
+    this.drawFunction = null;
+    if(options.hasOwnProperty("draw")) {
+        this.drawFunction = options.draw;
     }
 
     this.particles = {};
@@ -143,7 +146,7 @@ ParticleSystem.prototype.draw = function() {
         if(this.mode === ParticleSystem.CONTINUOUS_MODE || (this.mode === ParticleSystem.BURST_MODE && this.burstNow)) {
             this.burstNow = false;
             for(var i = 0; i < this.particlesPerTick; i++) {
-                this.particles[this.particleCounter] = new Particle(this.type, this.emitter, this.emitterSize, this.initV, this.initA, this.friction, this.life);
+                this.particles[this.particleCounter] = new Particle(this.drawFunction, this.emitter, this.emitterSize, this.initV, this.initA, this.friction, this.life);
                 this.particleCounter++;
             }
         }

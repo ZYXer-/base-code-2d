@@ -11,7 +11,7 @@ Keyboard.keyUpHandlers = {};
 
 
 Keyboard.init = function() {
-    jQuery(window).keydown(function(event) {
+    jQuery(document).keydown(function(event) {
         if(!Keyboard.allowDefault && Keyboard.allowKeys.indexOf(event.which) === -1) {
             event.preventDefault();
             Keyboard.keyPressed[event.which] = true;

@@ -60,6 +60,8 @@ function Text(options) {
     this.lineHeight = 0;
     if(options.hasOwnProperty("lineHeight")) {
         this.lineHeight = options.lineHeight;
+    } else if(options.hasOwnProperty("size")) {
+        this.lineHeight = options.size;
     }
 
     this.verticalAlign = "top";
@@ -93,6 +95,9 @@ Text.prototype.setPos = function(x, y) {
 
 Text.prototype.setSize = function(size) {
     this.size = size;
+    if(this.lineHeight === 0) {
+        this.lineHeight = size;
+    }
     return this;
 };
 
@@ -271,31 +276,43 @@ Text.prototype.drawLines = function(drawBorder) {
     }
     if(this.finishedAppearing) {
         for(var i = 0; i < this.lines.length; i++) {
-            this.drawLine(this.lines[i], this.x, this.y + y, drawBorder);
+            this.drawLine(this.lines[i], this.lines[i], this.x, this.y + y, drawBorder);
             y += this.lineHeight;
         }
     } else {
         for(var i = 0; i < this.showLines.length; i++) {
-            this.drawLine(this.showLines[i], this.x, this.y + y, drawBorder);
+            this.drawLine(this.showLines[i], this.lines[i], this.x, this.y + y, drawBorder);
             y += this.lineHeight;
         }
     }
 };
 
 
-Text.prototype.drawLine = function(line, x, y, drawBorder) {
+Text.prototype.drawLine = function(line, fullLine, x, y, drawBorder) {
     if(this.letterSpacing === 0) {
-        if(drawBorder) {
-            c.strokeText(line, x, y);
+        if(this.finishedAppearing || this.align === "left") {
+            if(drawBorder) {
+                c.strokeText(line, x, y);
+            } else {
+                c.fillText(line, x, y);
+            }
         } else {
-            c.fillText(line, x, y);
+            var appearOffset = this.measureWidth(fullLine) - this.measureWidth(line);
+            if(this.align === "center") {
+                appearOffset /= 2;
+            }
+            if(drawBorder) {
+                c.strokeText(line, x - appearOffset, y);
+            } else {
+                c.fillText(line, x - appearOffset, y);
+            }
         }
     } else {
         var offsetX = 0;
         if(this.align === "center") {
-            offsetX = -this.measureWidth(line) / 2;
+            offsetX = -this.measureWidth(fullLine) / 2;
         } else if(this.align === "right") {
-            offsetX = -this.measureWidth(line);
+            offsetX = -this.measureWidth(fullLine);
         }
         for(var i = 0; i < line.length; i++) {
             if(drawBorder) {

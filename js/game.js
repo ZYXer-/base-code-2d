@@ -75,11 +75,23 @@ Game.loop = function() {
         || window.msRequestAnimationFrame;
     requestAnimationFrame(Game.loop);
 
+    PerformanceMonitor.startStopwatch(0);
+    PerformanceMonitor.startStopwatch(1);
+
     SceneManager.update();
     Timer.update();
     Mouse.update();
     Game.update();
+    Sound.update();
+
+    PerformanceMonitor.stopStopwatch(1);
+    PerformanceMonitor.startStopwatch(2);
+
     Game.draw();
+
+    PerformanceMonitor.stopStopwatch(2);
+    PerformanceMonitor.stopStopwatch(0);
+
     PerformanceMonitor.update();
 };
 

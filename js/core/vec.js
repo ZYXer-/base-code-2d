@@ -51,6 +51,35 @@ Vec2.prototype.ceil = function() {
 };
 
 
+Vec2.prototype.min = function(minLength) {
+    var currentLength = this.norm();
+    if(currentLength < minLength) {
+        return this.normalize().multiply(minLength);
+    }
+    return this.copy();
+};
+
+
+Vec2.prototype.max = function(maxLength) {
+    var currentLength = this.norm();
+    if(currentLength > maxLength) {
+        return this.normalize().multiply(maxLength);
+    }
+    return this.copy();
+};
+
+
+Vec2.prototype.limit = function(minLength, maxLength) {
+    var currentLength = this.norm();
+    if(currentLength < minLength) {
+        return this.normalize().multiply(minLength);
+    } else if(currentLength > maxLength) {
+        return this.normalize().multiply(maxLength);
+    }
+    return this.copy();
+};
+
+
 Vec2.prototype.norm = function() {
     return Math.sqrt((this.x * this.x) + (this.y * this.y));
 };
@@ -149,6 +178,35 @@ Vec3.prototype.round = function() {
 
 Vec3.prototype.ceil = function() {
     return new Vec3(Math.ceil(this.x), Math.ceil(this.y), Math.ceil(this.z));
+};
+
+
+Vec3.prototype.min = function(minLength) {
+    var currentLength = this.norm();
+    if(currentLength < minLength) {
+        return this.normalize().multiply(minLength);
+    }
+    return this.copy();
+};
+
+
+Vec3.prototype.max = function(maxLength) {
+    var currentLength = this.norm();
+    if(currentLength > maxLength) {
+        return this.normalize().multiply(maxLength);
+    }
+    return this.copy();
+};
+
+
+Vec3.prototype.limit = function(minLength, maxLength) {
+    var currentLength = this.norm();
+    if(currentLength < minLength) {
+        return this.normalize().multiply(minLength);
+    } else if(currentLength > maxLength) {
+        return this.normalize().multiply(maxLength);
+    }
+    return this.copy();
 };
 
 

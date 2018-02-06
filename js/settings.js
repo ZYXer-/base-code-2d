@@ -8,10 +8,13 @@ Settings.Game = function() {};
 Settings.Game.MAX_TIME_PER_FRAME = 0.1;
 Settings.Game.TIME_MULTIPLIER = 1.0;
 
-Settings.Game.DEBUG = true;
 Settings.Game.PAUSE_ON_BLUR = false;
-
 Settings.Game.PREVENT_CONTEXT_MENU = true;
+
+Settings.Game.DEFAULT_SOUND_VOLUME = 50;
+
+Settings.Game.DEBUG = true;
+Settings.Game.SHOW_PERFORMANCE_DETAILS = true;
 
 
 

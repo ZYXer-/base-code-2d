@@ -53,7 +53,7 @@ SoundManagerPreloader.prototype.load = function() {
             preloader.reportAssetLoaded();
         },
         ontimeout : function() {
-            alert("Cannot play sound!");
+            alert("Error loading SoundManager2: cannot play any sounds.");
             preloader.reportAssetLoaded();
         }
     });
@@ -66,7 +66,6 @@ SoundPreloader.prototype = Object.create(Preloader.prototype);
 
 SoundPreloader.prototype.load = function(sources) {
     this.sources = sources;
-    Object.keys(this.sources).length;
     for(var name in this.sources) {
         this.totalAssets += this.sources[name].instances;
     }
@@ -79,19 +78,20 @@ SoundPreloader.prototype.load = function(sources) {
     }
 
     for(var name in this.sources) {
+        Sound.assets[name] = { nextInstance : 0, numOfInstances : this.sources[name].instances, instances : [] };
         for(var i = 0; i < this.sources[name].instances; i++) {
             soundManager.createSound({
                 id : name + "_instance_" + i,
                 url : this.sources[name].source,
                 autoLoad : true,
-                volume : 50,
+                volume : Settings.Game.DEFAULT_SOUND_VOLUME,
                 multiShot : false,
                 onload : function() {
                     preloader.reportAssetLoaded();
                 }
             });
+            Sound.assets[name].instances.push(new SoundInstance(name, i));
         }
-        Sound.assets[name] = { position : 0, count : this.sources[name].instances };
     }
 };
 
