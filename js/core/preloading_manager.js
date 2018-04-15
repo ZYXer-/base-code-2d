@@ -1,10 +1,10 @@
 function PreloadingManager() {}
 
-PreloadingManager.soundManagerPreloader;
-PreloadingManager.imagePreloader;
-PreloadingManager.soundPreloader;
-PreloadingManager.pixelFontPreloader;
-PreloadingManager.webFontPreloader;
+PreloadingManager.soundManagerPreloader = null;
+PreloadingManager.imagePreloader = null;
+PreloadingManager.soundPreloader = null;
+PreloadingManager.pixelFontPreloader = null;
+PreloadingManager.webFontPreloader = null;
 
 PreloadingManager.fakeLoadingCountdown = 0.0;
 PreloadingManager.soundLoadingCountdown = 0.0;
@@ -78,7 +78,11 @@ PreloadingManager.getPercentageLoaded = function() {
     var webFontPercentage = PreloadingManager.webFontPreloader.getFractionLoaded();
     webFontPercentage *= Settings.Loading.WEB_FONT_PERCENTAGE;
 
-    var fakeLoadingPercentage = (1.0 - (this.fakeLoadingCountdown / Settings.Loading.FAKE_LOADING_TIME));
+    var fakeLoadingPercentage = 1.0;
+    if(Settings.Loading.FAKE_LOADING_TIME !== 0.0)
+    {
+        fakeLoadingPercentage = (1.0 - (this.fakeLoadingCountdown / Settings.Loading.FAKE_LOADING_TIME));
+    }
     fakeLoadingPercentage = Utils.limit(fakeLoadingPercentage, 0.0, 1.0);
     fakeLoadingPercentage *= Settings.Loading.FAKE_PERCENTAGE;
 

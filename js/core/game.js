@@ -1,13 +1,13 @@
 function Game() {}
 
-Game.canvasWidth = Settings.Size.WIDTH;
-Game.canvasHeight = Settings.Size.HEIGHT;
+Game.canvasWidth = 1;
+Game.canvasHeight = 1;
 
-Game.width = Settings.Size.WIDTH;
-Game.height = Settings.Size.HEIGHT;
+Game.width = 1;
+Game.height = 1;
 
-Game.centerX = Math.round(Game.width / 2.0);
-Game.centerY = Math.round(Game.height / 2.0);
+Game.centerX = 0;
+Game.centerY = 0;
 
 Game.frameOffsetX = 0;
 Game.frameOffsetY = 0;
@@ -22,6 +22,15 @@ Game.paused = false;
 
 Game.start = function() {
 
+    Game.canvasWidth = Settings.Size.WIDTH;
+    Game.canvasHeight = Settings.Size.HEIGHT;
+
+    Game.width = Settings.Size.WIDTH;
+    Game.height = Settings.Size.HEIGHT;
+
+    Game.centerX = Math.round(Game.width / 2.0);
+    Game.centerY = Math.round(Game.height / 2.0);
+
     jQuery("#game_box, #game").width(Game.width).height(Game.height);
     canvas.width = Game.width;
     canvas.height = Game.height;
@@ -33,22 +42,22 @@ Game.start = function() {
         Game.resize();
     });
 
-    Keyboard.allowKey(Keyboard.F5);
-    Keyboard.allowKey(Keyboard.F12);
-    Keyboard.registerKeyUpHandler(Keyboard.F11, function() {
-        Game.toggleFullScreen();
-    });
+    for(var keyIndex in GlobalControls.allowDefaultBehavior) {
+        Keyboard.allowKey(GlobalControls.allowDefaultBehavior[keyIndex]);
+    }
+    GlobalControls.loadCustomBehavior();
 
-    Keyboard.registerKeyUpHandler(Keyboard.P, function() {
-        Game.pauseUnpause();
+    Mouse.left.registerUpCallback("_leftClick", function() {
+        SceneManager.callMethod("click");
     });
-
-    Keyboard.registerKeyUpHandler(Keyboard.M, function() {
-        Sound.muteUnmute();
+    Mouse.middle.registerUpCallback("_middleClick", function() {
+        SceneManager.callMethod("middleClick");
     });
-
-    Keyboard.registerKeyUpHandler(Keyboard.Q, function() {
-        ParticleSystem.particlesOn = !ParticleSystem.particlesOn;
+    Mouse.right.registerUpCallback("_rightClick", function() {
+        SceneManager.callMethod("rightClick");
+    });
+    Mouse.registerScrollCallback("_scroll", function(delta) {
+        SceneManager.callMethodWithParam("scroll", delta);
     });
 
     if(Settings.Game.PAUSE_ON_BLUR) {
@@ -61,7 +70,7 @@ Game.start = function() {
         Game.resize();
     });
 
-    SceneManager.init();
+    Scenes.load();
     SceneManager.changeScene(SceneManager.INITIAL_SCENE);
     Game.loop();
 };

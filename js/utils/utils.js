@@ -349,9 +349,14 @@ Utils.getArrowControls = function() {
 
 
 Utils.pad = function(number, length) {
-    number = number.toString();
+    var numberString = number.toString();
     var pad = "00000000";
-    return pad.substring(0, pad.length - number.length) + number;
+    return pad.substring(0, length - numberString.length) + numberString;
+};
+
+
+Utils.toFixedDecimal = function(number, numberOfDecimals) {
+    return number.toFixed(numberOfDecimals);
 };
 
 

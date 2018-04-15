@@ -28,6 +28,15 @@ IngameScene.resize = function() {
 };
 
 
+IngameScene.click = function() {
+
+
+    // do stuff when left mouse button is clicked
+
+
+};
+
+
 IngameScene.update = function() {
 
 

@@ -7,7 +7,8 @@ Mouse.left = null;
 Mouse.middle = null;
 Mouse.right = null;
 
-Mouse.wheelAreas = {};
+Mouse.scrollAreas = {};
+Mouse.scrollCallbacks = {};
 
 
 Mouse.init = function() {
@@ -87,11 +88,15 @@ Mouse.getPositionFromTouchEvent = function(event) {
 
 Mouse.triggerScroll = function(event) {
     var delta = (event.originalEvent.detail === undefined ? event.originalEvent.wheelDelta : event.originalEvent.detail);
-    for(var name in Mouse.wheelAreas) {
-        var area = Mouse.wheelAreas[name];
+    var name;
+    for(name in Mouse.scrollAreas) {
+        var area = Mouse.scrollAreas[name];
         if(Mouse.isOver(area.x, area.y, area.w, area.h)) {
             area.callback(delta);
         }
+    }
+    for(name in Mouse.scrollCallbacks) {
+        Mouse.scrollCallbacks[name].callback(delta);
     }
     event.preventDefault();
 };
@@ -126,8 +131,23 @@ Mouse.isOverCircle = function(x, y, r) {
 };
 
 
-Mouse.registerWheelArea = function(name, x, y, w, h, callback) {
-    Mouse.wheelAreas[name] = {
+Mouse.registerScrollCallback = function(name, callback) {
+    this.scrollCallbacks[name] = {
+        name : name,
+        callback : callback
+    };
+};
+
+
+Mouse.deleteScrollCallback = function(name) {
+    if(this.scrollCallbacks.hasOwnProperty(name)) {
+        delete this.scrollCallbacks[name];
+    }
+};
+
+
+Mouse.registerScrollArea = function(name, x, y, w, h, callback) {
+    Mouse.scrollAreas[name] = {
         name : name,
         x : x,
         y : y,
@@ -138,8 +158,8 @@ Mouse.registerWheelArea = function(name, x, y, w, h, callback) {
 };
 
 
-Mouse.deleteWheelArea = function(name) {
-    if(Mouse.wheelAreas.hasOwnProperty(name)) {
-        delete Mouse.wheelAreas[name];
+Mouse.deleteScrollArea = function(name) {
+    if(Mouse.scrollAreas.hasOwnProperty(name)) {
+        delete Mouse.scrollAreas[name];
     }
 };

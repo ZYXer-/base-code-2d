@@ -1,6 +1,6 @@
 function Preloader() {}
 
-Preloader.prototype.sources;
+Preloader.prototype.sources = null;
 
 Preloader.prototype.loadedAssets = 0;
 Preloader.prototype.totalAssets = 0;
@@ -18,7 +18,11 @@ Preloader.prototype.setEndCallback = function(callback) {
 
 Preloader.prototype.reportAssetLoaded = function() {
     this.loadedAssets++;
-    this.fractionLoaded = this.loadedAssets / this.totalAssets;
+    this.fractionLoaded = 1.0;
+    if(this.totalAssets !== 0)
+    {
+        this.fractionLoaded = this.loadedAssets / this.totalAssets;
+    }
     if(this.loadedAssets === this.totalAssets) {
         this.loaded = true;
         if(this.endCallback !== null) {

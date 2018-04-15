@@ -49,11 +49,11 @@ Color.fromHSL = function(h, s, l) { // h, s and l are all values from 0.0 to 1.0
     }
     var p = (2 * l) - q;
 
-    return {
-        r : Math.round(Color.hueToRGB(p, q, h + (1 / 3)) * 255),
-        g : Math.round(Color.hueToRGB(p, q, h) * 255),
-        b : Math.round(Color.hueToRGB(p, q, h - (1 / 3)) * 255)
-    };
+    return new Color(
+        Math.round(Color.hueToRGB(p, q, h + (1 / 3)) * 255),
+        Math.round(Color.hueToRGB(p, q, h) * 255),
+        Math.round(Color.hueToRGB(p, q, h - (1 / 3)) * 255)
+    );
 };
 
 

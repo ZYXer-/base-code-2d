@@ -14,7 +14,7 @@ Settings.Game.PREVENT_CONTEXT_MENU = true;
 Settings.Game.DEFAULT_SOUND_VOLUME = 50;
 
 Settings.Game.DEBUG = true;
-Settings.Game.SHOW_PERFORMANCE_DETAILS = true;
+Settings.Game.SHOW_PERFORMANCE_DETAILS = false;
 
 
 
