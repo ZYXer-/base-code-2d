@@ -27,8 +27,8 @@ Settings.Size.HEIGHT = 450;
 Settings.Size.AUTO_RESIZE = true;
 Settings.Size.MIN_WIDTH = 800;
 Settings.Size.MIN_HEIGHT = 450;
-Settings.Size.MAX_WIDTH = 1920;
-Settings.Size.MAX_HEIGHT = 1080;
+Settings.Size.MAX_WIDTH = 3840;
+Settings.Size.MAX_HEIGHT = 2160;
 
 Settings.Size.FIXED_ASPECT_RATIO = true;
 Settings.Size.ASPECT_RATIO = 16.0 / 9.0;

@@ -84,6 +84,13 @@ function Demo() {
     this.demoIntegerScaling = new IntegerScaling(2, 5, 360, 202);
     this.demoIntegerScaling.addScalableImage("demoData");
     this.demoIntegerScaling.setPivotPoints(new Vec2(0, Game.height), new Vec2(-8, 8));
+
+    // Setup polygon and offset it
+    this.demoPolygon = [[13, 45], [45, 89], [56, 200], [190, 30], [121, 17]];
+    this.demoPolygon.push(this.demoPolygon[0]);
+    this.demoPolygonOffset1 = (new Offset()).data(this.demoPolygon).offset(-5)[0];
+    this.demoPolygonOffset2 = (new Offset()).data(this.demoPolygon).arcSegments(10).offset(50)[0];
+
 }
 
 
@@ -272,6 +279,35 @@ Demo.prototype.draw = function() {
 
     // Draw integer scaled mask
     this.demoIntegerScaling.drawMask(-7, -193, 358, 200, "rgba(255, 0, 0, 0.1)");
+
+    // Draw regular and offset polygons;
+    c.save();
+    c.translate(750, 100);
+    c.strokeStyle = "#f00";
+    c.beginPath();
+    c.moveTo(this.demoPolygon[0][0], this.demoPolygon[0][1]);
+    for(var i = 0; i < this.demoPolygon.length; i++) {
+        c.lineTo(this.demoPolygon[i][0], this.demoPolygon[i][1]);
+    }
+    c.closePath();
+    c.stroke();
+    c.strokeStyle = "#0c0";
+    c.beginPath();
+    c.moveTo(this.demoPolygonOffset1[0][0], this.demoPolygonOffset1[0][1]);
+    for(var i = 0; i < this.demoPolygonOffset1.length; i++) {
+        c.lineTo(this.demoPolygonOffset1[i][0], this.demoPolygonOffset1[i][1]);
+    }
+    c.closePath();
+    c.stroke();
+    c.strokeStyle = "#00f";
+    c.beginPath();
+    c.moveTo(this.demoPolygonOffset2[0][0], this.demoPolygonOffset2[0][1]);
+    for(var i = 0; i < this.demoPolygonOffset2.length; i++) {
+        c.lineTo(this.demoPolygonOffset2[i][0], this.demoPolygonOffset2[i][1]);
+    }
+    c.closePath();
+    c.stroke();
+    c.restore();
 
     // Remove screen shake
     this.demoShaking.remove();
