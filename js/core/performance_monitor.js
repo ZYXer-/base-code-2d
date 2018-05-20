@@ -15,8 +15,7 @@ PerformanceMonitor.stopwatches[2] = { name : "draw" };
 PerformanceMonitor.init = function() {
     if(Settings.Game.DEBUG) {
 
-        var d = new Date();
-        PerformanceMonitor.lastTime = (1000 * d.getSeconds()) + d.getMilliseconds();
+        PerformanceMonitor.lastTime = PerformanceMonitor.now();
 
         jQuery("#game_box").after("<div id=\"fps\"></div>");
 
@@ -105,6 +104,5 @@ PerformanceMonitor.printFps = function() {
 
 
 PerformanceMonitor.now = function() {
-    var d = new Date();
-    return (1000 * d.getSeconds()) + d.getMilliseconds();
+    return performance.now();
 };
