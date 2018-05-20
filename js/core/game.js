@@ -114,31 +114,43 @@ Game.update = function() {
 
 Game.draw = function() {
 
-    if(Settings.Size.FIXED_ASPECT_RATIO) {
-        c.save();
-        c.translate(this.frameOffsetX, this.frameOffsetY);
-    }
-    if(Settings.Size.FIXED_SIZE_IN_UNITS) {
-        c.save();
-        c.scale(Game.scaleX, Game.scaleY);
-    }
+    Game.applyScaling();
 
     if(SceneManager.scene.hasOwnProperty("draw")) {
         SceneManager.scene.draw();
     }
 
-    if(Settings.Size.FIXED_SIZE_IN_UNITS) {
-        c.restore();
-    }
-    if(Settings.Size.FIXED_ASPECT_RATIO) {
-        c.restore();
+    Game.removeScaling();
 
+    if(Settings.Size.FIXED_ASPECT_RATIO) {
         c.fillStyle = Settings.Size.FRAME_COLOR;
 
         c.fillRect(-10, -10, Game.canvasWidth + 20, Game.frameOffsetY + 10);
         c.fillRect(-10, -10, Game.frameOffsetX + 10, Game.canvasHeight + 20);
         c.fillRect(Game.canvasWidth - Game.frameOffsetX, -10, Game.frameOffsetX + 10, Game.canvasHeight + 20);
         c.fillRect(-10, Game.canvasHeight - Game.frameOffsetY, Game.canvasWidth + 20, Game.frameOffsetY + 10);
+    }
+};
+
+
+Game.applyScaling = function() {
+    if(Settings.Size.FIXED_ASPECT_RATIO) {
+        c.save();
+        c.translate(Game.frameOffsetX, Game.frameOffsetY);
+    }
+    if(Settings.Size.FIXED_SIZE_IN_UNITS) {
+        c.save();
+        c.scale(Game.scaleX, Game.scaleY);
+    }
+};
+
+
+Game.removeScaling = function() {
+    if(Settings.Size.FIXED_SIZE_IN_UNITS) {
+        c.restore();
+    }
+    if(Settings.Size.FIXED_ASPECT_RATIO) {
+        c.restore();
     }
 };
 
