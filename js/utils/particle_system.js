@@ -47,6 +47,11 @@ function ParticleSystem(options) {
         this.particlesPerTick = options.particlesPerTick;
     }
 
+    this.initFunction = null;
+    if(options.hasOwnProperty("init")) {
+        this.initFunction = options.init;
+    }
+
     this.drawFunction = null;
     if(options.hasOwnProperty("draw")) {
         this.drawFunction = options.draw;
@@ -146,7 +151,7 @@ ParticleSystem.prototype.draw = function() {
         if(this.mode === ParticleSystem.CONTINUOUS_MODE || (this.mode === ParticleSystem.BURST_MODE && this.burstNow)) {
             this.burstNow = false;
             for(var i = 0; i < this.particlesPerTick; i++) {
-                this.particles[this.particleCounter] = new Particle(this.drawFunction, this.emitter, this.emitterSize, this.initV, this.initA, this.friction, this.life);
+                this.particles[this.particleCounter] = new Particle(this.drawFunction, this.emitter, this.emitterSize, this.initV, this.initA, this.friction, this.life, this.initFunction);
                 this.particleCounter++;
             }
         }

@@ -1,4 +1,4 @@
-function Particle(drawFunction, emitter, emitterSize, initV, initA, friction, life) {
+function Particle(drawFunction, emitter, emitterSize, initV, initA, friction, life, initFunction) {
 
     this.drawFunction = drawFunction;
 
@@ -29,6 +29,10 @@ function Particle(drawFunction, emitter, emitterSize, initV, initA, friction, li
     this.fric = { x : friction.x, y : friction.y, z : friction.z };
 
     this.life = Utils.randFloat(life.min, life.max);
+
+    if(initFunction != null) {
+        initFunction(this);
+    }
 }
 
 

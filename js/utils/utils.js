@@ -169,6 +169,21 @@ Utils.getContext = function(canvas) {
 };
 
 
+Utils.drawPolygon = function(vec2List) {
+    c.beginPath();
+    var vec;
+    if(vec2List.length > 0) {
+        vec = vec2List[0];
+        c.moveTo(vec.x, vec.y);
+    }
+    for(var i = 1; i < vec2List.length; i++) {
+        vec = vec2List[i];
+        c.lineTo(vec.x, vec.y);
+    }
+    c.closePath();
+};
+
+
 Utils.drawCircle = function(c, x, y, radius) {
     c.beginPath();
     c.arc(x, y, radius, 0, TWO_PI);
@@ -229,6 +244,52 @@ Utils.drawRoundedCornerRect = function(x, y, w, h, r) {
     c.arc(x + w - r[2], y + h - r[2], r[2], 0, HALF_PI);
     c.arc(x + r[3], y + h - r[3], r[3], HALF_PI, PI);
     c.closePath();
+};
+
+
+Utils.drawStar = function(x, y, points, outerR, innerR) {
+    var pointAngle = PI / points;
+    c.save();
+    c.translate(x, y);
+    c.beginPath();
+    c.moveTo(0, -outerR);
+    c.lineTo(Math.sin(pointAngle) * innerR, -Math.cos(pointAngle) * innerR);
+    for(var i = 1; i < points; i++) {
+        c.lineTo(Math.sin((i * 2) * pointAngle) * outerR, -Math.cos((i * 2) * pointAngle) * outerR);
+        c.lineTo(Math.sin(((i * 2) + 1) * pointAngle) * innerR, -Math.cos(((i * 2) + 1) * pointAngle) * innerR);
+    }
+    c.closePath();
+    c.restore();
+};
+
+
+Utils.drawHeart = function(x, y, w, h, overhang) { // negative overhang = left, positive = right, best results h > w * 0.86 && h < w
+    if(h < w * 0.86 || h > w) {
+        console.warn("Utils.drawHeart() called with height that would not result in a heart shape. Parameter h should be greater than 0.86 * w and less than w.");
+    }
+    c.save();
+    c.translate(x, y);
+    var r = (h - (0.5 * w)) / 1.4142136;
+    var a = (1.0 - 0.7071068) * r;
+    var alpha = Math.acos(0.5 * (w - (2 * r)) / r);
+
+    c.beginPath();
+    c.moveTo(0.0, h * 0.5);
+    c.lineTo((w * -0.5) + a, (h * 0.5) + a - (w * 0.5));
+
+    c.arc((w * -0.5) + r, (h * -0.5) + r, r, 3 * QUART_PI, -alpha);
+    if(overhang > 0.0) {
+        c.arc((w * -0.5) + r, (h * -0.5) + r, r, -alpha, -alpha + overhang);
+        c.arc((w * -0.5) + r, (h * -0.5) + r, r, -alpha + overhang, -alpha, true);
+    }
+    if(overhang < 0.0) {
+        c.arc((w * 0.5) - r, (h * -0.5) + r, r, -PI + alpha, -PI + alpha + overhang, true);
+        c.arc((w * 0.5) - r, (h * -0.5) + r, r, -PI + alpha + overhang, -PI + alpha);
+    }
+    c.arc((w * 0.5) - r, (h * -0.5) + r, r, -PI + alpha, QUART_PI);
+
+    c.closePath();
+    c.restore();
 };
 
 

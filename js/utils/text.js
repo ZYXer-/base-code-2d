@@ -45,6 +45,11 @@ function Text(options) {
         this.borderLineJoin = options.borderLineJoin;
     }
 
+    this.monospaced = -1;
+    if(options.hasOwnProperty("monospaced")) {
+        this.monospaced = options.monospaced;
+    }
+
     this.lines = [""];
     this.showLines = [""];
     this.appearPos = 0;
@@ -289,7 +294,7 @@ Text.prototype.drawLines = function(drawBorder) {
 
 
 Text.prototype.drawLine = function(line, fullLine, x, y, drawBorder) {
-    if(this.letterSpacing === 0) {
+    if(this.letterSpacing === 0 && this.monospaced === -1) {
         if(this.finishedAppearing || this.align === "left") {
             if(drawBorder) {
                 c.strokeText(line, x, y);
@@ -309,18 +314,35 @@ Text.prototype.drawLine = function(line, fullLine, x, y, drawBorder) {
         }
     } else {
         var offsetX = 0;
+        var letterWidth;
         if(this.align === "center") {
-            offsetX = -this.measureWidth(fullLine) / 2;
+            if(this.monospaced >= 0) {
+                offsetX = -((this.monospaced + this.letterSpacing) * fullLine.length) / 2;
+            } else {
+                offsetX = -this.measureWidth(fullLine) / 2;
+            }
         } else if(this.align === "right") {
-            offsetX = -this.measureWidth(fullLine);
+            if(this.monospaced >= 0) {
+                offsetX = -((this.monospaced + this.letterSpacing) * fullLine.length);
+            } else {
+                offsetX = -this.measureWidth(fullLine);
+            }
         }
         for(var i = 0; i < line.length; i++) {
+            letterWidth = this.measureWidth(line[i]);
+            if(this.monospaced >= 0) {
+                offsetX += (this.monospaced - letterWidth) * 0.5;
+            }
             if(drawBorder) {
                 c.strokeText(line[i], x + offsetX, y);
             } else {
                 c.fillText(line[i], x + offsetX, y);
             }
-            offsetX += this.measureWidth(line[i]) + this.letterSpacing;
+            if(this.monospaced >= 0) {
+                offsetX += ((this.monospaced - letterWidth) * -0.5) + this.monospaced + this.letterSpacing;
+            } else {
+                offsetX += letterWidth + this.letterSpacing;
+            }
         }
     }
 };
