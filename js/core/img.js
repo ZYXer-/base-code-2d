@@ -58,6 +58,24 @@ Img.drawCustom = function(name, sourceX, sourceY, sourceWidth, sourceHeight, tar
 };
 
 
+Img.drawScaled = function(name, x, y, scale) {
+    c.save();
+    c.translate(x, y);
+    c.scale(scale, scale);
+    Img.draw(name, 0, 0);
+    c.restore();
+};
+
+
+Img.drawSpriteScaled = function(name, x, y, targetW, targetH, posX, posY, scale) {
+    c.save();
+    c.translate(x, y);
+    c.scale(scale, scale);
+    Img.drawSprite(name, 0, 0, targetW / scale, targetH / scale, posX, posY);
+    c.restore();
+};
+
+
 Img.drawIn = function(context, name, x, y) {
     context.drawImage(Img.get(name), x, y);
 };
@@ -70,6 +88,24 @@ Img.drawSpriteIn = function(context, name, x, y, w, h, posX, posY) {
 
 Img.drawCustomIn = function(context, name, sourceX, sourceY, sourceWidth, sourceHeight, targetX, targetY, targetWidth, targetHeight) {
     context.drawImage(Img.get(name), sourceX, sourceY, sourceWidth, sourceHeight, targetX, targetY, targetWidth, targetHeight);
+};
+
+
+Img.drawScaledIn = function(context, name, x, y, scale) {
+    context.save();
+    context.translate(x, y);
+    context.scale(scale, scale);
+    Img.drawIn(context, name, 0, 0);
+    context.restore();
+};
+
+
+Img.drawSpriteScaledIn = function(context, name, x, y, targetW, targetH, posX, posY, scale) {
+    context.save();
+    context.translate(x, y);
+    context.scale(scale, scale);
+    Img.drawSpriteIn(context, name, 0, 0, targetW / scale, targetH / scale, posX, posY);
+    context.restore();
 };
 
 

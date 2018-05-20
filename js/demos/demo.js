@@ -4,7 +4,7 @@
 function Demo() {
 
 
-    // This is the constant (blue) particle system
+    // This is the constant (rainbow) particle system
     this.demoParticleSystem1 = new ParticleSystem({
         emitter : new Vec3(225, 300, 0),
         emitterSize : { x : 40.0, y : 10.0, z : 0.0 },
@@ -12,9 +12,12 @@ function Demo() {
         a : { x : { min : -10.0, max : 10.0 }, y : { min : 0.0, max : 0.0 }, z : { min : 0.0, max : 0.0 }},
         friction : { x : 0.0, y : 100.0, z : 0.0 },
         life : { min : 1.0, max : 2.0 },
+        init : function(particle) {
+            particle.color = Color.fromHSL(Utils.randFloat(0.0, 1.0), 1.0, 0.5);
+        },
         draw : function(particle) {
             var opacity = Utils.limit(particle.life / 2.0, 0.0, 1.0);
-            c.fillStyle = "rgba(0, 0, 255, " + opacity + ")";
+            c.fillStyle = "rgba(" + particle.color.r + ", " + particle.color.g + ", " + particle.color.b + ", " + opacity + ")";
             c.fillRect(particle.pos.x - 20, particle.pos.y - 20, 40, 40);
         }
     });
@@ -62,7 +65,8 @@ function Demo() {
         lineHeight : 50,
         verticalAlign : "bottom",
         letterSpacing : 3,
-        appearCharPerSec : 10
+        appearCharPerSec : 10,
+        monospaced : 25
     });
 
     // Text based on pixel font
@@ -166,6 +170,9 @@ Demo.prototype.resize = function() {
  */
 Demo.prototype.update = function() {
 
+    // reset tooltip content
+    Tooltip.reset();
+
     var oldRotation = this.demoImageRotation;
 
     // Rotate rotating image (black square with cross)
@@ -201,7 +208,7 @@ Demo.prototype.update = function() {
         this.demoSound.fadeTo(1.0, 100);
     }
 
-    if(oldRotation < 20.0 && this.demoImageRotation >= 20.0) {
+    if(oldRotation < 90.0 && this.demoImageRotation >= 90.0) {
         this.demoSound.stop();
     }
 };
@@ -218,6 +225,9 @@ Demo.prototype.draw = function() {
             if(this.demoMatrixFromImage[x][y] === "full") {
                 c.fillStyle = "#ddd";
                 c.fillRect(x * 20, y * 20, 20, 20);
+                if(Mouse.isOver(x * 20, y * 20, 20, 20)) {
+                    Tooltip.set("You are now over matrix field: " + x + "/" + y);
+                }
             }
         }
     }

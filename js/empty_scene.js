@@ -1,7 +1,7 @@
-function IngameScene() {}
+function EmptyScene() {}
 
 
-IngameScene.show = function() {
+EmptyScene.show = function() {
 
 
     // do stuff before we update and draw this scene for the first time
@@ -10,7 +10,7 @@ IngameScene.show = function() {
 };
 
 
-IngameScene.hide = function() {
+EmptyScene.hide = function() {
 
 
     // do stuff before we draw and update the next scene
@@ -19,7 +19,7 @@ IngameScene.hide = function() {
 };
 
 
-IngameScene.resize = function() {
+EmptyScene.resize = function() {
 
 
     // do stuff when window is resized
@@ -28,7 +28,7 @@ IngameScene.resize = function() {
 };
 
 
-IngameScene.click = function() {
+EmptyScene.click = function() {
 
 
     // do stuff when left mouse button is clicked
@@ -37,7 +37,7 @@ IngameScene.click = function() {
 };
 
 
-IngameScene.update = function() {
+EmptyScene.update = function() {
 
     // reset tooltip content
     Tooltip.reset();
@@ -60,7 +60,7 @@ IngameScene.update = function() {
 };
 
 
-IngameScene.draw = function() {
+EmptyScene.draw = function() {
 
     // clear scene
     c.fillStyle = "#fff";

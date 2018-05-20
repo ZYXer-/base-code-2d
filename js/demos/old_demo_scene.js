@@ -50,4 +50,7 @@ OldDemoScene.draw = function() {
 
     // draw button label
     Text.draw(95, 45, 16, "opensans", "center", "#000", "< back to menu");
+
+    // draw tooltip
+    Tooltip.draw();
 };

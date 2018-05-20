@@ -122,6 +122,11 @@ Vec2.prototype.toString = function() {
 };
 
 
+Vec2.prototype.toVec3 = function() {
+    return new Vec3(this.x, this.y, 0.0);
+};
+
+
 Vec2.fromAngle = function(angle) {
     return new Vec2(Math.sin(angle), Math.cos(angle));
 };
@@ -258,4 +263,9 @@ Vec3.prototype.toThree = function() {
 
 Vec3.prototype.toString = function() {
     return "x=" + this.x + " / y=" + this.y + " / z=" + this.z;
+};
+
+
+Vec3.prototype.toVec2 = function() {
+    return new Vec2(this.x, this.y);
 };
