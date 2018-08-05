@@ -1,3 +1,7 @@
+/*
+ZYXer's Basecode Version 41.1 (2018-08-05)
+*/
+
 function Game() {}
 
 Game.canvasWidth = 1;
@@ -60,6 +64,8 @@ Game.start = function() {
         SceneManager.callMethodWithParam("scroll", delta);
     });
 
+    Button.init();
+
     if(Settings.Game.PAUSE_ON_BLUR) {
         PageVisibility.registerBlurHandler("pause", function() {
             Game.pause();
@@ -92,6 +98,7 @@ Game.loop = function() {
     Mouse.update();
     Game.update();
     Sound.update();
+    Button.reset();
 
     PerformanceMonitor.stopStopwatch(1);
     PerformanceMonitor.startStopwatch(2);

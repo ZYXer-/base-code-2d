@@ -95,6 +95,23 @@ function Demo() {
     this.demoPolygonOffset1 = (new Offset()).data(this.demoPolygon).offset(-5)[0];
     this.demoPolygonOffset2 = (new Offset()).data(this.demoPolygon).arcSegments(10).offset(50)[0];
 
+    // Setup button
+    this.demoButton = new Button({
+        x : 20,
+        y : 200,
+        w : 50,
+        h : 25,
+        click : function() {
+            demo.demoButton.setActive(false);
+            demo.demoButton.setTooltip("This button is now inactive");
+        },
+        draw : function(x, y, w, h, over, down, active) {
+            c.fillStyle = "rgb(" + (over ? 128 : 0) + ", " + (down ? 128 : 0) + ", " + (active ? 128 : 0) + ")";
+            c.fillRect(x, y, w, h);
+        },
+        active : true,
+        tooltip : "Click this button to make it inactive."
+    });
 }
 
 
@@ -324,6 +341,9 @@ Demo.prototype.draw = function() {
 
     // Draw web-font-based text (logo in bottom right)
     this.demoText.drawPosText(Game.width - 20, Game.height - 20, "ZYXer's Base Code");
+
+    // Draw button
+    this.demoButton.draw();
 
 };
 

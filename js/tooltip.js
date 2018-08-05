@@ -5,6 +5,7 @@ Tooltip.VERTICAL_PADDING = 6;
 Tooltip.HORIZONTAL_PADDING = 8;
 Tooltip.DISTANCE_TO_MOUSE = 10;
 Tooltip.DISTANCE_TO_WINDOW_BORDER = 20;
+Tooltip.DISPLAY_DELAY = 0;
 
 Tooltip.show = false;
 Tooltip.text = "";
@@ -12,6 +13,8 @@ Tooltip.text = "";
 Tooltip.textDrawable = null;
 Tooltip.width = 0;
 Tooltip.height = 0;
+
+Tooltip.displayDelayCountdown = 0.0;
 
 
 Tooltip.reset = function() {
@@ -34,9 +37,10 @@ Tooltip.initTextDrawable = function() {
 
 
 Tooltip.set = function(text) {
-    if(!Tooltip.show || Tooltip.text !== text.trim()) {
 
-        Tooltip.show = true;
+    Tooltip.show = true;
+
+    if(Tooltip.text !== text.trim()) {
         Tooltip.text = text.trim();
 
         if(Tooltip.textDrawable === null) {
@@ -49,6 +53,8 @@ Tooltip.set = function(text) {
 
         Tooltip.width += 2 * Tooltip.HORIZONTAL_PADDING;
         Tooltip.height += 2 * Tooltip.VERTICAL_PADDING;
+
+        Tooltip.displayDelayCountdown = Tooltip.DISPLAY_DELAY;
     }
 };
 
@@ -57,29 +63,38 @@ Tooltip.draw = function() {
 
     if(Tooltip.show) {
 
-        var pos = Mouse.pos.add(new Vec2(Tooltip.DISTANCE_TO_MOUSE, Tooltip.DISTANCE_TO_MOUSE));
-        if(pos.x + Tooltip.width + Tooltip.DISTANCE_TO_WINDOW_BORDER >= Game.width) {
-            pos.x = Mouse.pos.x - (Tooltip.width + Tooltip.DISTANCE_TO_MOUSE);
+        if(Tooltip.displayDelayCountdown > 0.0) {
+            Tooltip.displayDelayCountdown -= Timer.delta;
+
+        } else {
+            var pos = Mouse.pos.add(new Vec2(Tooltip.DISTANCE_TO_MOUSE, Tooltip.DISTANCE_TO_MOUSE));
+            if(pos.x + Tooltip.width + Tooltip.DISTANCE_TO_WINDOW_BORDER >= Game.width) {
+                pos.x = Mouse.pos.x - (Tooltip.width + Tooltip.DISTANCE_TO_MOUSE);
+            }
+            if(pos.y + Tooltip.height + Tooltip.DISTANCE_TO_WINDOW_BORDER >= Game.height) {
+                pos.y = Mouse.pos.y - (Tooltip.height + Tooltip.DISTANCE_TO_MOUSE);
+            }
+
+            c.save();
+            c.translate(pos.x, pos.y);
+
+            c.fillStyle = "#fff";
+            c.fillRect(0, 0, Tooltip.width, Tooltip.height);
+
+            c.strokeStyle = "#000";
+            c.lineWidth = 1;
+            c.strokeRect(-0.5, -0.5, Tooltip.width + 1, Tooltip.height + 1);
+
+            c.translate(Tooltip.HORIZONTAL_PADDING, Tooltip.VERTICAL_PADDING);
+
+            Tooltip.textDrawable.draw();
+
+            c.restore();
         }
-        if(pos.y + Tooltip.height + Tooltip.DISTANCE_TO_WINDOW_BORDER >= Game.height) {
-            pos.y = Mouse.pos.y - (Tooltip.height + Tooltip.DISTANCE_TO_MOUSE);
-        }
 
-        c.save();
-        c.translate(pos.x, pos.y);
-
-        c.fillStyle = "#fff";
-        c.fillRect(0, 0, Tooltip.width, Tooltip.height);
-
-        c.strokeStyle = "#000";
-        c.lineWidth = 1;
-        c.strokeRect(-0.5, -0.5, Tooltip.width + 1, Tooltip.height + 1);
-
-        c.translate(Tooltip.HORIZONTAL_PADDING, Tooltip.VERTICAL_PADDING);
-
-        Tooltip.textDrawable.draw();
-
-        c.restore();
+    } else {
+        Tooltip.text = "";
+        Tooltip.displayDelayCountdown = 0.0;
     }
 
 };

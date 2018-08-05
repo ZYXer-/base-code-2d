@@ -6,6 +6,11 @@ function Vec2(x, y) {
 }
 
 
+Vec2.prototype.equals = function(other) {
+    return (this.x === other.x && this.y === other.y);
+};
+
+
 Vec2.prototype.copy = function() {
     return new Vec2(this.x, this.y);
 };
@@ -139,6 +144,11 @@ function Vec3(x, y, z) {
     this.z = z;
 
 }
+
+
+Vec3.prototype.equals = function(other) {
+    return (this.x === other.x && this.y === other.y && this.z === other.z);
+};
 
 
 Vec3.prototype.copy = function() {

@@ -13,6 +13,16 @@ Color.prototype.toHex = function() {
 };
 
 
+Color.prototype.toRGB = function() {
+    return "rgb(" + this.r.toString(10) + "," + this.g.toString(10) + "," + this.b.toString(10) + ")";
+};
+
+
+Color.prototype.toRGBA = function(opacity) {
+    return "rgb(" + this.r.toString(10) + "," + this.g.toString(10) + "," + this.b.toString(10) + "," + opacity.toString(10) + ")";
+};
+
+
 Color.prototype.clone = function() {
     return new Color(this.r, this.g, this.b);
 };

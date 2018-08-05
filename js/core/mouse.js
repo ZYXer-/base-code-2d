@@ -10,6 +10,8 @@ Mouse.right = null;
 Mouse.scrollAreas = {};
 Mouse.scrollCallbacks = {};
 
+Mouse.hoverAreas = {};
+
 
 Mouse.init = function() {
 
@@ -102,6 +104,21 @@ Mouse.triggerScroll = function(event) {
 };
 
 
+Mouse.updateHoverAreas = function() {
+    for(var name in Mouse.hoverAreas) {
+        var area = Mouse.hoverAreas[name];
+        var isOver = Mouse.isOver(area.x, area.y, area.w, area.h);
+        if(isOver && !area.isOver) {
+            area.overCallback();
+            area.isOver = true;
+        } else if(!isOver && area.isOver) {
+            area.outCallback();
+            area.isOver = false;
+        }
+    }
+};
+
+
 Mouse.updatePosition = function(pos) {
     if(pos !== null) {
         var offset = jQuery("#game").offset();
@@ -116,6 +133,7 @@ Mouse.update = function() {
     Mouse.left.update();
     Mouse.middle.update();
     Mouse.right.update();
+    Mouse.updateHoverAreas();
 };
 
 
@@ -161,5 +179,26 @@ Mouse.registerScrollArea = function(name, x, y, w, h, callback) {
 Mouse.deleteScrollArea = function(name) {
     if(Mouse.scrollAreas.hasOwnProperty(name)) {
         delete Mouse.scrollAreas[name];
+    }
+};
+
+
+Mouse.registerHoverArea = function(name, x, y, w, h, overCallback, outCallback) {
+    Mouse.hoverAreas[name] = {
+        name : name,
+        x : x,
+        y : y,
+        w : w,
+        h : h,
+        overCallback : overCallback,
+        outCallback : outCallback,
+        isOver : false
+    };
+};
+
+
+Mouse.deleteHoverArea = function(name) {
+    if(Mouse.hoverAreas.hasOwnProperty(name)) {
+        delete Mouse.hoverAreas[name];
     }
 };

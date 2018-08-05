@@ -123,8 +123,7 @@ Utils.max = function(value, max) {
 };
 
 
-Utils.scale0to1 = function(value, min, max, reverse)
-{
+Utils.scale0to1 = function(value, min, max, reverse) {
     reverse = (typeof reverse !== "undefined" ? reverse : false);
     if(min === max) {
         return 0.0;

@@ -246,6 +246,26 @@ Text.prototype.updateAppear = function() {
 
 
 Text.prototype.draw = function() {
+    this.drawIn(c);
+};
+
+
+Text.prototype.drawPos = function(x, y) {
+    this.drawPosIn(c, x, y);
+};
+
+
+Text.prototype.drawText = function(text) {
+    this.drawTextIn(c, text);
+};
+
+
+Text.prototype.drawPosText = function(x, y, text) {
+    this.drawPosTextIn(c, x, y, text);
+};
+
+
+Text.prototype.drawIn = function(c) {
     if(this.lines.length === 0) {
         this.applyMultiline();
     }
@@ -259,20 +279,23 @@ Text.prototype.draw = function() {
     } else {
         c.textAlign = "left";
     }
+    if(this.monospaced !== -1) {
+        c.textAlign = "center";
+    }
 
     if(this.borderWidth > 0) {
         c.lineWidth = this.borderWidth * 2;
         c.strokeStyle = this.borderColor;
         c.lineJoin = this.borderLineJoin;
-        this.drawLines(true);
+        this.drawLines(c, true);
         c.lineJoin = "miter";
     }
 
-    this.drawLines(false);
+    this.drawLines(c, false);
 };
 
 
-Text.prototype.drawLines = function(drawBorder) {
+Text.prototype.drawLines = function(c, drawBorder) {
     var y = 0;
     if(this.verticalAlign === "bottom") {
         y -= this.lineHeight * (this.lines.length - 1);
@@ -281,19 +304,19 @@ Text.prototype.drawLines = function(drawBorder) {
     }
     if(this.finishedAppearing) {
         for(var i = 0; i < this.lines.length; i++) {
-            this.drawLine(this.lines[i], this.lines[i], this.x, this.y + y, drawBorder);
+            this.drawLine(c, this.lines[i], this.lines[i], this.x, this.y + y, drawBorder);
             y += this.lineHeight;
         }
     } else {
         for(var i = 0; i < this.showLines.length; i++) {
-            this.drawLine(this.showLines[i], this.lines[i], this.x, this.y + y, drawBorder);
+            this.drawLine(c, this.showLines[i], this.lines[i], this.x, this.y + y, drawBorder);
             y += this.lineHeight;
         }
     }
 };
 
 
-Text.prototype.drawLine = function(line, fullLine, x, y, drawBorder) {
+Text.prototype.drawLine = function(c, line, fullLine, x, y, drawBorder) {
     if(this.letterSpacing === 0 && this.monospaced === -1) {
         if(this.finishedAppearing || this.align === "left") {
             if(drawBorder) {
@@ -314,7 +337,6 @@ Text.prototype.drawLine = function(line, fullLine, x, y, drawBorder) {
         }
     } else {
         var offsetX = 0;
-        var letterWidth;
         if(this.align === "center") {
             if(this.monospaced >= 0) {
                 offsetX = -((this.monospaced + this.letterSpacing) * fullLine.length) / 2;
@@ -329,9 +351,8 @@ Text.prototype.drawLine = function(line, fullLine, x, y, drawBorder) {
             }
         }
         for(var i = 0; i < line.length; i++) {
-            letterWidth = this.measureWidth(line[i]);
             if(this.monospaced >= 0) {
-                offsetX += (this.monospaced - letterWidth) * 0.5;
+                offsetX += this.monospaced * 0.5;
             }
             if(drawBorder) {
                 c.strokeText(line[i], x + offsetX, y);
@@ -339,31 +360,31 @@ Text.prototype.drawLine = function(line, fullLine, x, y, drawBorder) {
                 c.fillText(line[i], x + offsetX, y);
             }
             if(this.monospaced >= 0) {
-                offsetX += ((this.monospaced - letterWidth) * -0.5) + this.monospaced + this.letterSpacing;
+                offsetX += (this.monospaced * 0.5) + this.letterSpacing;
             } else {
-                offsetX += letterWidth + this.letterSpacing;
+                offsetX += this.measureWidth(line[i]) + this.letterSpacing;
             }
         }
     }
 };
 
 
-Text.prototype.drawPos = function(x, y) {
+Text.prototype.drawPosIn = function(c, x, y) {
     this.setPos(x, y);
-    this.draw();
+    this.draw(c);
 };
 
 
-Text.prototype.drawText = function(text) {
+Text.prototype.drawTextIn = function(c, text) {
     this.setText(text);
-    this.draw();
+    this.draw(c);
 };
 
 
-Text.prototype.drawPosText = function(x, y, text) {
+Text.prototype.drawPosTextIn = function(c, x, y, text) {
     this.setPos(x, y);
     this.setText(text);
-    this.draw();
+    this.draw(c);
 };
 
 
