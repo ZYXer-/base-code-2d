@@ -1,5 +1,6 @@
-import { PI, clamp, createMatrix, randFloat, rand, distance } from "./Utils.js";
-import Easing from "./Easing.js";
+import { clamp, createMatrix, randFloat, rand } from "./Utils.js";
+import { PI, distance } from "./GeometryUtils.js";
+import * as Easing from "./Easing.js";
 
 
 export function perlinNoise(size, lowestOctave, highOctaveWeight) { // size and lowestOctave must be multiple of 2, highOctaveWeight must be 0.0 - 1.0

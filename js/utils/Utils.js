@@ -2,10 +2,7 @@ import * as Keyboard from "../core/input/Keyboard.js";
 import Vec2 from "./Vec2.js";
 
 
-export const QUART_PI = 0.78539816339;
-export const HALF_PI = 1.57079632679;
-export const PI = 3.14159265359;
-export const TWO_PI = 6.28318530718;
+
 
 
 export function rand(min, max) {
@@ -32,68 +29,7 @@ export function trueOrFalse(probabilityOfTrue) {
 }
 
 
-export function distance(x1, y1, x2, y2) {
-    let dx = x2 - x1;
-    let dy = y2 - y1;
-    return Math.sqrt((dx * dx) + (dy * dy));
-}
 
-
-export function angle(x1, y1, x2, y2) {
-    return Math.atan2(x1 - x2, y2 - y1);
-}
-
-
-export function toRad(degrees) {
-    return degrees * 0.0174532;
-}
-
-
-export function angleDelta(angleA, angleB) {
-    let angleDelta = angleB - angleA;
-    while(angleDelta > PI) {
-        angleDelta -= TWO_PI;
-    }
-    while(angleDelta <= -PI) {
-        angleDelta += TWO_PI;
-    }
-    return angleDelta;
-}
-
-
-export function intersectLines(line1point1, line1point2, line2point1, line2point2) {
-    let x1 = line1point1.x;
-    let y1 = line1point1.y;
-    let x2 = line1point2.x;
-    let y2 = line1point2.y;
-    let x3 = line2point1.x;
-    let y3 = line2point1.y;
-    let x4 = line2point2.x;
-    let y4 = line2point2.y;
-    let demon = ((x1 - x2) * (y3 - y4)) - ((y1 - y2) * (x3 - x4));
-    if(demon === 0) {
-        return null; // parallel
-    }
-    let x = (((x1 * y2) - (y1 * x2)) * (x3 - x4)) - ((x1 - x2) * ((x3 * y4) - (y3 * x4)));
-    x /= demon;
-    let y = (((x1 * y2) - (y1 * x2)) * (y3 - y4)) - ((y1 - y2) * ((x3 * y4) - (y3 * x4)));
-    y /= demon;
-    return new Vec2(x, y);
-}
-
-
-export function inPolygon(polygon, point) {
-    let inside = false;
-    let j = (polygon.length - 1);
-    for(let i = 0; i < polygon.length; i++) {
-        if(((polygon[i].y > point.y) !== (polygon[j].y > point.y)) &&
-            (point.x < (polygon[j].x - polygon[i].x) * (point.y - polygon[i].y) / (polygon[j].y - polygon[i].y) + polygon[i].x)) {
-            inside = !inside;
-        }
-        j = i;
-    }
-    return inside;
-}
 
 
 export function clamp(value, min, max) {
@@ -165,130 +101,6 @@ export function createCanvas(width, height) {
 
 export function getContext(canvas) {
     return canvas.getContext("2d");
-}
-
-
-export function drawPolygon(vec2List) {
-    c.beginPath();
-    let vec;
-    if(vec2List.length > 0) {
-        vec = vec2List[0];
-        c.moveTo(vec.x, vec.y);
-    }
-    for(let i = 1; i < vec2List.length; i++) {
-        vec = vec2List[i];
-        c.lineTo(vec.x, vec.y);
-    }
-    c.closePath();
-}
-
-
-export function drawCircle(c, x, y, radius) {
-    c.beginPath();
-    c.arc(x, y, radius, 0, TWO_PI);
-    c.closePath();
-}
-
-
-export function drawEllipse(c, x, y, w, h) {
-    let kappa = 0.5522848;
-    let ox = (w / 2) * kappa;
-    let oy = (h / 2) * kappa;
-    let xe = x + w;
-    let ye = y + h;
-    let xm = x + w / 2;
-    let ym = y + h / 2;
-
-    c.beginPath();
-    c.moveTo(x, ym);
-    c.bezierCurveTo(x, ym - oy, xm - ox, y, xm, y);
-    c.bezierCurveTo(xm + ox, y, xe, ym - oy, xe, ym);
-    c.bezierCurveTo(xe, ym + oy, xm + ox, ye, xm, ye);
-    c.bezierCurveTo(xm - ox, ye, x, ym + oy, x, ym);
-    c.closePath();
-}
-
-
-export function drawRing(c, x, y, innerRadius, outerRadius) {
-    c.beginPath();
-    c.arc(x, y, outerRadius, 0, TWO_PI, false);
-    c.arc(x, y, innerRadius, TWO_PI, 0, true);
-    c.closePath();
-}
-
-
-export function drawCircleSegment(c, x, y, radius, startAngle, endAngle) {
-    c.beginPath();
-    c.lineTo(x, y);
-    c.arc(x, y, radius, startAngle, endAngle);
-    c.closePath();
-}
-
-
-export function drawRingSegment(c, x, y, innerRadius, outerRadius, startAngle, endAngle) {
-    c.beginPath();
-    c.arc(x, y, outerRadius, startAngle, endAngle, false);
-    c.arc(x, y, innerRadius, endAngle, startAngle, true);
-    c.closePath();
-}
-
-
-export function drawRoundedCornerRect(x, y, w, h, r) {
-    if(typeof r === "number") {
-        r = [ r, r, r, r ];
-    }
-    c.beginPath();
-    c.arc(x + r[0], y + r[0], r[0], PI, 3 * HALF_PI);
-    c.arc(x + w - r[1], y + r[1], r[1], 3 * HALF_PI, TWO_PI);
-    c.arc(x + w - r[2], y + h - r[2], r[2], 0, HALF_PI);
-    c.arc(x + r[3], y + h - r[3], r[3], HALF_PI, PI);
-    c.closePath();
-}
-
-
-export function drawStar(x, y, points, outerR, innerR) {
-    let pointAngle = PI / points;
-    c.save();
-    c.translate(x, y);
-    c.beginPath();
-    c.moveTo(0, -outerR);
-    c.lineTo(Math.sin(pointAngle) * innerR, -Math.cos(pointAngle) * innerR);
-    for(let i = 1; i < points; i++) {
-        c.lineTo(Math.sin((i * 2) * pointAngle) * outerR, -Math.cos((i * 2) * pointAngle) * outerR);
-        c.lineTo(Math.sin(((i * 2) + 1) * pointAngle) * innerR, -Math.cos(((i * 2) + 1) * pointAngle) * innerR);
-    }
-    c.closePath();
-    c.restore();
-}
-
-
-export function drawHeart(x, y, w, h, overhang) { // negative overhang = left, positive = right, best results h > w * 0.86 && h < w
-    if(h < w * 0.86 || h > w) {
-        console.warn("Utils.drawHeart() called with height that would not result in a heart shape. Parameter h should be greater than 0.86 * w and less than w.");
-    }
-    c.save();
-    c.translate(x, y);
-    let r = (h - (0.5 * w)) / 1.4142136;
-    let a = (1.0 - 0.7071068) * r;
-    let alpha = Math.acos(0.5 * (w - (2 * r)) / r);
-
-    c.beginPath();
-    c.moveTo(0.0, h * 0.5);
-    c.lineTo((w * -0.5) + a, (h * 0.5) + a - (w * 0.5));
-
-    c.arc((w * -0.5) + r, (h * -0.5) + r, r, 3 * QUART_PI, -alpha);
-    if(overhang > 0.0) {
-        c.arc((w * -0.5) + r, (h * -0.5) + r, r, -alpha, -alpha + overhang);
-        c.arc((w * -0.5) + r, (h * -0.5) + r, r, -alpha + overhang, -alpha, true);
-    }
-    if(overhang < 0.0) {
-        c.arc((w * 0.5) - r, (h * -0.5) + r, r, -PI + alpha, -PI + alpha + overhang, true);
-        c.arc((w * 0.5) - r, (h * -0.5) + r, r, -PI + alpha + overhang, -PI + alpha);
-    }
-    c.arc((w * 0.5) - r, (h * -0.5) + r, r, -PI + alpha, QUART_PI);
-
-    c.closePath();
-    c.restore();
 }
 
 

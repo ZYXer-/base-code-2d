@@ -9,6 +9,8 @@ import * as Sound from "../core/Sound.js";
 import * as Utils from "../utils/Utils.js";
 import * as ImageProcessing from "../utils/ImageProcessing.js";
 import * as Easing from "../utils/Easing.js";
+import { QUART_PI, HALF_PI, PI, TWO_PI } from "../utils/GeometryUtils.js";
+import { drawCircle } from "../utils/DrawUtils.js";
 import Vec2 from "../utils/Vec2.js";
 import Vec3 from "../utils/Vec3.js";
 import Text from "../utils/Text.js";
@@ -308,7 +310,7 @@ class Demo {
         // Draw arrow-key-controlled pawn
         c.save();
         c.translate(this.demoPawn.pos.x, this.demoPawn.pos.y);
-        c.rotate(this.demoPawn.angle * Utils.QUART_PI);
+        c.rotate(this.demoPawn.angle * QUART_PI);
 
         // Check if mouse is hovering over pawn
         if(Mouse.isOverCircle(this.demoPawn.pos.x, this.demoPawn.pos.y, 12)) {
@@ -317,7 +319,7 @@ class Demo {
             c.fillStyle = "#c00";
         }
 
-        Utils.drawCircle(c, 0, 0, 12);
+        drawCircle(c, 0, 0, 12);
         c.fill();
 
         c.fillStyle = "#fff";

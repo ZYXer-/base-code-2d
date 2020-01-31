@@ -1,29 +1,30 @@
-import * as Utils from "./Utils.js";
+import { clamp } from "./Utils.js";
 import * as Timer from "../core/Timer.js";
+import { QUART_PI, HALF_PI, PI, TWO_PI } from "./GeometryUtils.js";
 
 
 export function sin(x) {
-    return Utils.clamp(0.5 - (0.5 * Math.cos(Utils.PI * x)), 0.0, 1.0);
+    return clamp(0.5 - (0.5 * Math.cos(PI * x)), 0.0, 1.0);
 }
 
 
 export function sinOut(x) {
-    return Utils.clamp(Math.sin(Utils.HALF_PI * x), 0.0, 1.0);
+    return clamp(Math.sin(HALF_PI * x), 0.0, 1.0);
 }
 
 
 export function sinIn(x) {
-    return Utils.clamp(1.0 - Math.cos(Utils.HALF_PI * x), 0.0, 1.0);
+    return clamp(1.0 - Math.cos(HALF_PI * x), 0.0, 1.0);
 }
 
 
 export function quad(x) {
     x *= 2.0;
     if(x < 1.0) {
-        return Utils.clamp(0.5 * x * x, 0.0, 1.0);
+        return clamp(0.5 * x * x, 0.0, 1.0);
     } else {
         x = 2.0 - x;
-        return Utils.clamp(1.0 - (0.5 * x * x), 0.0, 1.0);
+        return clamp(1.0 - (0.5 * x * x), 0.0, 1.0);
     }
 }
 
@@ -41,10 +42,10 @@ export function quadIn(x) {
 export function cube(x) {
     x *= 2.0;
     if(x < 1.0) {
-        return Utils.clamp(0.5 * x * x * x, 0.0, 1.0);
+        return clamp(0.5 * x * x * x, 0.0, 1.0);
     } else {
         x = 2.0 - x;
-        return Utils.clamp(1.0 - (0.5 * x * x * x), 0.0, 1.0);
+        return clamp(1.0 - (0.5 * x * x * x), 0.0, 1.0);
     }
 }
 
@@ -72,7 +73,7 @@ export function accelerateToPos(currentPos, targetPos, velocity, acceleration, m
         }
         let a = 0;
         if(Math.abs(neededBrakingA) >= acceleration) {
-            a = -Utils.clamp(neededBrakingA, -acceleration * 1.2, acceleration * 1.2);
+            a = -clamp(neededBrakingA, -acceleration * 1.2, acceleration * 1.2);
         } else if(Math.abs(neededBrakingA) * 1.2 < acceleration) { // no acceleration during 0.2 sec
             if(dstToTarget < 0) {
                 a = -acceleration;
@@ -81,7 +82,7 @@ export function accelerateToPos(currentPos, targetPos, velocity, acceleration, m
             }
         }
         newVelocity += a * Timer.delta;
-        newVelocity = Utils.clamp(newVelocity, -maxV, maxV);
+        newVelocity = clamp(newVelocity, -maxV, maxV);
         newPos += newVelocity * Timer.delta;
         let threshold = Math.abs(newVelocity * Timer.delta);
         if(newPos > targetPos - threshold && newPos < targetPos + threshold) {
