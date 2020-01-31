@@ -1,0 +1,28 @@
+{
+  "name": "base-code-2d",
+  "version": "45.1.1",
+  "description": "Base code to create 2D games using html canvas.",
+  "main": "nodeServer.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node nodeServer.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZYXer-/base-code-2d.git"
+  },
+  "keywords": [
+    "2d",
+    "game"
+  ],
+  "author": "Henry Raymond",
+  "license": "GPL-2.0-or-later",
+  "bugs": {
+    "url": "https://github.com/ZYXer-/base-code-2d/issues"
+  },
+  "homepage": "https://github.com/ZYXer-/base-code-2d#readme"
+}
