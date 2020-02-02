@@ -1,5 +1,5 @@
 import * as Mouse from "../core/input/Mouse.js";
-import * as Tooltip from "../Tooltip.js";
+import * as Tooltip from "../core/Tooltip.js";
 
 
 class Button {

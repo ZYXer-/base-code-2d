@@ -1,8 +1,8 @@
-import { c } from "./core/canvas.js";
-import * as Viewport from "./core/Viewport.js";
-import * as Mouse from "./core/input/Mouse.js";
-import * as Timer from "./core/Timer.js";
-import Vec2 from "./utils/Vec2.js";
+import { c } from "./canvas.js";
+import * as Viewport from "./Viewport.js";
+import * as Mouse from "./input/Mouse.js";
+import * as Timer from "./Timer.js";
+import Vec2 from "../utils/Vec2.js";
 
 
 let show = false;

@@ -16,6 +16,6 @@ export function load() {
 
     // Scene that is shown when loading is over
     SCENE_AFTER_LOADING = DemoMenuScene;
-    // SceneManager.SCENE_AFTER_LOADING = IngameScene;
+    // SCENE_AFTER_LOADING = IngameScene;
 
 }

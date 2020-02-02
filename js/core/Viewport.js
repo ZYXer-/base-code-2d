@@ -1,6 +1,7 @@
 import { c, canvas } from "./canvas.js";
 import * as Settings from "../Settings.js";
 import * as SceneManager from "./SceneManager.js";
+import * as sf from "../libs/screenfull.min.js";
 import { clamp } from "../utils/Utils.js";
 
 

@@ -1,7 +1,7 @@
 import { c } from "./core/canvas.js";
 import * as Game from "./core/Game.js";
 import * as Viewport from "./core/Viewport.js";
-import * as Tooltip from "./Tooltip.js";
+import * as Tooltip from "./core/Tooltip.js";
 import * as BasicTooltipPainter from "./BasicTooltipPainter.js"
 import * as PauseScreen from "./PauseScreen.js";
 import * as Mouse from "./core/input/Mouse.js";

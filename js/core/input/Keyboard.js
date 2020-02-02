@@ -3,9 +3,8 @@
 export let allowDefault = false;
 
 
-let allowKeys = [];
-
-let keyPressed = new Map();
+let allowKeys = new Set();
+let keyPressed = new Set();
 
 let keyDownHandlers = new Map();
 let keyUpHandlers = new Map();
@@ -13,20 +12,20 @@ let keyUpHandlers = new Map();
 
 function construct() {
     jQuery(document).keydown(event => {
-        if(!allowDefault && allowKeys.indexOf(event.which) === -1) {
+        if(!allowDefault && !allowKeys.has(event.which)) {
             event.preventDefault();
-            keyPressed[event.which] = true;
-            if(keyDownHandlers.hasOwnProperty(event.which)) {
-                keyDownHandlers[event.which].callback();
+            keyPressed.add(event.which);
+            if(keyDownHandlers.has(event.which)) {
+                keyDownHandlers.get(event.which).callback();
             }
         }
 
     }).keyup(event => {
-        if(!allowDefault && allowKeys.indexOf(event.which) === -1) {
+        if(!allowDefault && !allowKeys.has(event.which)) {
             event.preventDefault();
-            keyPressed[event.which] = false;
-            if(keyUpHandlers.hasOwnProperty(event.which)) {
-                keyUpHandlers[event.which].callback();
+            keyPressed.delete(event.which);
+            if(keyUpHandlers.has(event.which)) {
+                keyUpHandlers.get(event.which).callback();
             }
         }
     });
@@ -36,10 +35,7 @@ construct();
 
 
 export function isPressed(key) {
-    if(!keyPressed.hasOwnProperty(key)) {
-        return false;
-    }
-    return keyPressed[key];
+    return keyPressed.has(key);
 }
 
 
@@ -69,18 +65,12 @@ export function setAllowDefault(newAllowDefault) {
 
 
 export function allowKey(key) {
-    let i = allowKeys.indexOf(key);
-    if(i === -1) {
-        allowKeys.push(key);
-    }
+    allowKeys.add(key);
 }
 
 
 export function preventKey(key) {
-    let i = allowKeys.indexOf(key);
-    if(i > -1) {
-        allowKeys.splice(i, 1);
-    }
+    allowKeys.delete(key);
 }
 
 

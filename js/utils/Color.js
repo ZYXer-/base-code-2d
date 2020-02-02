@@ -47,7 +47,7 @@ class Color {
     }
 
 
-    static fromHSL(h, s, l) { // h, s and l are all values from 0.0 to 1.0
+    static fromHSL(h, s, l) { // h, s and l are all values from 0.0 to 1.0 (s > 0.0)
         if(s === 0) {
             return { r : Math.round(l * 255), g : Math.round(l * 255), b : Math.round(l * 255) };
         }

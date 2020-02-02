@@ -21,7 +21,7 @@ import Shaking from "../utils/Shaking.js";
 import PixelText from "../utils/PixelText.js";
 import Acceleratable from "../utils/Acceleratable.js";
 import IntegerScaling from "../utils/IntegerScaling.js";
-import * as Tooltip from "../Tooltip.js";
+import * as Tooltip from "../core/Tooltip.js";
 import * as offsetjs from "../libs/offset.min.js";
 
 
