@@ -33,7 +33,16 @@ export function set(newContent) {
         show = true;
         overridePosition = null;
 
-        if(content !== newContent) {
+        let contentIsNew = true;
+        if(typeof content === typeof newContent) {
+            if(typeof content === "object") {
+                contentIsNew = JSON.stringify(content) !== JSON.stringify(newContent);
+            } else {
+                contentIsNew = content !== newContent;
+            }
+        }
+
+        if(contentIsNew) {
             content = newContent;
 
             dimensions = painter.insertNewContent(content);
@@ -62,14 +71,14 @@ export function draw() {
                 pos = overridePosition;
             }
 
-            const maxX = pos.x + dimensions.width + painter.DISTANCE_TO_WINDOW_BORDER;
+            const maxX = pos.x + dimensions.x + painter.DISTANCE_TO_WINDOW_BORDER;
             if(maxX >= Viewport.width) {
-                pos.x = Mouse.pos.x - (dimensions.width + painter.DISTANCE_TO_MOUSE);
+                pos.x = Mouse.pos.x - (dimensions.x + painter.DISTANCE_TO_MOUSE);
             }
 
-            const maxY = pos.y + dimensions.height + painter.DISTANCE_TO_WINDOW_BORDER;
+            const maxY = pos.y + dimensions.y + painter.DISTANCE_TO_WINDOW_BORDER;
             if(maxY >= Viewport.height) {
-                pos.y = Mouse.pos.y - (dimensions.height + painter.DISTANCE_TO_MOUSE);
+                pos.y = Mouse.pos.y - (dimensions.y + painter.DISTANCE_TO_MOUSE);
             }
 
             c.save();

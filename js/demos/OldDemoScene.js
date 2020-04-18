@@ -6,6 +6,7 @@ import * as Tooltip from "../core/Tooltip.js";
 import * as BasicTooltipPainter from "../BasicTooltipPainter.js";
 import Demo from "./Demo.js";
 import Text from "../utils/Text.js";
+import * as PauseScreen from "../PauseScreen.js";
 
 
 let demo;
@@ -55,6 +56,9 @@ export function draw() {
 
     // draw tooltip
     Tooltip.draw();
+
+    // draw pause screen when paused
+    PauseScreen.draw();
 }
 
 
