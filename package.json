@@ -4,10 +4,9 @@
   "description": "Base code to create 2D games using html canvas.",
   "main": "nodeServer.js",
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.18.1",
     "path": "^0.12.7"
   },
-  "devDependencies": {},
   "scripts": {
     "start": "node nodeServer.js"
   },
