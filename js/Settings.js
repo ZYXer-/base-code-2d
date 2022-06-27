@@ -33,7 +33,7 @@ export const Size = {
     FRAME_COLOR: "#000",
 
     FIXED_SIZE_IN_UNITS: false,
-    WIDTH_IN_UNITS: 1920,
+    WIDTH_IN_UNITS: 1920, // setting width or heigth to 0 only constrains in the other dimension
     HEIGHT_IN_UNITS: 1080
 };
 

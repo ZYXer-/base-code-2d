@@ -102,9 +102,20 @@ export function resize() {
         height -= 2.0 * frameOffsetY;
     }
 
-    if(Settings.Size.FIXED_SIZE_IN_UNITS) {
-        scaleX = (canvasWidth - (2.0 * frameOffsetX)) / Settings.Size.WIDTH_IN_UNITS;
-        scaleY = (canvasHeight - (2.0 * frameOffsetY)) / Settings.Size.HEIGHT_IN_UNITS;
+    if (Settings.Size.FIXED_SIZE_IN_UNITS) {
+        
+        if (Settings.Size.WIDTH_IN_UNITS === 0) {
+            scaleY = (canvasHeight - (2.0 * frameOffsetY)) / Settings.Size.HEIGHT_IN_UNITS;
+            scaleX = scaleY;
+
+        } else if (Settings.Size.HEIGHT_IN_UNITS === 0) {
+            scaleX = (canvasWidth - (2.0 * frameOffsetX)) / Settings.Size.WIDTH_IN_UNITS;
+            scaleY = scaleX;
+
+        } else {
+            scaleX = (canvasWidth - (2.0 * frameOffsetX)) / Settings.Size.WIDTH_IN_UNITS;
+            scaleY = (canvasHeight - (2.0 * frameOffsetY)) / Settings.Size.HEIGHT_IN_UNITS;
+        }
 
         width /= scaleX;
         height /= scaleY;
