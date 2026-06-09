@@ -76,7 +76,6 @@ Format: `<TOPIC>-<NUMBER>` — check off items as they are completed.
 ## INF — Infrastructure
 
 - [x] **INF-1** Add a `package.json` start script (`"start": "npm start"`)
-- [ ] **INF-2** Consider a lightweight bundler/dev server (e.g. Vite) for better DX (HMR, sourcemaps) — only if the no-build-step policy is relaxed
 - [ ] **INF-3** Add a `.editorconfig` for consistent indentation across editors
 - [x] **INF-4** Set up ESLint with a custom config matching project style
 - [ ] **INF-5** Restructure repo — move current root content (demos, assets, entry point) into an `example/` subfolder so the engine and the example game are clearly separated

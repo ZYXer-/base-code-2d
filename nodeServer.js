@@ -5,7 +5,7 @@ const app = express();
 
 app.use(express.static(__dirname));
 
-app.get("*", function (request, response) {
+app.get("/{*path}", function (request, response) {
     response.sendFile(path.resolve(__dirname, "index.htm"));
 });
 
