@@ -58,8 +58,8 @@ export default class Vec2 {
 
 
     min(minLength) {
-        let currentLength = this.norm();
-        if(currentLength < minLength) {
+        const currentLength = this.norm();
+        if (currentLength < minLength) {
             return this.normalize().multiply(minLength);
         }
         return this.copy();
@@ -67,8 +67,8 @@ export default class Vec2 {
 
 
     max(maxLength) {
-        let currentLength = this.norm();
-        if(currentLength > maxLength) {
+        const currentLength = this.norm();
+        if (currentLength > maxLength) {
             return this.normalize().multiply(maxLength);
         }
         return this.copy();
@@ -76,10 +76,10 @@ export default class Vec2 {
 
 
     clamp(minLength, maxLength) {
-        let currentLength = this.norm();
-        if(currentLength < minLength) {
+        const currentLength = this.norm();
+        if (currentLength < minLength) {
             return this.normalize().multiply(minLength);
-        } else if(currentLength > maxLength) {
+        } else if (currentLength > maxLength) {
             return this.normalize().multiply(maxLength);
         }
         return this.copy();
@@ -97,8 +97,8 @@ export default class Vec2 {
 
 
     normalize() {
-        let length = this.norm();
-        if(length === 0) {
+        const length = this.norm();
+        if (length === 0) {
             return new Vec2(0.0, 0.0);
         }
         return new Vec2(this.x / length, this.y / length);

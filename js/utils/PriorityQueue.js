@@ -24,9 +24,9 @@ class PriorityQueue {
 
 
     pop() {
-        let element = this.elements[0];
-        let end = this.elements.pop();
-        if(this.elements.length > 0) {
+        const element = this.elements[0];
+        const end = this.elements.pop();
+        if (this.elements.length > 0) {
             this.elements[0] = end;
             this.sinkDown(0);
         }
@@ -35,10 +35,10 @@ class PriorityQueue {
 
 
     remove(node) {
-        for(let i = 0; i < this.elements.length; i++) {
-            if(this.elements[i] === node) {
-                let end = this.elements.pop();
-                if(i !== this.elements.length - 1) {
+        for (let i = 0; i < this.elements.length; i++) {
+            if (this.elements[i] === node) {
+                const end = this.elements.pop();
+                if (i !== this.elements.length - 1) {
                     this.elements[i] = end;
                     this.bubbleUp(i);
                     this.sinkDown(i);
@@ -50,8 +50,8 @@ class PriorityQueue {
 
 
     rescore(node) {
-        for(let i = 0; i < this.elements.length; i++) {
-            if(this.elements[i] === node) {
+        for (let i = 0; i < this.elements.length; i++) {
+            if (this.elements[i] === node) {
                 this.bubbleUp(i);
                 this.sinkDown(i);
                 break;
@@ -61,12 +61,12 @@ class PriorityQueue {
 
 
     bubbleUp(n) {
-        let element = this.elements[n];
-        let score = this.scoreCallback(element);
-        while(n > 0) {
-            let parentN = Math.floor((n + 1) / 2) - 1;
-            let parent = this.elements[parentN];
-            if(score < this.scoreCallback(parent)) {
+        const element = this.elements[n];
+        const score = this.scoreCallback(element);
+        while (n > 0) {
+            const parentN = Math.floor((n + 1) / 2) - 1;
+            const parent = this.elements[parentN];
+            if (score < this.scoreCallback(parent)) {
                 this.elements[parentN] = element;
                 this.elements[n] = parent;
                 n = parentN;
@@ -78,22 +78,22 @@ class PriorityQueue {
 
 
     sinkDown(n) {
-        let length = this.elements.length;
-        let element = this.elements[n];
-        let score = this.scoreCallback(element);
+        const length = this.elements.length;
+        const element = this.elements[n];
+        const score = this.scoreCallback(element);
 
-        while(true) {
-            let child2n = (n + 1) * 2;
-            let child1n = child2n - 1;
-            let oldN = n;
+        while (true) {
+            const child2n = (n + 1) * 2;
+            const child1n = child2n - 1;
+            const oldN = n;
 
-            if(child2n < length) {
-                let child1 = this.elements[child1n];
-                let child1Score = this.scoreCallback(child1);
-                let child2 = this.elements[child2n];
-                let child2Score = this.scoreCallback(child2);
-                if(child1Score < score) {
-                    if(child2Score < child1Score) {
+            if (child2n < length) {
+                const child1 = this.elements[child1n];
+                const child1Score = this.scoreCallback(child1);
+                const child2 = this.elements[child2n];
+                const child2Score = this.scoreCallback(child2);
+                if (child1Score < score) {
+                    if (child2Score < child1Score) {
                         this.elements[n] = this.elements[child2n];
                         this.elements[child2n] = element;
                         n = child2n;
@@ -102,22 +102,22 @@ class PriorityQueue {
                         this.elements[child1n] = element;
                         n = child1n;
                     }
-                } else if(child2Score < score) {
+                } else if (child2Score < score) {
                     this.elements[n] = this.elements[child2n];
                     this.elements[child2n] = element;
                     n = child2n;
                 }
 
-            } else if(child1n < length) {
-                let child1 = this.elements[child1n];
-                let child1Score = this.scoreCallback(child1);
-                if(score > child1Score) {
+            } else if (child1n < length) {
+                const child1 = this.elements[child1n];
+                const child1Score = this.scoreCallback(child1);
+                if (score > child1Score) {
                     this.elements[n] = this.elements[child1n];
                     this.elements[child1n] = element;
                     n = child1n;
                 }
             }
-            if(n === oldN) {
+            if (n === oldN) {
                 break;
             }
         }

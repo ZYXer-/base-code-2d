@@ -7,9 +7,9 @@ class Color {
         this.b = b;
     }
 
-    
+
     toHex() {
-        let hex = ((this.r * 65536) + (this.g * 256) + this.b).toString(16);
+        const hex = ((this.r * 65536) + (this.g * 256) + this.b).toString(16);
         return "#" + ("000000".substring(0, 6 - hex.length)) + hex;
     }
 
@@ -48,17 +48,17 @@ class Color {
 
 
     static fromHSL(h, s, l) { // h, s and l are all values from 0.0 to 1.0 (s > 0.0)
-        if(s === 0) {
+        if (s === 0) {
             return { r : Math.round(l * 255), g : Math.round(l * 255), b : Math.round(l * 255) };
         }
 
         let q;
-        if(l < 0.5) {
+        if (l < 0.5) {
             q = l * (1 + s);
         } else {
             q = l + s - (l * s);
         }
-        let p = (2 * l) - q;
+        const p = (2 * l) - q;
 
         return new Color(
             Math.round(Color.hueToRGB(p, q, h + (1 / 3)) * 255),
@@ -69,18 +69,18 @@ class Color {
 
 
     static hueToRGB(p, q, t) {
-        if(t < 0) {
+        if (t < 0) {
             t += 1;
         }
-        if(t > 1) {
+        if (t > 1) {
             t -= 1;
         }
 
-        if(t < 1 / 6) {
+        if (t < 1 / 6) {
             return p + (6 * (q - p) * t);
-        } else if(t < 1 / 2) {
+        } else if (t < 1 / 2) {
             return q;
-        } else if(t < 2/3) {
+        } else if (t < 2/3) {
             return p + (6 * (q - p) * ((2 / 3) - t));
         } else {
             return p;

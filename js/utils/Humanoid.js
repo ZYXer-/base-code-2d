@@ -4,7 +4,6 @@ import * as Timer from "../core/Timer.js";
 import Vec2 from "./Vec2.js";
 
 
-
 class Humanoid {
 
     // TODO unfinished
@@ -19,7 +18,7 @@ class Humanoid {
             back : null
         };
 
-        for(let type in this.sprites) {
+        for (const type in this.sprites) {
             this.sprites[type] = {
 
                 torso : { x : 0, y : 0, w : 1, h : 1 },
@@ -39,7 +38,7 @@ class Humanoid {
             face : null
         };
 
-        for(let jointType in this.joints) {
+        for (const jointType in this.joints) {
             this.joints[jointType] = {
 
                 baseToTorsoCenter : new Vec2(0, 0),
@@ -89,8 +88,6 @@ class Humanoid {
 
         c.save();
         c.translate(0, 0); // TODO
-
-
 
 
         c.restore();

@@ -1,6 +1,6 @@
 class DrawQueue {
 
-    
+
     constructor() {
         this.elements = [];
         this.needsUpdate = false;
@@ -29,10 +29,10 @@ class DrawQueue {
 
 
     comparator(a, b) {
-        if(a.z < b.z) {
+        if (a.z < b.z) {
             return -1;
         }
-        if(a.z > b.z) {
+        if (a.z > b.z) {
             return 1;
         }
         return 0;
@@ -40,7 +40,7 @@ class DrawQueue {
 
 
     draw() {
-        if(this.needsUpdate) {
+        if (this.needsUpdate) {
             this.elements.sort(this.comparator);
             this.needsUpdate = false;
         }
@@ -48,7 +48,7 @@ class DrawQueue {
             element.draw();
         });
     }
-    
+
 }
 
 

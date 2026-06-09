@@ -4,7 +4,7 @@ import * as Settings from "../Settings.js";
 import * as Img from "../core/Img.js";
 import * as Mouse from "../core/input/Mouse.js";
 import * as ImageProcessing from "./ImageProcessing.js";
-import { clamp } from "./Utils.js";
+import * as NumberUtils from "./NumberUtils.js";
 import Vec2 from "./Vec2.js";
 
 
@@ -31,7 +31,7 @@ class IntegerScaling {
 
         this.resize();
 
-        if(Settings.Size.FIXED_SIZE_IN_UNITS) {
+        if (Settings.Size.FIXED_SIZE_IN_UNITS) {
             console.warn("Do not use FIXED_SIZE_IN_UNITS and IntegerScaling at the same time, as this might lead to unexpected results.");
         }
     }
@@ -44,7 +44,7 @@ class IntegerScaling {
 
 
     addScalableImage(name) {
-        for(let scale = this.minScale; scale <= this.maxScale; scale++) {
+        for (let scale = this.minScale; scale <= this.maxScale; scale++) {
             ImageProcessing.pixelate(name, name + scale, scale);
         }
     }
@@ -52,15 +52,15 @@ class IntegerScaling {
 
     resize() {
 
-        let widthScale = Math.floor(Viewport.width / this.minUnitsPerWidth);
-        let heightScale = Math.floor(Viewport.height / this.minUnitsPerHeight);
+        const widthScale = Math.floor(Viewport.width / this.minUnitsPerWidth);
+        const heightScale = Math.floor(Viewport.height / this.minUnitsPerHeight);
 
         this.s = widthScale;
-        if(widthScale > heightScale) {
+        if (widthScale > heightScale) {
             this.s = heightScale;
         }
 
-        this.s = clamp(this.s, this.minScale, this.maxScale);
+        this.s = NumberUtils.clamp(this.s, this.minScale, this.maxScale);
 
         this.gameWidth = Viewport.width / this.s;
         this.gameHeight = Viewport.height / this.s;
@@ -92,10 +92,10 @@ class IntegerScaling {
 
 
     drawMask(x, y, w, h, color) {
-        let maskL = this.unscaledPivot.x + ((-this.scaledPivot.x + x) * this.s);
-        let maskR = this.unscaledPivot.x + ((-this.scaledPivot.x + x + w) * this.s);
-        let maskT = this.unscaledPivot.y + ((-this.scaledPivot.y + y) * this.s);
-        let maskB = this.unscaledPivot.y + ((-this.scaledPivot.y + y + h) * this.s);
+        const maskL = this.unscaledPivot.x + ((-this.scaledPivot.x + x) * this.s);
+        const maskR = this.unscaledPivot.x + ((-this.scaledPivot.x + x + w) * this.s);
+        const maskT = this.unscaledPivot.y + ((-this.scaledPivot.y + y) * this.s);
+        const maskB = this.unscaledPivot.y + ((-this.scaledPivot.y + y + h) * this.s);
 
         c.fillStyle = color;
 
@@ -112,8 +112,8 @@ class IntegerScaling {
 
 
     mouseIsOverCircle(x, y, r) {
-        let deltaX = this.mousePos.x - x;
-        let deltaY = this.mousePos.y - y;
+        const deltaX = this.mousePos.x - x;
+        const deltaY = this.mousePos.y - y;
         return (deltaX * deltaX) + (deltaY * deltaY) <= r * r;
     }
 
@@ -124,13 +124,13 @@ class IntegerScaling {
 
 
     draw(name, x, y) {
-        let img = this.get(name);
+        const img = this.get(name);
         c.drawImage(img, 0, 0, img.width, img.height, x, y, img.width / this.s, img.height / this.s);
     }
 
 
     drawSprite(name, x, y, w, h, posX, posY) {
-        let img = this.get(name);
+        const img = this.get(name);
         c.drawImage(img, posX * w * this.s, posY * h * this.s, w * this.s, h * this.s, x, y, w, h);
     }
 
@@ -153,31 +153,31 @@ class IntegerScaling {
         this.drawSprite(name, 0, 0, w, h, posY, posY);
         c.restore();
     }
-    
+
 
     drawCustom(name, sourceX, sourceY, sourceWidth, sourceHeight, targetX, targetY, targetWidth, targetHeight) {
-        let img = this.get(name);
+        const img = this.get(name);
         c.drawImage(img, sourceX * this.s, sourceY * this.s, sourceWidth * this.s, sourceHeight * this.s, targetX, targetY, targetWidth, targetHeight);
     }
 
 
     drawIn(context, name, x, y) {
-        let img = this.get(name);
+        const img = this.get(name);
         context.drawImage(img, 0, 0, img.width, img.height, x, y, img.width / this.s, img.height / this.s);
     }
 
 
     drawSpriteIn(context, name, x, y, w, h, posX, posY) {
-        let img = this.get(name);
+        const img = this.get(name);
         context.drawImage(img, posX * w * this.s, posY * h * this.s, w * this.s, h * this.s, x, y, w, h);
     }
 
 
     drawCustomIn(context, name, sourceX, sourceY, sourceWidth, sourceHeight, targetX, targetY, targetWidth, targetHeight) {
-        let img = this.get(name);
+        const img = this.get(name);
         context.drawImage(img, sourceX * this.s, sourceY * this.s, sourceWidth * this.s, sourceHeight * this.s, targetX, targetY, targetWidth, targetHeight);
     }
-    
+
 }
 
 

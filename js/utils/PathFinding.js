@@ -13,19 +13,19 @@ class PathFinding {
         this.start = { x : (start.x - this.gridMinX), y : (start.y - this.gridMinY) };
         this.end = { x : (end.x - this.gridMinX), y : (end.y - this.gridMinY) };
 
-        let nodeQueue = new PriorityQueue(node => {
+        const nodeQueue = new PriorityQueue(node => {
             return node.f;
         });
 
         nodeQueue.push(this.grid[this.start.x][this.start.y]);
 
-        while(nodeQueue.size() > 0) {
+        while (nodeQueue.size() > 0) {
 
             let currentNode = nodeQueue.pop();
 
-            if(currentNode.x === this.end.x && currentNode.y === this.end.y) {
-                let path = [];
-                while(currentNode.parent !== null) {
+            if (currentNode.x === this.end.x && currentNode.y === this.end.y) {
+                const path = [];
+                while (currentNode.parent !== null) {
                     path.push({ x : (currentNode.x + this.gridMinX), y : (currentNode.y + this.gridMinY) });
                     currentNode = currentNode.parent;
                 }
@@ -34,20 +34,20 @@ class PathFinding {
 
             currentNode.processed = true;
 
-            let neighbors = this.getNeighbors(currentNode, directions);
+            const neighbors = this.getNeighbors(currentNode, directions);
 
-            for(let i in neighbors) {
-                let neighbor = neighbors[i];
+            for (const i in neighbors) {
+                const neighbor = neighbors[i];
 
-                let gScore = currentNode.g + neighbor.tempCost;
-                let beenVisited = neighbor.visited;
+                const gScore = currentNode.g + neighbor.tempCost;
+                const beenVisited = neighbor.visited;
 
-                if(!beenVisited || gScore < neighbor.g) {
+                if (!beenVisited || gScore < neighbor.g) {
 
-                    let xDistance = Math.abs(neighbor.x - this.end.x);
-                    let yDistance = Math.abs(neighbor.y - this.end.y);
+                    const xDistance = Math.abs(neighbor.x - this.end.x);
+                    const yDistance = Math.abs(neighbor.y - this.end.y);
                     let hScore;
-                    if(xDistance > yDistance) {
+                    if (xDistance > yDistance) {
                         hScore = (1414 * yDistance) + (1000 * (xDistance - yDistance));
                     } else {
                         hScore = (1414 * xDistance) + (1000 * (yDistance - xDistance));
@@ -59,7 +59,7 @@ class PathFinding {
                     neighbor.g = gScore;
                     neighbor.f = neighbor.g + neighbor.h;
 
-                    if(!beenVisited) {
+                    if (!beenVisited) {
                         nodeQueue.push(neighbor);
                     } else {
                         nodeQueue.rescore(neighbor);
@@ -74,7 +74,7 @@ class PathFinding {
 
     setupGrid(start, end) {
 
-        if(start.x < end.x) {
+        if (start.x < end.x) {
             this.gridMinX = start.x;
             this.gridMaxX = end.x;
         } else {
@@ -82,7 +82,7 @@ class PathFinding {
             this.gridMaxX = start.x;
         }
 
-        if(start.y < end.y) {
+        if (start.y < end.y) {
             this.gridMinY = start.y;
             this.gridMaxY = end.y;
         } else {
@@ -99,9 +99,9 @@ class PathFinding {
         this.gridHeight = 1 + this.gridMaxY - this.gridMinY;
 
         this.grid = [];
-        for(let x = 0; x < this.gridWidth; x++) {
+        for (let x = 0; x < this.gridWidth; x++) {
             this.grid[x] = [];
-            for(let y = 0; y < this.gridHeight; y++) {
+            for (let y = 0; y < this.gridHeight; y++) {
                 this.grid[x][y] = {
                     x : x,
                     y : y,
@@ -122,24 +122,24 @@ class PathFinding {
 
     getNeighbors(node, directions) {
 
-        let neighbors = [];
+        const neighbors = [];
 
-        if(directions === 6) {
+        if (directions === 6) {
 
-            for(let dir = 0; dir < directions; dir++) {
+            for (let dir = 0; dir < directions; dir++) {
 
-                let odd = (node.y + this.gridMinY) % 2;
+                const odd = (node.y + this.gridMinY) % 2;
 
-                let newX = node.x + PathFinding.HEX_NEIGHBOR_X[odd][dir];
-                let newY = node.y + PathFinding.HEX_NEIGHBOR_Y[odd][dir];
+                const newX = node.x + PathFinding.HEX_NEIGHBOR_X[odd][dir];
+                const newY = node.y + PathFinding.HEX_NEIGHBOR_Y[odd][dir];
 
-                if(newX >= 0 && newX < this.gridWidth && newY >= 0 && newY < this.gridHeight) {
+                if (newX >= 0 && newX < this.gridWidth && newY >= 0 && newY < this.gridHeight) {
 
-                    if(!this.grid[newX][newY].checkedIfFree) {
+                    if (!this.grid[newX][newY].checkedIfFree) {
                         this.grid[newX][newY].free = this.isFreeCallback(newX + this.gridMinX, newY + this.gridMinY);
                     }
 
-                    if(!this.grid[newX][newY].processed && this.grid[newX][newY].free) {
+                    if (!this.grid[newX][newY].processed && this.grid[newX][newY].free) {
                         this.grid[newX][newY].tempCost = 1;
                         neighbors.push(this.grid[newX][newY]);
                     }
@@ -148,18 +148,18 @@ class PathFinding {
 
         } else {
 
-            for(let dir = 0; dir < directions; dir++) {
+            for (let dir = 0; dir < directions; dir++) {
 
-                let newX = node.x + PathFinding.NEIGHBOR_X[dir];
-                let newY = node.y + PathFinding.NEIGHBOR_Y[dir];
+                const newX = node.x + PathFinding.NEIGHBOR_X[dir];
+                const newY = node.y + PathFinding.NEIGHBOR_Y[dir];
 
-                if(newX >= 0 && newX < this.gridWidth && newY >= 0 && newY < this.gridHeight) {
+                if (newX >= 0 && newX < this.gridWidth && newY >= 0 && newY < this.gridHeight) {
 
-                    if(!this.grid[newX][newY].checkedIfFree) {
+                    if (!this.grid[newX][newY].checkedIfFree) {
                         this.grid[newX][newY].free = this.isFreeCallback(newX + this.gridMinX, newY + this.gridMinY);
                     }
 
-                    if(!this.grid[newX][newY].processed && this.grid[newX][newY].free) {
+                    if (!this.grid[newX][newY].processed && this.grid[newX][newY].free) {
                         this.grid[newX][newY].tempCost = PathFinding.NEIGHBOR_COST[dir];
                         neighbors.push(this.grid[newX][newY]);
                     }

@@ -1,5 +1,5 @@
 import * as Settings from "../Settings.js";
-import { clamp } from "../utils/Utils.js";
+import * as NumberUtils from "../utils/NumberUtils.js";
 import TimerCallback from "../utils/TimerCallback.js";
 
 
@@ -24,7 +24,7 @@ export function update() {
         lastTime -= 60000;
     }
     delta = Settings.Game.TIME_MULTIPLIER * (now - lastTime) / 1000;
-    delta = clamp(delta, 0.00001, Settings.Game.MAX_TIME_PER_FRAME);
+    delta = NumberUtils.clamp(delta, 0.00001, Settings.Game.MAX_TIME_PER_FRAME);
     lastTime = now;
 }
 

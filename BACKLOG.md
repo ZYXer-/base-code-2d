@@ -24,14 +24,17 @@ Format: `<TOPIC>-<NUMBER>` — check off items as they are completed.
 
 ## CLN — Cleanup / Refactoring
 
-- [ ] **CLN-1** Complete the `Utils.js` → `DrawUtils.js` + `GeometryUtils.js` split (started per git history, WIP)
-- [ ] **CLN-2** Remove or replace remaining references to the old `Utils.js` once the split is complete
+- [x] **CLN-1** Complete the `Utils.js` → `DrawUtils.js` + `GeometryUtils.js` split (started per git history, WIP)
+- [x] **CLN-2** Remove or replace remaining references to the old `Utils.js` once the split is complete
 - [ ] **CLN-3** Audit and remove unused demo assets (`test.png`, `test2.png`, `demo_data.png`, cannon sounds)
 - [ ] **CLN-4** Remove or consolidate `OldDemoScene.js` (legacy)
 - [ ] **CLN-5** Review jQuery usage — most usages are simple DOM ops that could be replaced with vanilla JS
 - [ ] **CLN-6** Replace `options.hasOwnProperty(x)` with `Object.hasOwn(options, x)` throughout (ESLint `no-prototype-builtins` — ~48 occurrences, mainly in `Button.js` and `ParticleSystem.js`)
 - [ ] **CLN-7** Replace `var` with `let`/`const` in `Text.js` (15 occurrences flagged by ESLint)
 - [ ] **CLN-8** Add space between control-flow keywords and `(` across all source files — `if(` → `if (`, `for(` → `for (`, etc. (ESLint `keyword-spacing` auto-fixable: `npm run lint -- --fix`)
+- [ ] **CLN-9** Fix inconsistent `c` parameter in `DrawUtils.js`
+- [ ] **CLN-10** Expand `StringUtils.js` with more string utility functions (user has additional string utils to add)
+- [ ] **CLN-11** Move remaining `Utils.js` functions (`createCanvas`, `getContext`, `parallaxCalculator`, `stopwatch`, `getArrowControls`) to appropriate files; `Utils.js` should eventually be empty — `drawPolygon`, `drawRoundedCornerRect`, `drawStar`, and `drawHeart` import `c` from `canvas.js` directly instead of accepting it as a first parameter like the other functions in the same file; pick one approach and apply it consistently
 
 ---
 

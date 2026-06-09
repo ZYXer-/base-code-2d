@@ -1,6 +1,6 @@
 import * as Game from "../core/Game.js";
 import * as Timer from "../core/Timer.js";
-import * as Utils from "./Utils.js";
+import * as NumberUtils from "./NumberUtils.js";
 
 
 class Particle {
@@ -12,20 +12,20 @@ class Particle {
 
         this.pos = { x : emitter.x, y : emitter.y, z : emitter.z };
 
-        if(emitterSize.x !== 0.0) {
-            this.pos.x += Utils.randFloat(-emitterSize.x, emitterSize.x);
+        if (emitterSize.x !== 0.0) {
+            this.pos.x += NumberUtils.randFloat(-emitterSize.x, emitterSize.x);
         }
-        if(emitterSize.y !== 0.0) {
-            this.pos.y += Utils.randFloat(-emitterSize.y, emitterSize.y);
+        if (emitterSize.y !== 0.0) {
+            this.pos.y += NumberUtils.randFloat(-emitterSize.y, emitterSize.y);
         }
-        if(emitterSize.z !== 0.0) {
-            this.pos.z += Utils.randFloat(-emitterSize.z, emitterSize.z);
+        if (emitterSize.z !== 0.0) {
+            this.pos.z += NumberUtils.randFloat(-emitterSize.z, emitterSize.z);
         }
 
         this.v = {
-            x : Utils.randFloat(initV.x.min, initV.x.max),
-            y : Utils.randFloat(initV.y.min, initV.y.max),
-            z : Utils.randFloat(initV.z.min, initV.z.max)
+            x : NumberUtils.randFloat(initV.x.min, initV.x.max),
+            y : NumberUtils.randFloat(initV.y.min, initV.y.max),
+            z : NumberUtils.randFloat(initV.z.min, initV.z.max)
         };
 
         this.a = {
@@ -36,9 +36,9 @@ class Particle {
 
         this.fric = { x : friction.x, y : friction.y, z : friction.z };
 
-        this.life = Utils.randFloat(life.min, life.max);
+        this.life = NumberUtils.randFloat(life.min, life.max);
 
-        if(initFunction != null) {
+        if (initFunction !== null) {
             initFunction(this);
         }
     }
@@ -46,8 +46,8 @@ class Particle {
 
     draw() {
 
-        if(!Game.paused) {
-            let delta = Timer.delta;
+        if (!Game.paused) {
+            const delta = Timer.delta;
 
             this.pos.x += this.v.x * delta;
             this.pos.y += this.v.y * delta;

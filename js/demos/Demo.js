@@ -7,6 +7,7 @@ import * as Keyboard from "../core/input/Keyboard.js";
 import * as Img from "../core/Img.js";
 import * as Sound from "../core/Sound.js";
 import * as Utils from "../utils/Utils.js";
+import * as NumberUtils from "../utils/NumberUtils.js";
 import * as ImageProcessing from "../utils/ImageProcessing.js";
 import * as Easing from "../utils/Easing.js";
 import { QUART_PI, HALF_PI, PI, TWO_PI } from "../utils/GeometryUtils.js";
@@ -41,10 +42,10 @@ class Demo {
             friction : { x : 0.0, y : 100.0, z : 0.0 },
             life : { min : 1.0, max : 2.0 },
             init : particle => {
-                particle.color = Color.fromHSL(Utils.randFloat(0.0, 1.0), 1.0, 0.5);
+                particle.color = Color.fromHSL(NumberUtils.randFloat(0.0, 1.0), 1.0, 0.5);
             },
             draw : particle => {
-                let opacity = Utils.clamp(particle.life / 2.0, 0.0, 1.0);
+                let opacity = NumberUtils.clamp(particle.life / 2.0, 0.0, 1.0);
                 c.fillStyle = "rgba(" + particle.color.r + ", " + particle.color.g + ", " + particle.color.b + ", " + opacity + ")";
                 c.fillRect(particle.pos.x - 20, particle.pos.y - 20, 40, 40);
             }
@@ -58,7 +59,7 @@ class Demo {
             life : { min : 0.5, max : 0.7 },
             particlesPerTick : 50,
             draw : particle => {
-                let opacity = Utils.clamp(particle.life / 0.7, 0.0, 1.0);
+                let opacity = NumberUtils.clamp(particle.life / 0.7, 0.0, 1.0);
                 c.fillStyle = "rgba(0, 127, 0, " + opacity + ")";
                 c.fillRect(particle.pos.x - 10, particle.pos.y - 10, 20, 20);
             }

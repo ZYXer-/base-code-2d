@@ -1,7 +1,7 @@
 import * as Settings from "../../Settings.js";
 import * as SceneManager from "../SceneManager.js";
 import * as Scenes from "../../Scenes.js";
-import * as Utils from "../../utils/Utils.js";
+import * as NumberUtils from "../../utils/NumberUtils.js";
 import * as Timer from "../Timer.js";
 import * as Resources from "../../Resources.js";
 import * as CustomPreloading from "../../CustomPreloading.js";
@@ -86,7 +86,7 @@ export function getPercentageLoaded() {
     {
         fakeLoadingPercentage = (1.0 - (fakeLoadingCountdown / Settings.Loading.FAKE_LOADING_TIME));
     }
-    fakeLoadingPercentage = Utils.clamp(fakeLoadingPercentage, 0.0, 1.0);
+    fakeLoadingPercentage = NumberUtils.clamp(fakeLoadingPercentage, 0.0, 1.0);
     fakeLoadingPercentage *= Settings.Loading.FAKE_PERCENTAGE;
 
     let percentage = soundManagerPercentage;

@@ -46,7 +46,10 @@ Staged loading with weighted percentages: SoundManager init (5%) → Images (30%
 | `Vec2.js`, `Vec3.js` | 2D/3D vector math |
 | `DrawUtils.js` | Shape primitives (circles, polygons, stars, rounded rects, Bezier) |
 | `GeometryUtils.js` | Math constants, collision detection |
-| `Utils.js` | Random, clamp, scale, unique IDs, matrix creation |
+| `NumberUtils.js` | Random, clamp, min/max, scale, number formatting |
+| `DataUtils.js` | Arrays, objects, matrix creation, unique IDs, shallow/deep copy |
+| `StringUtils.js` | String helpers (`titleCase`; more to be added) |
+| `Utils.js` | Canvas creation, parallax calculator, stopwatch, arrow-key input (CLN-11: these will move to better homes) |
 | `Text.js` | Web font text rendering with border, alignment, animation |
 | `PixelText.js` | Sprite-based pixel font rendering |
 | `Color.js` | RGB + HSL color class |
@@ -85,7 +88,6 @@ Staged loading with weighted percentages: SoundManager init (5%) → Images (30%
 ## Known Issues / Status
 
 - Audio system (SoundManager2) uses Adobe Flash as a fallback — this is outdated and should be removed. See `AUD` items in BACKLOG.md.
-- `Utils.js` was being split into `DrawUtils.js` and `GeometryUtils.js` (WIP per git history) — migration is incomplete.
 - Documentation was essentially nonexistent before June 2026 — docs are being built up incrementally.
 
 ## Useful Commands

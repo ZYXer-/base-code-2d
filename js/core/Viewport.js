@@ -2,7 +2,7 @@ import { c, canvas } from "./canvas.js";
 import * as Settings from "../Settings.js";
 import * as SceneManager from "./SceneManager.js";
 import * as sf from "../libs/screenfull.min.js";
-import { clamp } from "../utils/Utils.js";
+import * as NumberUtils from "../utils/NumberUtils.js";
 
 
 export let canvasWidth = 1;
@@ -72,16 +72,16 @@ export function resize() {
     let cssWidth = jQuery(window).width();
     let cssHeight = jQuery(window).height();
 
-    cssWidth = clamp(cssWidth, Settings.Size.MIN_WIDTH / devicePixelRatio, Settings.Size.MAX_WIDTH / devicePixelRatio);
-    cssHeight = clamp(cssHeight, Settings.Size.MIN_HEIGHT / devicePixelRatio, Settings.Size.MAX_HEIGHT / devicePixelRatio);
+    cssWidth = NumberUtils.clamp(cssWidth, Settings.Size.MIN_WIDTH / devicePixelRatio, Settings.Size.MAX_WIDTH / devicePixelRatio);
+    cssHeight = NumberUtils.clamp(cssHeight, Settings.Size.MIN_HEIGHT / devicePixelRatio, Settings.Size.MAX_HEIGHT / devicePixelRatio);
 
     jQuery("#game_box, #game").width(cssWidth).height(cssHeight);
 
     canvasWidth = cssWidth * devicePixelRatio;
-    canvasWidth = clamp(canvasWidth, Settings.Size.MIN_WIDTH, Settings.Size.MAX_WIDTH);
+    canvasWidth = NumberUtils.clamp(canvasWidth, Settings.Size.MIN_WIDTH, Settings.Size.MAX_WIDTH);
 
     canvasHeight = cssHeight * devicePixelRatio;
-    canvasHeight = clamp(canvasHeight, Settings.Size.MIN_HEIGHT, Settings.Size.MAX_HEIGHT);
+    canvasHeight = NumberUtils.clamp(canvasHeight, Settings.Size.MIN_HEIGHT, Settings.Size.MAX_HEIGHT);
 
     canvas.width = canvasWidth;
     canvas.height = canvasHeight;

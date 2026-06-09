@@ -1,6 +1,6 @@
 import { c } from "../core/canvas.js";
 import * as Game from "../core/Game.js";
-import * as Utils from "./Utils.js";
+import * as NumberUtils from "./NumberUtils.js";
 import Vec2 from "./Vec2.js";
 
 
@@ -25,18 +25,18 @@ class Shaking {
 
 
     apply() {
-        if(!Game.paused) {
-            if(this.timer > 0 && this.timer <= this.timerStart) {
+        if (!Game.paused) {
+            if (this.timer > 0 && this.timer <= this.timerStart) {
 
-                let maxShake = Math.ceil(this.amplitude * (1 - Math.sin(1.2 * (this.timerStart - this.timer) / this.timerStart)));
-                let minShake = Math.floor(maxShake * 0.7);
-                this.offset.x = Utils.rand(minShake, maxShake);
-                this.offset.y = Utils.rand(minShake, maxShake);
+                const maxShake = Math.ceil(this.amplitude * (1 - Math.sin(1.2 * (this.timerStart - this.timer) / this.timerStart)));
+                const minShake = Math.floor(maxShake * 0.7);
+                this.offset.x = NumberUtils.rand(minShake, maxShake);
+                this.offset.y = NumberUtils.rand(minShake, maxShake);
 
-                if(this.timer % 2 === 0) {
+                if (this.timer % 2 === 0) {
                     this.offset.x = -this.offset.x;
                 }
-                if(this.timer % 4 < 1) {
+                if (this.timer % 4 < 1) {
                     this.offset.y = -this.offset.y;
                 }
 
@@ -45,7 +45,7 @@ class Shaking {
                 this.offset.y = 0;
             }
 
-            if(this.timer > 0) {
+            if (this.timer > 0) {
                 this.timer--;
             }
         }

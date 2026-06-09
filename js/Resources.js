@@ -1,9 +1,9 @@
-import { objectToMap } from "./utils/Utils.js";
+import * as DataUtils from "./utils/DataUtils.js";
 
 
 // Images
 
-export const images = objectToMap({
+export const images = DataUtils.objectToMap({
     loading : "img/loading.png",
     test : "img/test.png",
     test2 : "img/test2.png",
@@ -22,7 +22,7 @@ export const webFonts = [
 
 // Sprite-based Fonts
 
-export const pixelFonts = objectToMap({
+export const pixelFonts = DataUtils.objectToMap({
     black : {
         file : "fontBlack",
         minCharSpacingInFile : 1,
@@ -36,7 +36,7 @@ export const pixelFonts = objectToMap({
 
 // Sounds
 
-export const sounds = objectToMap({
+export const sounds = DataUtils.objectToMap({
     cannon : { source : ["audio/cannon.wav", "audio/cannon.mp3"], instances : 3 },
     soundtrack : { source : ["audio/soundtrack.ogg", "audio/soundtrack.mp3"], instances : 1 }
 });
