@@ -290,8 +290,8 @@ to attach them to the start of each source file to most effectively
 convey the exclusion of warranty; and each file should have at least
 the "copyright" line and a pointer to where the full notice is found.
 
-    {description}
-    Copyright (C) {year}  {fullname}
+    2D Game Engine Base Code
+    Copyright (C) 2015-2026  Henry Raymond
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -329,8 +329,7 @@ necessary.  Here is a sample; alter the names:
   Yoyodyne, Inc., hereby disclaims all copyright interest in the program
   `Gnomovision' (which makes passes at compilers) written by James Hacker.
 
-  {signature of Ty Coon}, 1 April 1989
-  Ty Coon, President of Vice
+  Henry Raymond, 2026
 
 This General Public License does not permit incorporating your program into
 proprietary programs.  If your program is a subroutine library, you may

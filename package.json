@@ -8,7 +8,8 @@
     "path": "^0.12.7"
   },
   "scripts": {
-    "start": "node nodeServer.js"
+    "start": "node nodeServer.js",
+    "lint": "eslint js/ nodeServer.js"
   },
   "repository": {
     "type": "git",
@@ -23,5 +24,10 @@
   "bugs": {
     "url": "https://github.com/ZYXer-/base-code-2d/issues"
   },
-  "homepage": "https://github.com/ZYXer-/base-code-2d#readme"
+  "homepage": "https://github.com/ZYXer-/base-code-2d#readme",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.4.1",
+    "globals": "^17.6.0"
+  }
 }
