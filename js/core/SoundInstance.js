@@ -1,60 +1,39 @@
 import * as Settings from "../Settings.js";
-import * as Sound from "./Sound.js";
-import * as sm2 from "../libs/soundmanager2.js";
 
 
 class SoundInstance {
 
-    
-    constructor(soundAsset, id) {
 
-        this.soundAsset = soundAsset;
-        this.id = id;
-
-        this.name = this.soundAsset + "_instance_" + id;
-        this.volume = Settings.Game.DEFAULT_SOUND_VOLUME;
-
-        this.currentlyFading = false;
+    constructor(howl, soundId) {
+        this.howl = howl;
+        this.soundId = soundId;
     }
 
 
     stop() {
-        soundManager.stop(this.name);
+        this.howl.stop(this.soundId);
     }
 
 
-    setVolume(volume) { // volume : 0 - 100
-        this.volume = volume;
-        soundManager.setVolume(this.name, volume);
+    setVolume(volume) {
+        this.howl.volume(volume, this.soundId);
     }
 
 
-    fadeIn(length) {
-        this.fadeTo(length, Settings.Game.DEFAULT_SOUND_VOLUME);
+    fadeIn(duration) {
+        this.howl.fade(0, Settings.Game.DEFAULT_SOUND_VOLUME, duration, this.soundId);
     }
 
 
-    fadeOut(length) {
-        this.fadeTo(length, 0);
+    fadeOut(duration) {
+        this.howl.fade(this.howl.volume(this.soundId), 0, duration, this.soundId);
     }
 
 
-    fadeTo(length, targetVolume) {
-        if(this.currentlyFading) {
-            for(let fade of Sound.fades) {
-                if(fade.name === this.name) {
-                    Sound.fades.delete(fade);
-                }
-            }
-        }
-        Sound.fades.add({
-            name : this.name,
-            instance : this,
-            timer : 0.0,
-            length : length,
-            targetVolume : targetVolume
-        });
+    fadeTo(duration, targetVolume) {
+        this.howl.fade(this.howl.volume(this.soundId), targetVolume, duration, this.soundId);
     }
+
 
 }
 

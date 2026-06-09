@@ -1,21 +1,19 @@
-import * as Timer from "./Timer.js";
-import * as sm2 from "../libs/soundmanager2.js";
+import * as Settings from "../Settings.js";
+import SoundInstance from "./SoundInstance.js";
 
 
 export let muted = false;
 
 export const assets = new Map();
 
-export const fades = new Set();
 
-
-export function add(name, sound) {
-    assets.set(name, sound);
+export function add(name, howl) {
+    assets.set(name, howl);
 }
 
 
 export function muteUnmute() {
-    if(muted) {
+    if (muted) {
         unmute();
     } else {
         mute();
@@ -25,81 +23,71 @@ export function muteUnmute() {
 
 export function mute() {
     muted = true;
-    soundManager.mute();
+    Howler.mute(true);
 }
 
 
 export function unmute() {
     muted = false;
-    soundManager.unmute();
+    Howler.mute(false);
 }
 
 
-export function play(name, attributes) { // attributes example: { volume : 100, onfinish : foo(), loops : 3 }
-    if(assets.has(name)) {
-        let asset = assets.get(name);
-        let instance = asset.instances[asset.nextInstance];
-        soundManager.play(instance.name, attributes);
-        asset.nextInstance++;
-        if(asset.nextInstance >= asset.numOfInstances) {
-            asset.nextInstance = 0;
-        }
-        return instance;
-    } else {
+// options: { volume: 0–1, loop: bool, onEnd: callback fired when the sound finishes }
+export function play(name, options = {}) {
+    if (!assets.has(name)) {
         alert("There is no sound named '" + name + "'.");
         return null;
     }
+    const howl = assets.get(name);
+    const soundId = howl.play();
+    if (options.volume !== undefined) {
+        howl.volume(options.volume, soundId);
+    }
+    if (options.loop !== undefined) {
+        howl.loop(options.loop, soundId);
+    }
+    if (options.onEnd !== undefined) {
+        howl.once("end", options.onEnd, soundId);
+    }
+    return new SoundInstance(howl, soundId);
 }
 
 
 export function stop(name) {
-    getLastInstance(name).stop();
-}
-
-
-export function setVolume(name, volume) { // volume : 0 - 100
-    getLastInstance(name).setVolume(volume);
-}
-
-
-export function fadeIn(name, length) {
-    getLastInstance(name).fadeIn(length);
-}
-
-
-export function fadeOut(name, length) {
-    getLastInstance(name).fadeOut(length);
-}
-
-
-export function fadeTo(name, length, targetVolume) {
-    getLastInstance(name).fadeTo(length, targetVolume);
-}
-
-
-export function update() {
-    for(let fade of fades) {
-        fade.timer += Timer.delta;
-        if(fade.timer >= fade.length) {
-            fade.instance.setVolume(fade.targetVolume);
-            fade.instance.currentlyFading = false;
-            fades.delete(fade);
-        } else {
-            let deltaVolume = fade.targetVolume - fade.instance.volume;
-            deltaVolume /= ((fade.length - fade.timer) / Timer.delta);
-            fade.instance.setVolume(fade.instance.volume + deltaVolume);
-        }
+    if (assets.has(name)) {
+        assets.get(name).stop();
     }
 }
 
 
-function getLastInstance(name) {
-    if(assets.has(name)) {
-        let asset = assets.get(name);
-        let position = asset.nextInstance - 1;
-        if(position < 0) {
-            position = asset.numOfInstances - 1;
-        }
-        return asset.instances[position];
+export function setVolume(name, volume) {
+    if (assets.has(name)) {
+        assets.get(name).volume(volume);
     }
 }
+
+
+export function fadeIn(name, duration) {
+    if (assets.has(name)) {
+        const howl = assets.get(name);
+        howl.fade(0, Settings.Game.DEFAULT_SOUND_VOLUME, duration);
+    }
+}
+
+
+export function fadeOut(name, duration) {
+    if (assets.has(name)) {
+        const howl = assets.get(name);
+        howl.fade(howl.volume(), 0, duration);
+    }
+}
+
+
+export function fadeTo(name, duration, targetVolume) {
+    if (assets.has(name)) {
+        const howl = assets.get(name);
+        howl.fade(howl.volume(), targetVolume, duration);
+    }
+}
+

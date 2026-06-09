@@ -5,6 +5,7 @@
   "main": "nodeServer.js",
   "dependencies": {
     "express": "^5.0.0",
+    "howler": "^2.2.4",
     "path": "^0.12.7"
   },
   "scripts": {

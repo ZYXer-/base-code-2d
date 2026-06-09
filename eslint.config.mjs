@@ -23,7 +23,8 @@ export default [
                 // Third-party libraries loaded as global <script> tags in index.htm
                 "jQuery": "readonly",
                 "$": "readonly",
-                "soundManager": "readonly",
+                "Howl": "readonly",
+                "Howler": "readonly",
                 "screenfull": "readonly",
                 "Offset": "readonly",
             }
@@ -32,6 +33,7 @@ export default [
 
             // --- Bug prevention (errors) ---
             // These catch real problems; fix before committing.
+            "curly": ["error", "all"],
             "no-var": "error",
             "eqeqeq": "error",
             "no-unused-vars": ["error", {

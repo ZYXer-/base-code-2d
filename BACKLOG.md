@@ -3,22 +3,12 @@
 Format: `<TOPIC>-<NUMBER>` — check off items as they are completed.
 
 ## Topics
-- **AUD** — Audio system
 - **CLN** — Cleanup / refactoring
 - **DEM** — Demo scenes
 - **DOC** — Documentation
 - **ENG** — Engine core
 - **INF** — Infrastructure / tooling
 - **UI** — UI components
-
----
-
-## AUD — Audio
-
-- [ ] **AUD-1** Remove Adobe Flash fallback from SoundManager2 configuration
-- [ ] **AUD-2** Evaluate replacing SoundManager2 with the Web Audio API directly (it is now well-supported in all target browsers)
-- [ ] **AUD-3** Expose per-sound volume control (not just global mute)
-- [ ] **AUD-4** Integrate Howler.js as the audio library (replaces SoundManager2; more specific alternative to AUD-2 — target library is Howler rather than rolling raw Web Audio API)
 
 ---
 

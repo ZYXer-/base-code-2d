@@ -6,6 +6,12 @@ Entries are in reverse chronological order. One bullet per change, one clause pe
 
 ## 2026-06-09
 
+- Replaced SoundManager2 with Howler.js: rewrote `Sound.js` and `SoundInstance.js` around the Howler API; replaced `SoundPreloader.js` to create `Howl` objects (with `pool` for polyphony); deleted `SoundManagerPreloader.js` and removed its init stage from `PreloadingManager.js`
+- Removed manual fade loop from `Sound.js` — fades now delegated to `Howler.fade()`
+- Changed `DEFAULT_SOUND_VOLUME` from 0–100 scale to 0–1 to match Howler; updated `SOUND_PERCENTAGE` from 10 to 15 (absorbed the removed SM2 init stage's 5%)
+- Added `howler.min.js` to `js/libs/` and wired it as a script tag in `index.htm`
+- Added `curly` ESLint rule (error) to enforce braces on all control-flow bodies; documented in `docs/style.md`
+- Updated `docs/decisions.md` to document Howler.js as the audio library (superseding SoundManager2 entry); removed completed AUD items from `BACKLOG.md`
 - Initialized project documentation: `CLAUDE.md`, `README.md`, `BACKLOG.md`, `CHANGELOG.md`, `docs/decisions.md`, `docs/terminology.md`
 - Added `.claude/commands/onboard.md` and `.claude/commands/sync-docs.md` skills for AI-assisted development
 - Split `Utils.js` into `NumberUtils.js` (numeric/random helpers), `DataUtils.js` (arrays, objects, matrix, IDs), and `StringUtils.js` (string helpers); `Utils.js` retains canvas creation, parallax, stopwatch, and arrow-key controls

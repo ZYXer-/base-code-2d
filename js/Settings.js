@@ -9,7 +9,7 @@ export const Game = {
     PAUSE_ON_BLUR: false,
     PREVENT_CONTEXT_MENU: true,
 
-    DEFAULT_SOUND_VOLUME: 50,
+    DEFAULT_SOUND_VOLUME: 0.5,
 
     DEBUG: true,
     SHOW_PERFORMANCE_DETAILS: false
@@ -41,9 +41,8 @@ export const Size = {
 // Loading Settings
 export const Loading = {
 
-    SOUND_MANAGER_PERCENTAGE: 5,
     IMAGE_PERCENTAGE: 30,
-    SOUND_PERCENTAGE: 10,
+    SOUND_PERCENTAGE: 15,
     PIXEL_FONT_PERCENTAGE: 5,
     WEB_FONT_PERCENTAGE: 10,
     FAKE_PERCENTAGE: 40,

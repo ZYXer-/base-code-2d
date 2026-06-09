@@ -27,7 +27,7 @@ Then open `http://localhost:8080` in a browser. The entry point is `index.htm`.
 | `SceneManager.js` | Scene lifecycle: `show()`, `hide()`, `update()`, `draw()`, `resize()` |
 | `Viewport.js` + `canvas.js` | Canvas setup, responsive resizing, pixel ratio, fullscreen |
 | `Timer.js` | Delta time, timed callbacks: `countdown`, `doFor`, `repeatEvery` |
-| `Sound.js` + `SoundInstance.js` | Audio via SoundManager2; per-sound instance pooling |
+| `Sound.js` + `SoundInstance.js` | Audio via Howler.js; per-instance control via sound IDs and `SoundInstance` wrapper |
 | `PerformanceMonitor.js` | FPS + per-stage timing display |
 | `PageVisibility.js` | Pause on browser blur |
 | `Tooltip.js` | Tooltip rendering |
@@ -38,7 +38,7 @@ Then open `http://localhost:8080` in a browser. The entry point is `index.htm`.
 - `Mouse.js` — Multi-button, hover areas, scroll, touch, drag-and-drop; `pos` Vec2 export
 
 ### Preloading (`js/core/resourcePreloading/`)
-Staged loading with weighted percentages: SoundManager init (5%) → Images (30%) → Pixel fonts (5%) → Web fonts (10%) → Sounds (10%) → Fake delay (40%).
+Staged loading with weighted percentages: Images (30%) → Pixel fonts (5%) → Web fonts (10%) → Sounds (15%) → Fake delay (40%).
 
 ### Utilities (`js/utils/`)
 | File | Role |
@@ -73,7 +73,7 @@ Staged loading with weighted percentages: SoundManager init (5%) → Images (30%
 - `PauseScreen.js` — Pause overlay
 
 ### Third-Party Libraries (`js/libs/`)
-- jQuery 3.4.1, SoundManager2, screenfull, Box2D, FontFaceObserver, polygon offset
+- jQuery 3.4.1, Howler.js 2.2.4, screenfull, Box2D, FontFaceObserver, polygon offset
 
 ## Conventions
 
@@ -87,7 +87,6 @@ Staged loading with weighted percentages: SoundManager init (5%) → Images (30%
 
 ## Known Issues / Status
 
-- Audio system (SoundManager2) uses Adobe Flash as a fallback — this is outdated and should be removed. See `AUD` items in BACKLOG.md.
 - Documentation was essentially nonexistent before June 2026 — docs are being built up incrementally.
 
 ## Useful Commands

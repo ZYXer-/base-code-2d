@@ -5,14 +5,12 @@ import * as NumberUtils from "../../utils/NumberUtils.js";
 import * as Timer from "../Timer.js";
 import * as Resources from "../../Resources.js";
 import * as CustomPreloading from "../../CustomPreloading.js";
-import SoundManagerPreloader from "./SoundManagerPreloader.js";
 import SoundPreloader from "./SoundPreloader.js";
 import ImagePreloader from "./ImagePreloader.js";
 import PixelFontPreloader from "./PixelFontPreloader.js";
 import WebFontPreloader from "./WebFontPreloader.js";
 
 
-const soundManagerPreloader = new SoundManagerPreloader();
 const soundPreloader = new SoundPreloader();
 const imagePreloader = new ImagePreloader();
 const pixelFontPreloader = new PixelFontPreloader();
@@ -24,10 +22,7 @@ let soundLoadingCountdown = Settings.Loading.TIME_BEFORE_SOUND_LOADING_FAIL;
 
 export function preload() {
 
-    soundManagerPreloader.setEndCallback(() => {
-        soundPreloader.load(Resources.sounds);
-    });
-    soundManagerPreloader.load();
+    soundPreloader.load(Resources.sounds);
 
     imagePreloader.setEndCallback(() => {
         pixelFontPreloader.load(Resources.pixelFonts);
@@ -43,9 +38,7 @@ export function update() {
     if(imagePreloader.isLoaded()
         && pixelFontPreloader.isLoaded()
         && webFontPreloader.isLoaded()
-        && ((soundManagerPreloader.isLoaded()
-            && soundPreloader.isLoaded())
-            || soundLoadingCountdown < 0)) {
+        && (soundPreloader.isLoaded() || soundLoadingCountdown < 0)) {
 
         fakeLoadingCountdown -= Timer.delta;
         if(fakeLoadingCountdown < 0) {
@@ -65,9 +58,6 @@ export function update() {
 
 
 export function getPercentageLoaded() {
-
-    let soundManagerPercentage = soundManagerPreloader.getFractionLoaded();
-    soundManagerPercentage *= Settings.Loading.SOUND_MANAGER_PERCENTAGE;
 
     let imagePercentage = imagePreloader.getFractionLoaded();
     imagePercentage *= Settings.Loading.IMAGE_PERCENTAGE;
@@ -89,8 +79,7 @@ export function getPercentageLoaded() {
     fakeLoadingPercentage = NumberUtils.clamp(fakeLoadingPercentage, 0.0, 1.0);
     fakeLoadingPercentage *= Settings.Loading.FAKE_PERCENTAGE;
 
-    let percentage = soundManagerPercentage;
-    percentage += imagePercentage;
+    let percentage = imagePercentage;
     percentage += soundPercentage;
     percentage += pixelFontPercentage;
     percentage += webFontPercentage;

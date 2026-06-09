@@ -9,7 +9,6 @@ import * as GlobalControls from "../GlobalControls.js";
 import * as PageVisibility from "./PageVisibility.js";
 import * as PerformanceMonitor from "./PerformanceMonitor.js";
 import * as Timer from "./Timer.js";
-import * as Sound from "./Sound.js";
 import Button from "../utils/Button.js";
 
 
@@ -92,7 +91,6 @@ function loop() {
     Timer.update();
     Mouse.update();
     update();
-    Sound.update();
     Button.reset();
 
     PerformanceMonitor.stopStopwatch(1);

@@ -127,6 +127,22 @@ Always use `===` and `!==`. Never `==` or `!=`.
 
 ---
 
+## Curly braces — always required
+
+Every `if`, `else`, `for`, `while`, and `do` body must use curly braces, even for single-statement bodies. No braceless single-liners.
+
+```js
+// correct
+if (condition) {
+    doSomething();
+}
+
+// wrong — ESLint error
+if (condition) doSomething();
+```
+
+---
+
 ## Brace style
 
 Opening brace on the same line (1TBS / K&R style).

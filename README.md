@@ -9,7 +9,7 @@ This repo is **not a library you install** — it is a living, runnable template
 - A **game loop** with delta-time and frame-rate cap
 - A **scene system** (show/hide/update/draw/resize lifecycle)
 - **Keyboard + mouse + touch** input handling
-- A **sound system** (SoundManager2-based) with per-sound instance pooling
+- A **sound system** (Howler.js) with per-sound instance pooling and per-instance volume/fade control
 - **Asset preloading** with a staged loading bar
 - **Responsive canvas** with fixed aspect ratio, pixel-ratio support, and optional integer scaling
 - **Particle system** (continuous stream or burst)

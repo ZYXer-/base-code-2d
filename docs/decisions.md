@@ -72,10 +72,10 @@ Locked decisions that constrain ongoing development. These rule out alternatives
 
 ---
 
-## SoundManager2 for Audio (Legacy — Under Review)
+## Howler.js for Audio
 
-**Decision:** Audio is handled via SoundManager2 (with Flash fallback historically included).
+**Decision:** Audio is handled via [Howler.js](https://howlerjs.com/), loaded as a pre-bundled global in `js/libs/howler.min.js`.
 
-**Why:** Was the most robust cross-browser solution when first adopted.
+**Why:** Howler abstracts the Web Audio API with a clean, well-maintained API; handles polyphony (via `pool`), cross-browser codec fallbacks, and per-instance control via sound IDs. Replaced SoundManager2 (which relied on a Flash fallback) in June 2026.
 
-**Status:** Outdated. Flash fallback is dead. Replacement with the Web Audio API is tracked in `AUD-2`. No new audio features should be built on SoundManager2.
+**Constraint:** Sounds must be registered in `js/Resources.js` with a `source` array (multiple formats for codec fallback) and an `instances` count for the pool size. Audio is managed via `Sound.js` (sound-level) and `SoundInstance.js` (per-instance control).
