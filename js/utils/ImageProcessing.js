@@ -310,5 +310,5 @@ export function outputImage(name) {
 
     const image = new Image();
     image.src = outputCanvas.toDataURL("image/png");
-    jQuery("body").append(image);
+    document.body.appendChild(image);
 }

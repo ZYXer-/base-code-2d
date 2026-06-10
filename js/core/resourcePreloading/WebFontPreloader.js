@@ -18,12 +18,17 @@ class WebFontPreloader extends Preloader {
         for(let i = 0; i < this.totalAssets; i++) {
             let font = this.sources[i];
             let fontObserver = new FontFaceObserver(font);
-            jQuery("body").append("<div id=\"webfont_preload_" + font + "\" style=\"display: none; font-family: " + font + "\">" + font + "</div>");
+            const probeDiv = document.createElement("div");
+            probeDiv.id = "webfont_preload_" + font;
+            probeDiv.style.display = "none";
+            probeDiv.style.fontFamily = font;
+            probeDiv.textContent = font;
+            document.body.appendChild(probeDiv);
             fontObserver.load().then(() => {
-                jQuery("#webfont_preload_" + font).remove();
+                document.getElementById("webfont_preload_" + font).remove();
                 this.reportAssetLoaded();
             }, () => {
-                jQuery("#webfont_preload_" + font).remove();
+                document.getElementById("webfont_preload_" + font).remove();
                 this.reportAssetLoaded();
             });
         }

@@ -21,11 +21,8 @@ export default [
             globals: {
                 ...globals.browser,
                 // Third-party libraries loaded as global <script> tags in index.htm
-                "jQuery": "readonly",
-                "$": "readonly",
                 "Howl": "readonly",
                 "Howler": "readonly",
-                "screenfull": "readonly",
                 "Offset": "readonly",
             }
         },

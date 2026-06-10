@@ -13,7 +13,7 @@ Then open `http://localhost:8080` in a browser. The entry point is `index.htm`.
 ## Architecture Overview
 
 ### Entry Point
-- `index.htm` — Creates the canvas, loads jQuery and ES6 modules
+- `index.htm` — Creates the canvas, loads Howler.js and ES6 modules
 - `js/main.js` — Calls `Game.start()` on document ready
 - `js/Settings.js` — All tunable parameters (canvas size, timing, debug flags, etc.)
 - `js/Resources.js` — Centralized registry of all image, font, and sound assets
@@ -73,7 +73,7 @@ Staged loading with weighted percentages: Images (30%) → Pixel fonts (5%) → 
 - `PauseScreen.js` — Pause overlay
 
 ### Third-Party Libraries (`js/libs/`)
-- jQuery 3.4.1, Howler.js 2.2.4, screenfull, Box2D, FontFaceObserver, polygon offset
+- Howler.js 2.2.4, Box2D, FontFaceObserver, polygon offset
 
 ## Conventions
 

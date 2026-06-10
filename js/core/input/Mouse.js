@@ -18,57 +18,58 @@ const scrollCallbacks = new Map();
 
 function construct() {
 
-    jQuery(document).bind("contextmenu", event => {
+    document.addEventListener("contextmenu", event => {
         if(Settings.Game.PREVENT_CONTEXT_MENU) {
             event.preventDefault();
         }
     });
 
-    jQuery("body")
-        .attr("unselectable", "on")
-        .css("user-select", "none")
-        .on("selectstart", false)
+    document.body.setAttribute("unselectable", "on");
+    document.body.style.userSelect = "none";
+    document.body.addEventListener("selectstart", event => { event.preventDefault(); });
 
-        .mousemove(event => {
-            updatePosition(getPositionFromMouseEvent(event));
-        })
-        .bind("touchmove", event => {
-            updatePosition(getPositionFromTouchEvent(event));
-            event.preventDefault();
-        })
-        .mousedown(event => {
-            updatePosition(getPositionFromMouseEvent(event));
-            if(event.which === 1) {
-                left.triggerDown();
-            } else if(event.which === 2) {
-                middle.triggerDown();
-            } else if(event.which === 3) {
-                right.triggerDown();
-            }
-            event.preventDefault();
-        })
-        .bind("touchstart", event => {
-            left.triggerDown(getPositionFromTouchEvent(event));
-            event.preventDefault();
-        })
-        .mouseup(event => {
-            updatePosition(getPositionFromMouseEvent(event));
-            if(event.which === 1) {
-                left.triggerUp();
-            } else if(event.which === 2) {
-                middle.triggerUp();
-            } else if(event.which === 3) {
-                right.triggerUp();
-            }
-            event.preventDefault();
-        })
-        .bind("touchend touchleave touchcancel", event => {
+    document.body.addEventListener("mousemove", event => {
+        updatePosition(getPositionFromMouseEvent(event));
+    });
+    document.body.addEventListener("touchmove", event => {
+        updatePosition(getPositionFromTouchEvent(event));
+        event.preventDefault();
+    }, { passive : false });
+    document.body.addEventListener("mousedown", event => {
+        updatePosition(getPositionFromMouseEvent(event));
+        if(event.button === 0) {
+            left.triggerDown();
+        } else if(event.button === 1) {
+            middle.triggerDown();
+        } else if(event.button === 2) {
+            right.triggerDown();
+        }
+        event.preventDefault();
+    });
+    document.body.addEventListener("touchstart", event => {
+        left.triggerDown(getPositionFromTouchEvent(event));
+        event.preventDefault();
+    }, { passive : false });
+    document.body.addEventListener("mouseup", event => {
+        updatePosition(getPositionFromMouseEvent(event));
+        if(event.button === 0) {
+            left.triggerUp();
+        } else if(event.button === 1) {
+            middle.triggerUp();
+        } else if(event.button === 2) {
+            right.triggerUp();
+        }
+        event.preventDefault();
+    });
+    ["touchend", "touchleave", "touchcancel"].forEach(eventName => {
+        document.body.addEventListener(eventName, event => {
             left.triggerUp(getPositionFromTouchEvent(event));
             event.preventDefault();
-        })
-        .on("mousewheel DOMMouseScroll", event => {
-            triggerScroll(event);
-        });
+        }, { passive : false });
+    });
+    document.body.addEventListener("wheel", event => {
+        triggerScroll(event);
+    }, { passive : false });
 }
 construct();
 
@@ -128,10 +129,10 @@ export function deleteScrollCallback(name) {
 
 function updatePosition(newPos) {
     if(newPos !== null) {
-        const offset = jQuery("#game").offset();
+        const rect = document.getElementById("game").getBoundingClientRect();
         const ratio = window.devicePixelRatio || 1;
-        pos.x = ((ratio * (newPos.x - offset.left)) - Viewport.frameOffsetX) / Viewport.scaleX;
-        pos.y = ((ratio * (newPos.y - offset.top)) - Viewport.frameOffsetY) / Viewport.scaleY;
+        pos.x = ((ratio * (newPos.x - (rect.left + window.scrollX))) - Viewport.frameOffsetX) / Viewport.scaleX;
+        pos.y = ((ratio * (newPos.y - (rect.top + window.scrollY))) - Viewport.frameOffsetY) / Viewport.scaleY;
     }
 }
 
@@ -156,8 +157,8 @@ function getPositionFromMouseEvent(event) {
 
 
 function getPositionFromTouchEvent(event) {
-    if(event.originalEvent.touches.length > 0) {
-        const touch = event.originalEvent.touches[0];
+    if(event.touches.length > 0) {
+        const touch = event.touches[0];
         return { x : touch.pageX, y : touch.pageY };
     } else {
         return null;
@@ -166,7 +167,7 @@ function getPositionFromTouchEvent(event) {
 
 
 function triggerScroll(event) {
-    const delta = (event.originalEvent.detail === undefined ? event.originalEvent.wheelDelta : event.originalEvent.detail);
+    const delta = -event.deltaY;
     for(let [_, area] of scrollAreas) {
         if(isOver(area.x, area.y, area.w, area.h)) {
             area.callback(delta);

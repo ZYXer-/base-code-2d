@@ -4,6 +4,17 @@ Entries are in reverse chronological order. One bullet per change, one clause pe
 
 ---
 
+## 2026-06-10
+
+- Removed jQuery (CLN-5): replaced all source-file usages with vanilla JS equivalents across `PerformanceMonitor.js`, `Viewport.js`, `Keyboard.js`, `Mouse.js`, `WebFontPreloader.js`, `main.js`, `DataUtils.js`, and `ImageProcessing.js`; deleted `js/libs/jquery-3.4.1.min.js`
+- Modernised `Mouse.js` as part of CLN-5: switched `event.which` → `event.button`, `mousewheel`/`DOMMouseScroll` → `wheel`, unwrapped `event.originalEvent` touch/scroll references, added `{ passive: false }` where `preventDefault()` is called
+- Replaced `jQuery.extend(true, ...)` with `structuredClone` in `DataUtils.deepCopy`
+- Updated `CLAUDE.md` to remove jQuery from entry-point description and third-party libs list
+- Replaced `screenfull.js` with the native Fullscreen API (ENG-3): rewrote `isFullScreen`, `makeFullScreen`, `exitFullScreen`, and `toggleFullScreen` in `Viewport.js` using `document.fullscreenElement`, `requestFullscreen()`, and `exitFullscreen()`; deleted `js/libs/screenfull.min.js`
+- Removed stale `screenfull`, `jQuery`, and `$` ESLint globals from `eslint.config.mjs`
+
+---
+
 ## 2026-06-09
 
 - Replaced SoundManager2 with Howler.js: rewrote `Sound.js` and `SoundInstance.js` around the Howler API; replaced `SoundPreloader.js` to create `Howl` objects (with `pool` for polyphony); deleted `SoundManagerPreloader.js` and removed its init stage from `PreloadingManager.js`

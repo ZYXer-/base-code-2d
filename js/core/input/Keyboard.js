@@ -11,7 +11,7 @@ let keyUpHandlers = new Map();
 
 
 function construct() {
-    jQuery(document).keydown(event => {
+    document.addEventListener("keydown", event => {
         if(!allowDefault && !allowKeys.has(event.which)) {
             event.preventDefault();
             keyPressed.add(event.which);
@@ -19,8 +19,8 @@ function construct() {
                 keyDownHandlers.get(event.which).callback();
             }
         }
-
-    }).keyup(event => {
+    });
+    document.addEventListener("keyup", event => {
         if(!allowDefault && !allowKeys.has(event.which)) {
             event.preventDefault();
             keyPressed.delete(event.which);
@@ -29,7 +29,6 @@ function construct() {
             }
         }
     });
-
 }
 construct();
 

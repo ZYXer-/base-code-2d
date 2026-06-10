@@ -1,7 +1,6 @@
 import { c, canvas } from "./canvas.js";
 import * as Settings from "../Settings.js";
 import * as SceneManager from "./SceneManager.js";
-import * as sf from "../libs/screenfull.min.js";
 import * as NumberUtils from "../utils/NumberUtils.js";
 
 
@@ -32,36 +31,39 @@ export function init() {
     centerX = Math.round(width / 2.0);
     centerY = Math.round(height / 2.0);
 
-    jQuery("#game_box, #game").width(width).height(height);
+    document.querySelectorAll("#game_box, #game").forEach(el => {
+        el.style.width = width + "px";
+        el.style.height = height + "px";
+    });
     canvas.width = width;
     canvas.height = height;
 
-    jQuery(window).ready(() => {
-        window.onresize = () => {
-            resize();
-        };
-        resize();
-    });
+    window.addEventListener("resize", resize);
+    resize();
 }
 
 
 export function isFullScreen() {
-    return screenfull.isFullscreen;
+    return !!document.fullscreenElement;
 }
 
 
 export function makeFullScreen() {
-    screenfull.request(jQuery("html")[0]);
+    document.documentElement.requestFullscreen();
 }
 
 
 export function exitFullScreen() {
-    screenfull.exit();
+    document.exitFullscreen();
 }
 
 
 export function toggleFullScreen() {
-    screenfull.toggle(jQuery("html")[0]);
+    if (isFullScreen()) {
+        exitFullScreen();
+    } else {
+        makeFullScreen();
+    }
 }
 
 
@@ -69,13 +71,16 @@ export function resize() {
 
     const devicePixelRatio = window.devicePixelRatio || 1;
 
-    let cssWidth = jQuery(window).width();
-    let cssHeight = jQuery(window).height();
+    let cssWidth = window.innerWidth;
+    let cssHeight = window.innerHeight;
 
     cssWidth = NumberUtils.clamp(cssWidth, Settings.Size.MIN_WIDTH / devicePixelRatio, Settings.Size.MAX_WIDTH / devicePixelRatio);
     cssHeight = NumberUtils.clamp(cssHeight, Settings.Size.MIN_HEIGHT / devicePixelRatio, Settings.Size.MAX_HEIGHT / devicePixelRatio);
 
-    jQuery("#game_box, #game").width(cssWidth).height(cssHeight);
+    document.querySelectorAll("#game_box, #game").forEach(el => {
+        el.style.width = cssWidth + "px";
+        el.style.height = cssHeight + "px";
+    });
 
     canvasWidth = cssWidth * devicePixelRatio;
     canvasWidth = NumberUtils.clamp(canvasWidth, Settings.Size.MIN_WIDTH, Settings.Size.MAX_WIDTH);

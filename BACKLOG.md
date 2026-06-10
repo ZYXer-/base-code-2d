@@ -18,7 +18,7 @@ Format: `<TOPIC>-<NUMBER>` — check off items as they are completed.
 - [x] **CLN-2** Remove or replace remaining references to the old `Utils.js` once the split is complete
 - [ ] **CLN-3** Audit and remove unused demo assets (`test.png`, `test2.png`, `demo_data.png`, cannon sounds)
 - [ ] **CLN-4** Remove or consolidate `OldDemoScene.js` (legacy)
-- [ ] **CLN-5** Review jQuery usage — most usages are simple DOM ops that could be replaced with vanilla JS
+- [x] **CLN-5** Review jQuery usage — most usages are simple DOM ops that could be replaced with vanilla JS
 - [ ] **CLN-6** Replace `options.hasOwnProperty(x)` with `Object.hasOwn(options, x)` throughout (ESLint `no-prototype-builtins` — ~48 occurrences, mainly in `Button.js` and `ParticleSystem.js`)
 - [ ] **CLN-7** Replace `var` with `let`/`const` in `Text.js` (15 occurrences flagged by ESLint)
 - [ ] **CLN-8** Add space between control-flow keywords and `(` across all source files — `if(` → `if (`, `for(` → `for (`, etc. (ESLint `keyword-spacing` auto-fixable: `npm run lint -- --fix`)
@@ -49,7 +49,7 @@ Format: `<TOPIC>-<NUMBER>` — check off items as they are completed.
 
 - [ ] **ENG-1** Fix Tooltip dimension reading (noted as broken in git history)
 - [ ] **ENG-2** Verify `FIXED_SIZE_IN_UNITS` works correctly when constraining only one dimension (fixed in LD50 update — add a regression test or demo)
-- [ ] **ENG-3** Evaluate replacing `screenfull.js` with the native Fullscreen API (broadly supported now)
+- [x] **ENG-3** Replace `screenfull.js` with the native Fullscreen API (broadly supported now)
 - [ ] **ENG-4** Review `PageVisibility.js` for edge cases (e.g. resize event on focus regain)
 - [ ] **ENG-5** Add TypeScript type definitions or JSDoc types for the public API surface
 - [ ] **ENG-6** Fix `Vec2.toVec3()` — calls `new Vec3()` but `Vec3` is never imported in `Vec2.js` (ESLint `no-undef`)

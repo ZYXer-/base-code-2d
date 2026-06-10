@@ -24,12 +24,12 @@ export function createMatrix(width, height, defaultValue) {
 
 
 export function shallowCopy(object) {
-    return jQuery.extend({}, object);
+    return Object.assign({}, object);
 }
 
 
 export function deepCopy(object) {
-    return jQuery.extend(true, {}, object);
+    return structuredClone(object);
 }
 
 

@@ -21,7 +21,7 @@ function construct() {
 
         lastTime = now();
 
-        jQuery("#game_box").after("<div id=\"fps\"></div>");
+        document.getElementById("game_box").insertAdjacentHTML("afterend", "<div id=\"fps\"></div>");
 
         measurementCountdown = MEASUREMENT_TICK_INTERVAL;
 
@@ -103,7 +103,7 @@ export function printFps() {
         }
     }
     fpsContent += "<strong>" + fps.toFixed(1) + " FPS</strong>";
-    jQuery("#fps").html(fpsContent);
+    document.getElementById("fps").innerHTML = fpsContent;
 }
 
 
