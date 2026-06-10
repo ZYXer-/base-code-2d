@@ -8,21 +8,21 @@ class ParticleSystem {
     constructor(options) {
 
         this.mode = ParticleSystem.CONTINUOUS_MODE;
-        if (options.hasOwnProperty("mode")) {
+        if (Object.hasOwn(options, "mode")) {
             this.mode = options.mode;
         }
 
         this.emitter = {x: 0.0, y: 0.0, z: 0.0};
-        if (options.hasOwnProperty("emitter")) {
+        if (Object.hasOwn(options, "emitter")) {
             this.emitter = { x: options.emitter.x, y: options.emitter.y, z: options.emitter.z };
         }
         this.emitterSize = {x: 0.0, y: 0.0, z: 0.0};
-        if (options.hasOwnProperty("emitterSize")) {
+        if (Object.hasOwn(options, "emitterSize")) {
             this.emitterSize = { x: options.emitterSize.x, y: options.emitterSize.y, z: options.emitterSize.z };
         }
 
         this.initV = {x: { min: 0.0, max: 0.0 }, y: { min: 0.0, max: 0.0 }, z: { min: 0.0, max: 0.0 }};
-        if (options.hasOwnProperty("v")) {
+        if (Object.hasOwn(options, "v")) {
             this.initV = {
                 x: { min: options.v.x.min, max: options.v.x.max },
                 y: { min: options.v.y.min, max: options.v.y.max },
@@ -31,7 +31,7 @@ class ParticleSystem {
         }
 
         this.initA = {x: { min: 0.0, max: 0.0 }, y: { min: 0.0, max: 0.0 }, z: { min: 0.0, max: 0.0 }};
-        if (options.hasOwnProperty("a")) {
+        if (Object.hasOwn(options, "a")) {
             this.initA = {
                 x: { min: options.a.x.min, max: options.a.x.max },
                 y: { min: options.a.y.min, max: options.a.y.max },
@@ -40,27 +40,27 @@ class ParticleSystem {
         }
 
         this.friction = {x: 0.0, y: 0.0, z: 0.0};
-        if (options.hasOwnProperty("friction")) {
+        if (Object.hasOwn(options, "friction")) {
             this.friction = { x: options.friction.x, y: options.friction.y, z: options.friction.z };
         }
 
         this.life = { min: 0.0, max: 0.0 };
-        if (options.hasOwnProperty("life")) {
+        if (Object.hasOwn(options, "life")) {
             this.life = { min: options.life.min, max: options.life.max };
         }
 
         this.particlesPerTick = 1;
-        if (options.hasOwnProperty("particlesPerTick")) {
+        if (Object.hasOwn(options, "particlesPerTick")) {
             this.particlesPerTick = options.particlesPerTick;
         }
 
         this.initFunction = null;
-        if (options.hasOwnProperty("init")) {
+        if (Object.hasOwn(options, "init")) {
             this.initFunction = options.init;
         }
 
         this.drawFunction = null;
-        if (options.hasOwnProperty("draw")) {
+        if (Object.hasOwn(options, "draw")) {
             this.drawFunction = options.draw;
         }
 

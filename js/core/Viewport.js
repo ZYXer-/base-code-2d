@@ -49,12 +49,12 @@ export function isFullScreen() {
 
 
 export function makeFullScreen() {
-    document.documentElement.requestFullscreen();
+    document.documentElement.requestFullscreen().catch(() => {});
 }
 
 
 export function exitFullScreen() {
-    document.exitFullscreen();
+    document.exitFullscreen().catch(() => {});
 }
 
 

@@ -12,42 +12,42 @@ class Button {
 
     set(options) {
         this.x = 0;
-        if (options.hasOwnProperty("x")) {
+        if (Object.hasOwn(options, "x")) {
             this.x = options.x;
         }
 
         this.y = 0;
-        if (options.hasOwnProperty("y")) {
+        if (Object.hasOwn(options, "y")) {
             this.y = options.y;
         }
 
         this.w = 0;
-        if (options.hasOwnProperty("w")) {
+        if (Object.hasOwn(options, "w")) {
             this.w = options.w;
         }
 
         this.h = 0;
-        if (options.hasOwnProperty("h")) {
+        if (Object.hasOwn(options, "h")) {
             this.h = options.h;
         }
 
         this.clickCallback = null;
-        if (options.hasOwnProperty("click")) {
+        if (Object.hasOwn(options, "click")) {
             this.clickCallback = options.click;
         }
 
         this.drawCallback = null;
-        if (options.hasOwnProperty("draw")) {
+        if (Object.hasOwn(options, "draw")) {
             this.drawCallback = options.draw;
         }
 
         this.active = true;
-        if (options.hasOwnProperty("active")) {
+        if (Object.hasOwn(options, "active")) {
             this.active = options.active;
         }
 
         this.tooltip = null;
-        if (options.hasOwnProperty("tooltip")) {
+        if (Object.hasOwn(options, "tooltip")) {
             this.tooltip = options.tooltip;
         }
     }

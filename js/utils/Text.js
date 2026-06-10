@@ -7,52 +7,52 @@ class Text {
     constructor(options) {
 
         this.x = 0;
-        if (options.hasOwnProperty("x")) {
+        if (Object.hasOwn(options, "x")) {
             this.x = options.x;
         }
 
         this.y = 0;
-        if (options.hasOwnProperty("y")) {
+        if (Object.hasOwn(options, "y")) {
             this.y = options.y;
         }
 
         this.size = 16;
-        if (options.hasOwnProperty("size")) {
+        if (Object.hasOwn(options, "size")) {
             this.size = options.size;
         }
 
         this.font = "";
-        if (options.hasOwnProperty("font")) {
+        if (Object.hasOwn(options, "font")) {
             this.font = options.font;
         }
 
         this.align = "left";
-        if (options.hasOwnProperty("align")) {
+        if (Object.hasOwn(options, "align")) {
             this.align = options.align;
         }
 
         this.color = "#000";
-        if (options.hasOwnProperty("color")) {
+        if (Object.hasOwn(options, "color")) {
             this.color = options.color;
         }
 
         this.borderWidth = 0;
-        if (options.hasOwnProperty("borderWidth")) {
+        if (Object.hasOwn(options, "borderWidth")) {
             this.borderWidth = options.borderWidth;
         }
 
         this.borderColor = "#000";
-        if (options.hasOwnProperty("borderColor")) {
+        if (Object.hasOwn(options, "borderColor")) {
             this.borderColor = options.borderColor;
         }
 
         this.borderLineJoin = "round";
-        if (options.hasOwnProperty("borderLineJoin")) {
+        if (Object.hasOwn(options, "borderLineJoin")) {
             this.borderLineJoin = options.borderLineJoin;
         }
 
         this.monospaced = -1;
-        if (options.hasOwnProperty("monospaced")) {
+        if (Object.hasOwn(options, "monospaced")) {
             this.monospaced = options.monospaced;
         }
 
@@ -64,34 +64,34 @@ class Text {
         this.finishedAppearing = true;
 
         this.maxWidth = 0;
-        if (options.hasOwnProperty("maxWidth")) {
+        if (Object.hasOwn(options, "maxWidth")) {
             this.maxWidth = options.maxWidth;
         }
 
         this.lineHeight = 0;
-        if (options.hasOwnProperty("lineHeight")) {
+        if (Object.hasOwn(options, "lineHeight")) {
             this.lineHeight = options.lineHeight;
-        } else if (options.hasOwnProperty("size")) {
+        } else if (Object.hasOwn(options, "size")) {
             this.lineHeight = options.size;
         }
 
         this.verticalAlign = "top";
-        if (options.hasOwnProperty("verticalAlign")) {
+        if (Object.hasOwn(options, "verticalAlign")) {
             this.verticalAlign = options.verticalAlign;
         }
 
         this.letterSpacing = 0;
-        if (options.hasOwnProperty("letterSpacing")) {
+        if (Object.hasOwn(options, "letterSpacing")) {
             this.letterSpacing = options.letterSpacing;
         }
 
         this.appearCharPerSec = 0;
-        if (options.hasOwnProperty("appearCharPerSec")) {
+        if (Object.hasOwn(options, "appearCharPerSec")) {
             this.appearCharPerSec = options.appearCharPerSec;
         }
 
         this.text = "";
-        if (options.hasOwnProperty("text")) {
+        if (Object.hasOwn(options, "text")) {
             this.setText(options.text);
         }
     }
@@ -309,12 +309,12 @@ class Text {
             y -= this.lineHeight * 0.5 * (this.lines.length - 1);
         }
         if (this.finishedAppearing) {
-            for (var i = 0; i < this.lines.length; i++) {
+            for (let i = 0; i < this.lines.length; i++) {
                 this.drawLine(c, this.lines[i], this.lines[i], this.x, this.y + y, drawBorder);
                 y += this.lineHeight;
             }
         } else {
-            for (var i = 0; i < this.showLines.length; i++) {
+            for (let i = 0; i < this.showLines.length; i++) {
                 this.drawLine(c, this.showLines[i], this.lines[i], this.x, this.y + y, drawBorder);
                 y += this.lineHeight;
             }

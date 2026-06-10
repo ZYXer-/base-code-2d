@@ -1,3 +1,6 @@
+import Vec3 from "./Vec3.js";
+
+
 export default class Vec2 {
 
 

@@ -140,12 +140,12 @@ function updatePosition(newPos) {
 
 
 function updateHoverAreas() {
-    for (const [name, area] of hoverAreas) {
-        const isOver = isOver(area.x, area.y, area.w, area.h);
-        if (isOver && !area.isOver) {
+    for (const [_, area] of hoverAreas) {
+        const hovering = isOver(area.x, area.y, area.w, area.h);
+        if (hovering && !area.isOver) {
             area.overCallback();
             area.isOver = true;
-        } else if (!isOver && area.isOver) {
+        } else if (!hovering && area.isOver) {
             area.outCallback();
             area.isOver = false;
         }

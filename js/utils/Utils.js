@@ -38,30 +38,30 @@ export function stopwatch(stopwatchTime, speed, min, max, callbacks) {
     stopwatchTime = NumberUtils.clamp(stopwatchTime, min, max);
 
     if (stopwatchTime === min) {
-        if (lastTime > min && callbacks.hasOwnProperty("reachMin")) {
+        if (lastTime > min && Object.hasOwn(callbacks, "reachMin")) {
             callbacks.reachMin();
         }
-        if (callbacks.hasOwnProperty("atMin")) {
+        if (Object.hasOwn(callbacks, "atMin")) {
             callbacks.atMin();
         }
     }
 
     if (stopwatchTime === max) {
-        if (lastTime < max && callbacks.hasOwnProperty("reachMax")) {
+        if (lastTime < max && Object.hasOwn(callbacks, "reachMax")) {
             callbacks.reachMax();
         }
-        if (callbacks.hasOwnProperty("atMax")) {
+        if (Object.hasOwn(callbacks, "atMax")) {
             callbacks.atMax();
         }
     }
 
-    if (stopwatchTime < max && callbacks.hasOwnProperty("exceptMax")) {
+    if (stopwatchTime < max && Object.hasOwn(callbacks, "exceptMax")) {
         callbacks.exceptMax();
     }
-    if (stopwatchTime > min && callbacks.hasOwnProperty("exceptMin")) {
+    if (stopwatchTime > min && Object.hasOwn(callbacks, "exceptMin")) {
         callbacks.exceptMin();
     }
-    if (stopwatchTime > min && stopwatchTime < max && callbacks.hasOwnProperty("exceptMinMax")) {
+    if (stopwatchTime > min && stopwatchTime < max && Object.hasOwn(callbacks, "exceptMinMax")) {
         callbacks.exceptMinMax();
     }
 

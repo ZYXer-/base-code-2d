@@ -6,6 +6,10 @@ Entries are in reverse chronological order. One bullet per change, one clause pe
 
 ## 2026-06-10
 
+- Added `import Vec3` to `Vec2.js` to fix `toVec3()` referencing an undefined global (ENG-6)
+- Removed `Vec3.toThree()` — Three.js is not a dependency and the method was dead code (ENG-7)
+- Marked ENG-12 closed — `Vec3.js` already had `import Vec2` from a prior change
+- Replaced `var` with `let` in `Text.js` (CLN-7): two loop variables in `drawLines()`
 - Removed jQuery (CLN-5): replaced all source-file usages with vanilla JS equivalents across `PerformanceMonitor.js`, `Viewport.js`, `Keyboard.js`, `Mouse.js`, `WebFontPreloader.js`, `main.js`, `DataUtils.js`, and `ImageProcessing.js`; deleted `js/libs/jquery-3.4.1.min.js`
 - Modernised `Mouse.js` as part of CLN-5: switched `event.which` → `event.button`, `mousewheel`/`DOMMouseScroll` → `wheel`, unwrapped `event.originalEvent` touch/scroll references, added `{ passive: false }` where `preventDefault()` is called
 - Replaced `jQuery.extend(true, ...)` with `structuredClone` in `DataUtils.deepCopy`
@@ -16,6 +20,12 @@ Entries are in reverse chronological order. One bullet per change, one clause pe
 - Modernised `PageVisibility.js` (ENG-4): removed vendor-prefix detection (`mozHidden`, `webkitHidden`, `msHidden`), removed IE 9 fallback, switched from property assignment to `addEventListener` for `focus`/`blur`/`pageshow`/`pagehide`, replaced `document[hiddenAttr]` with `document.hidden`, replaced `hasOwnProperty` with `Object.hasOwn`
 - Changed object literal colon spacing style from `{ key : value }` to `{ key: value }` (AirBnB default); updated `eslint.config.mjs` (`key-spacing` simplified to `"warn"`), removed the now-standard section from `docs/style.md`, and updated the deviation count from four to three
 - Applied key-spacing fix across 43 files via `npm run lint -- --fix`
+- Fixed unhandled Promise rejections in `Viewport.makeFullScreen` / `exitFullScreen` — added `.catch(() => {})` to `requestFullscreen()` and `exitFullscreen()` calls
+- Fixed `isOver` TDZ variable shadow in `Mouse.updateHoverAreas` — `const isOver = isOver(...)` caused a ReferenceError; renamed local to `hovering` and unused destructured `name` to `_`
+- Fixed missing trailing newlines in `js/main.js`, `js/utils/ImageProcessing.js`, `js/BasicTooltipPainter.js`
+- Replaced `hasOwnProperty` with `Object.hasOwn` (CLN-6) across `Button.js`, `ParticleSystem.js`, `Text.js`, `Utils.js`, `ImageProcessing.js`, and `PixelFontManager.js`
+- Deleted orphaned `js/libs/soundmanager2.js` — not referenced anywhere after the Howler migration
+- Renamed backlog topic abbreviation `DEM` → `DEMO`; moved CLN-3 and CLN-4 (demo assets and `OldDemoScene.js`) into the DEMO section as DEMO-4 and DEMO-5
 
 ---
 

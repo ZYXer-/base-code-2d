@@ -131,11 +131,6 @@ export default class Vec3 {
     }
 
 
-    toThree() {
-        return new THREE.Vector3(this.x, this.y, this.z);
-    }
-
-
     toString() {
         return "x=" + this.x + " / y=" + this.y + " / z=" + this.z;
     }

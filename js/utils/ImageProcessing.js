@@ -34,7 +34,7 @@ export function readMatrix(image, width, height, defaultValue, colorAllocation) 
     for (let x = 0; x < width; x++) {
         for (let y = 0; y < height; y++) {
             hexColor = Color.fromArray(data[x][y]).toHex();
-            if (colorAllocation.hasOwnProperty(hexColor)) {
+            if (Object.hasOwn(colorAllocation, hexColor)) {
                 matrix[x][y] = colorAllocation[hexColor];
             }
         }
@@ -68,7 +68,7 @@ export function replaceColors(source, target, colorMap) {
         for (let y = 0; y < height; y++) {
             i = ((y * width) + x) * 4;
             hexColor = Color.fromRGB(data[i], data[i + 1], data[i + 2]).toHex();
-            if (colorMap.hasOwnProperty(hexColor)) {
+            if (Object.hasOwn(colorMap, hexColor)) {
                 rgb = colorMap[hexColor];
                 data[i] = rgb.r;
                 data[i + 1] = rgb.g;
