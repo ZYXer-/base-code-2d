@@ -16,7 +16,7 @@ let textDrawable = null;
 
 export function insertNewContent(content) {
 
-    if(textDrawable === null) {
+    if (textDrawable === null) {
         initTextDrawable();
     }
 
@@ -48,13 +48,13 @@ export function draw(content, dimensions) {
 
 function initTextDrawable() {
     textDrawable = new Text({
-        x : 0,
-        y : 12, // set as distance from top of character to baseline
-        size : 14,
-        font : "opensans",
-        align : "left",
-        color : "#000",
-        maxWidth : 150,
-        lineHeight : 16
+        x: 0,
+        y: 12, // set as distance from top of character to baseline
+        size: 14,
+        font: "opensans",
+        align: "left",
+        color: "#000",
+        maxWidth: 150,
+        lineHeight: 16
     });
 }

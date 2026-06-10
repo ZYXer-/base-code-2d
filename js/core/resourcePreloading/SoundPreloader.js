@@ -17,13 +17,13 @@ class SoundPreloader extends Preloader {
 
         this.totalAssets = sources.size;
 
-        for (let [name, source] of sources) {
+        for (const [name, source] of sources) {
             const howl = new Howl({
-                src : source.source,
-                pool : source.instances,
-                volume : Settings.Game.DEFAULT_SOUND_VOLUME,
-                onload : () => this.reportAssetLoaded(),
-                onloaderror : (_, error) => {
+                src: source.source,
+                pool: source.instances,
+                volume: Settings.Game.DEFAULT_SOUND_VOLUME,
+                onload: () => this.reportAssetLoaded(),
+                onloaderror: (_, error) => {
                     console.warn("Failed to load sound '" + name + "':", error);
                     this.reportAssetLoaded();
                 }

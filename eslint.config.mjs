@@ -57,7 +57,7 @@ export default [
             "brace-style": ["warn", "1tbs"],
             "prefer-const": "warn",
             "keyword-spacing": ["warn", { "before": true, "after": true }],
-            "key-spacing": ["warn", { "beforeColon": true, "afterColon": true }],
+            "key-spacing": "warn",
         }
     },
 

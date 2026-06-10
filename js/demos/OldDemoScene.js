@@ -61,4 +61,3 @@ export function draw() {
     PauseScreen.draw();
 }
 
-

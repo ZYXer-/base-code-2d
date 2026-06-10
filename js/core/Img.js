@@ -15,7 +15,7 @@ export function isLoaded(name) {
 
 
 export function get(name) {
-    if(assets.has(name)) {
+    if (assets.has(name)) {
         return assets.get(name);
     } else {
         alert("There is no image named '" + name + "'.");

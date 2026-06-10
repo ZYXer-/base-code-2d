@@ -27,7 +27,7 @@ export function parallaxCalculator(scale, pos, shift, textureWidth, tileWidth, s
     const firstTileX = -tileOffset - overflow;
     const firstTileIndex = startingTile % numOfTilesInTex;
     const numOfTiles = endTile - startingTile;
-    return { firstTileX : firstTileX, firstTileIndex : firstTileIndex, numOfTiles : numOfTiles };
+    return { firstTileX: firstTileX, firstTileIndex: firstTileIndex, numOfTiles: numOfTiles };
 }
 
 

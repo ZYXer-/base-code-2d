@@ -19,14 +19,16 @@ const scrollCallbacks = new Map();
 function construct() {
 
     document.addEventListener("contextmenu", event => {
-        if(Settings.Game.PREVENT_CONTEXT_MENU) {
+        if (Settings.Game.PREVENT_CONTEXT_MENU) {
             event.preventDefault();
         }
     });
 
     document.body.setAttribute("unselectable", "on");
     document.body.style.userSelect = "none";
-    document.body.addEventListener("selectstart", event => { event.preventDefault(); });
+    document.body.addEventListener("selectstart", event => {
+        event.preventDefault();
+    });
 
     document.body.addEventListener("mousemove", event => {
         updatePosition(getPositionFromMouseEvent(event));
@@ -34,14 +36,14 @@ function construct() {
     document.body.addEventListener("touchmove", event => {
         updatePosition(getPositionFromTouchEvent(event));
         event.preventDefault();
-    }, { passive : false });
+    }, { passive: false });
     document.body.addEventListener("mousedown", event => {
         updatePosition(getPositionFromMouseEvent(event));
-        if(event.button === 0) {
+        if (event.button === 0) {
             left.triggerDown();
-        } else if(event.button === 1) {
+        } else if (event.button === 1) {
             middle.triggerDown();
-        } else if(event.button === 2) {
+        } else if (event.button === 2) {
             right.triggerDown();
         }
         event.preventDefault();
@@ -49,14 +51,14 @@ function construct() {
     document.body.addEventListener("touchstart", event => {
         left.triggerDown(getPositionFromTouchEvent(event));
         event.preventDefault();
-    }, { passive : false });
+    }, { passive: false });
     document.body.addEventListener("mouseup", event => {
         updatePosition(getPositionFromMouseEvent(event));
-        if(event.button === 0) {
+        if (event.button === 0) {
             left.triggerUp();
-        } else if(event.button === 1) {
+        } else if (event.button === 1) {
             middle.triggerUp();
-        } else if(event.button === 2) {
+        } else if (event.button === 2) {
             right.triggerUp();
         }
         event.preventDefault();
@@ -65,11 +67,11 @@ function construct() {
         document.body.addEventListener(eventName, event => {
             left.triggerUp(getPositionFromTouchEvent(event));
             event.preventDefault();
-        }, { passive : false });
+        }, { passive: false });
     });
     document.body.addEventListener("wheel", event => {
         triggerScroll(event);
-    }, { passive : false });
+    }, { passive: false });
 }
 construct();
 
@@ -95,7 +97,7 @@ export function isOverCircle(x, y, r) {
 
 
 export function registerHoverArea(name, x, y, w, h, overCallback, outCallback) {
-    hoverAreas.set(name, { name, x, y, w, h, overCallback, outCallback, isOver : false });
+    hoverAreas.set(name, { name, x, y, w, h, overCallback, outCallback, isOver: false });
 }
 
 
@@ -128,7 +130,7 @@ export function deleteScrollCallback(name) {
 
 
 function updatePosition(newPos) {
-    if(newPos !== null) {
+    if (newPos !== null) {
         const rect = document.getElementById("game").getBoundingClientRect();
         const ratio = window.devicePixelRatio || 1;
         pos.x = ((ratio * (newPos.x - (rect.left + window.scrollX))) - Viewport.frameOffsetX) / Viewport.scaleX;
@@ -138,12 +140,12 @@ function updatePosition(newPos) {
 
 
 function updateHoverAreas() {
-    for(let [name, area] of hoverAreas) {
+    for (const [name, area] of hoverAreas) {
         const isOver = isOver(area.x, area.y, area.w, area.h);
-        if(isOver && !area.isOver) {
+        if (isOver && !area.isOver) {
             area.overCallback();
             area.isOver = true;
-        } else if(!isOver && area.isOver) {
+        } else if (!isOver && area.isOver) {
             area.outCallback();
             area.isOver = false;
         }
@@ -152,14 +154,14 @@ function updateHoverAreas() {
 
 
 function getPositionFromMouseEvent(event) {
-    return { x : event.pageX, y : event.pageY };
+    return { x: event.pageX, y: event.pageY };
 }
 
 
 function getPositionFromTouchEvent(event) {
-    if(event.touches.length > 0) {
+    if (event.touches.length > 0) {
         const touch = event.touches[0];
-        return { x : touch.pageX, y : touch.pageY };
+        return { x: touch.pageX, y: touch.pageY };
     } else {
         return null;
     }
@@ -168,12 +170,12 @@ function getPositionFromTouchEvent(event) {
 
 function triggerScroll(event) {
     const delta = -event.deltaY;
-    for(let [_, area] of scrollAreas) {
-        if(isOver(area.x, area.y, area.w, area.h)) {
+    for (const [_, area] of scrollAreas) {
+        if (isOver(area.x, area.y, area.w, area.h)) {
             area.callback(delta);
         }
     }
-    for(let [_, callback] of scrollCallbacks) {
+    for (const [_, callback] of scrollCallbacks) {
         callback.callback(delta);
     }
     event.preventDefault();

@@ -1,30 +1,28 @@
-
-
 export let allowDefault = false;
 
 
-let allowKeys = new Set();
-let keyPressed = new Set();
+const allowKeys = new Set();
+const keyPressed = new Set();
 
-let keyDownHandlers = new Map();
-let keyUpHandlers = new Map();
+const keyDownHandlers = new Map();
+const keyUpHandlers = new Map();
 
 
 function construct() {
     document.addEventListener("keydown", event => {
-        if(!allowDefault && !allowKeys.has(event.which)) {
+        if (!allowDefault && !allowKeys.has(event.which)) {
             event.preventDefault();
             keyPressed.add(event.which);
-            if(keyDownHandlers.has(event.which)) {
+            if (keyDownHandlers.has(event.which)) {
                 keyDownHandlers.get(event.which).callback();
             }
         }
     });
     document.addEventListener("keyup", event => {
-        if(!allowDefault && !allowKeys.has(event.which)) {
+        if (!allowDefault && !allowKeys.has(event.which)) {
             event.preventDefault();
             keyPressed.delete(event.which);
-            if(keyUpHandlers.has(event.which)) {
+            if (keyUpHandlers.has(event.which)) {
                 keyUpHandlers.get(event.which).callback();
             }
         }

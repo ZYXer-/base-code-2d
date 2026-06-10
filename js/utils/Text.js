@@ -396,13 +396,13 @@ class Text {
 
     static draw(x, y, size, font, align, color, text) {
         (new Text({
-            x : x,
-            y : y,
-            size : size,
-            font : font,
-            align : align,
-            color : color,
-            text : text
+            x: x,
+            y: y,
+            size: size,
+            font: font,
+            align: align,
+            color: color,
+            text: text
         })).draw();
     }
 

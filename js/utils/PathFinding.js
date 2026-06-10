@@ -10,8 +10,8 @@ class PathFinding {
 
         this.setupGrid(start, end);
 
-        this.start = { x : (start.x - this.gridMinX), y : (start.y - this.gridMinY) };
-        this.end = { x : (end.x - this.gridMinX), y : (end.y - this.gridMinY) };
+        this.start = { x: (start.x - this.gridMinX), y: (start.y - this.gridMinY) };
+        this.end = { x: (end.x - this.gridMinX), y: (end.y - this.gridMinY) };
 
         const nodeQueue = new PriorityQueue(node => {
             return node.f;
@@ -26,7 +26,7 @@ class PathFinding {
             if (currentNode.x === this.end.x && currentNode.y === this.end.y) {
                 const path = [];
                 while (currentNode.parent !== null) {
-                    path.push({ x : (currentNode.x + this.gridMinX), y : (currentNode.y + this.gridMinY) });
+                    path.push({ x: (currentNode.x + this.gridMinX), y: (currentNode.y + this.gridMinY) });
                     currentNode = currentNode.parent;
                 }
                 return path.reverse();
@@ -103,17 +103,17 @@ class PathFinding {
             this.grid[x] = [];
             for (let y = 0; y < this.gridHeight; y++) {
                 this.grid[x][y] = {
-                    x : x,
-                    y : y,
-                    f : 0,
-                    g : 0,
-                    h : 0,
-                    tempCost : 0,
-                    processed : false,
-                    visited : false,
-                    checkedIfFree : false,
-                    free : true,
-                    parent : null
+                    x: x,
+                    y: y,
+                    f: 0,
+                    g: 0,
+                    h: 0,
+                    tempCost: 0,
+                    processed: false,
+                    visited: false,
+                    checkedIfFree: false,
+                    free: true,
+                    parent: null
                 };
             }
         }

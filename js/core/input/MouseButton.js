@@ -27,8 +27,8 @@ export default class MouseButton {
         this.down = true;
         this.downPos = Mouse.pos.copy();
 
-        for(let [_, area] of this.draggableAreas) {
-            if(Mouse.isOver(area.x, area.y, area.w, area.h)) {
+        for (const [_, area] of this.draggableAreas) {
+            if (Mouse.isOver(area.x, area.y, area.w, area.h)) {
 
                 this.dragging = true;
                 this.lastDrag = Mouse.pos.copy();
@@ -36,16 +36,16 @@ export default class MouseButton {
 
                 this.draggingCallback = area.draggingCallback;
                 this.dropCallback = area.dropCallback;
-                if(area.downCallback !== null) {
+                if (area.downCallback !== null) {
                     area.downCallback();
                 }
             }
         }
-        for(let [_, callback] of this.downCallbacks) {
+        for (const [_, callback] of this.downCallbacks) {
             callback.callback();
         }
-        for(let [_, area] of this.downAreas) {
-            if(Mouse.isOver(area.x, area.y, area.w, area.h)) {
+        for (const [_, area] of this.downAreas) {
+            if (Mouse.isOver(area.x, area.y, area.w, area.h)) {
                 area.callback();
             }
         }
@@ -55,17 +55,17 @@ export default class MouseButton {
     triggerUp() {
         this.down = false;
 
-        if(this.dragging) {
+        if (this.dragging) {
             this.dragging = false;
-            if(this.dropCallback !== null) {
+            if (this.dropCallback !== null) {
                 this.dropCallback();
             }
         } else {
-            for(let [_, callback] of this.upCallbacks) {
+            for (const [_, callback] of this.upCallbacks) {
                 callback.callback();
             }
-            for(let [_, area] of this.upAreas) {
-                if(Mouse.isOver(area.x, area.y, area.w, area.h)) {
+            for (const [_, area] of this.upAreas) {
+                if (Mouse.isOver(area.x, area.y, area.w, area.h)) {
                     area.callback();
                 }
             }
@@ -74,10 +74,10 @@ export default class MouseButton {
 
 
     update() {
-        if(this.dragging) {
+        if (this.dragging) {
             this.dragDelta = Mouse.pos.subtract(this.lastDrag);
             this.lastDrag = Mouse.pos.copy();
-            if(this.draggingCallback !== null) {
+            if (this.draggingCallback !== null) {
                 this.draggingCallback();
             }
         } else {

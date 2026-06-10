@@ -94,9 +94,9 @@ export function resize() {
     width = canvasWidth;
     height = canvasHeight;
 
-    if(Settings.Size.FIXED_ASPECT_RATIO) {
-        let aspectRatio = width / height;
-        if(aspectRatio > Settings.Size.ASPECT_RATIO) {
+    if (Settings.Size.FIXED_ASPECT_RATIO) {
+        const aspectRatio = width / height;
+        if (aspectRatio > Settings.Size.ASPECT_RATIO) {
             frameOffsetX = Math.round(0.5 * (width - (height * Settings.Size.ASPECT_RATIO)));
             frameOffsetY = 0;
         } else {
@@ -108,7 +108,7 @@ export function resize() {
     }
 
     if (Settings.Size.FIXED_SIZE_IN_UNITS) {
-        
+
         if (Settings.Size.WIDTH_IN_UNITS === 0) {
             scaleY = (canvasHeight - (2.0 * frameOffsetY)) / Settings.Size.HEIGHT_IN_UNITS;
             scaleX = scaleY;
@@ -146,11 +146,11 @@ export function draw() {
 
 
 function applyScaling() {
-    if(Settings.Size.FIXED_ASPECT_RATIO) {
+    if (Settings.Size.FIXED_ASPECT_RATIO) {
         c.save();
         c.translate(frameOffsetX, frameOffsetY);
     }
-    if(Settings.Size.FIXED_SIZE_IN_UNITS) {
+    if (Settings.Size.FIXED_SIZE_IN_UNITS) {
         c.save();
         c.scale(scaleX, scaleY);
     }
@@ -158,17 +158,17 @@ function applyScaling() {
 
 
 function removeScaling() {
-    if(Settings.Size.FIXED_SIZE_IN_UNITS) {
+    if (Settings.Size.FIXED_SIZE_IN_UNITS) {
         c.restore();
     }
-    if(Settings.Size.FIXED_ASPECT_RATIO) {
+    if (Settings.Size.FIXED_ASPECT_RATIO) {
         c.restore();
     }
 }
 
 
 function drawFrame() {
-    if(Settings.Size.FIXED_ASPECT_RATIO) {
+    if (Settings.Size.FIXED_ASPECT_RATIO) {
         c.fillStyle = Settings.Size.FRAME_COLOR;
 
         c.fillRect(-10, -10, canvasWidth + 20, frameOffsetY + 10);

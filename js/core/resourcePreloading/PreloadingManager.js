@@ -35,19 +35,19 @@ export function preload() {
 
 export function update() {
 
-    if(imagePreloader.isLoaded()
+    if (imagePreloader.isLoaded()
         && pixelFontPreloader.isLoaded()
         && webFontPreloader.isLoaded()
         && (soundPreloader.isLoaded() || soundLoadingCountdown < 0)) {
 
         fakeLoadingCountdown -= Timer.delta;
-        if(fakeLoadingCountdown < 0) {
+        if (fakeLoadingCountdown < 0) {
             CustomPreloading.preload();
             SceneManager.changeScene(Scenes.SCENE_AFTER_LOADING);
         }
     }
 
-    if(imagePreloader.isLoaded()
+    if (imagePreloader.isLoaded()
         && pixelFontPreloader.isLoaded()
         && webFontPreloader.isLoaded()
         && !soundPreloader.isLoaded()) {
@@ -72,8 +72,7 @@ export function getPercentageLoaded() {
     webFontPercentage *= Settings.Loading.WEB_FONT_PERCENTAGE;
 
     let fakeLoadingPercentage = 1.0;
-    if(Settings.Loading.FAKE_LOADING_TIME !== 0.0)
-    {
+    if (Settings.Loading.FAKE_LOADING_TIME !== 0.0) {
         fakeLoadingPercentage = (1.0 - (fakeLoadingCountdown / Settings.Loading.FAKE_LOADING_TIME));
     }
     fakeLoadingPercentage = NumberUtils.clamp(fakeLoadingPercentage, 0.0, 1.0);

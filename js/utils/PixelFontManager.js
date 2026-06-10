@@ -24,12 +24,12 @@ export function create(name, file, minCharSpacingInFile, printCharSpacing, print
     const data = fontContextData.data;
 
     const font = {
-        name : name,
-        file : file,
-        charSpacing : printCharSpacing,
-        charOffsets : [0],
-        charWidths : [printSpaceWidth],
-        charHeight : fileHeight
+        name: name,
+        file: file,
+        charSpacing: printCharSpacing,
+        charOffsets: [0],
+        charWidths: [printSpaceWidth],
+        charHeight: fileHeight
     };
 
     let x = 0;

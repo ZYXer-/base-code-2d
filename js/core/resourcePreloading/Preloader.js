@@ -2,7 +2,7 @@ class Preloader {
 
 
     constructor() {
-        
+
         this.sources = null;
 
         this.loadedAssets = 0;
@@ -24,13 +24,12 @@ class Preloader {
     reportAssetLoaded() {
         this.loadedAssets++;
         this.fractionLoaded = 1.0;
-        if(this.totalAssets !== 0)
-        {
+        if (this.totalAssets !== 0) {
             this.fractionLoaded = this.loadedAssets / this.totalAssets;
         }
-        if(this.loadedAssets === this.totalAssets) {
+        if (this.loadedAssets === this.totalAssets) {
             this.loaded = true;
-            if(this.endCallback !== null) {
+            if (this.endCallback !== null) {
                 this.endCallback();
             }
         }

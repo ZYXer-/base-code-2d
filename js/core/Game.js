@@ -19,7 +19,7 @@ export function start() {
 
     Viewport.init();
 
-    for(let keyIndex in GlobalControls.allowDefaultBehavior) {
+    for (const keyIndex in GlobalControls.allowDefaultBehavior) {
         Keyboard.allowKey(GlobalControls.allowDefaultBehavior[keyIndex]);
     }
     GlobalControls.loadCustomBehavior();
@@ -39,7 +39,7 @@ export function start() {
 
     Button.init();
 
-    if(Settings.Game.PAUSE_ON_BLUR) {
+    if (Settings.Game.PAUSE_ON_BLUR) {
         PageVisibility.registerBlurHandler("pause", () => {
             pause();
         });
@@ -66,7 +66,7 @@ export function unpause() {
 
 
 export function pauseUnpause() {
-    if(paused) {
+    if (paused) {
         unpause();
     } else {
         pause();

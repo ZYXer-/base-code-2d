@@ -24,14 +24,14 @@ export function update() {
 
 
 export function draw() {
-    let gradient = c.createLinearGradient(0, 0, 0, Viewport.height);
+    const gradient = c.createLinearGradient(0, 0, 0, Viewport.height);
     gradient.addColorStop(0, "#111");
     gradient.addColorStop(1, "#333");
 
     c.fillStyle = gradient;
     c.fillRect(0, 0, Viewport.width, Viewport.height);
 
-    if(Img.isLoaded("loading")) {
+    if (Img.isLoaded("loading")) {
         Img.draw("loading", Viewport.centerX - 200, Viewport.centerY - 200);
     }
 

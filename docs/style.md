@@ -2,7 +2,7 @@
 
 This document describes the coding style used in this project. It is enforced by ESLint (`eslint.config.mjs`). Run `npm run lint` to check. Bug-prevention rules are **errors**; style rules are **warnings**.
 
-The style is close to AirBnB JavaScript with four deliberate differences noted below.
+The style is close to AirBnB JavaScript with three deliberate differences noted below.
 
 ---
 
@@ -58,19 +58,6 @@ switch (state) { ... }
 ```
 
 > **Note:** Existing code uses the no-space style (`if(x)`). Fixing it across the codebase is tracked as CLN-8.
-
----
-
-## Object literal colon spacing
-
-**Spaces on both sides** of the colon in object literals.
-
-```js
-const vec = { x : 0.0, y : 0.0 };
-const range = { min : 0, max : 100 };
-```
-
-*Differs from AirBnB (`{ x: 0 }`). Personal preference.*
 
 ---
 

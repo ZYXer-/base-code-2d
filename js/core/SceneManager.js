@@ -7,7 +7,7 @@ let nextScene = null;
 
 
 export function update() {
-    if(scene !== nextScene) {
+    if (scene !== nextScene) {
 
         callMethod("hide");
 
@@ -15,7 +15,7 @@ export function update() {
 
         callMethod("show");
 
-        if(Settings.Size.AUTO_RESIZE) {
+        if (Settings.Size.AUTO_RESIZE) {
             Viewport.resize();
         }
     }
@@ -23,14 +23,14 @@ export function update() {
 
 
 export function callMethod(methodName) {
-    if(scene !== null && typeof scene[methodName] === "function") {
+    if (scene !== null && typeof scene[methodName] === "function") {
         scene[methodName]();
     }
 }
 
 
 export function callMethodWithParam(methodName, parameter) {
-    if(scene !== null && typeof scene[methodName] === "function") {
+    if (scene !== null && typeof scene[methodName] === "function") {
         scene[methodName](parameter);
     }
 }

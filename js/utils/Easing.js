@@ -92,5 +92,5 @@ export function accelerateToPos(currentPos, targetPos, velocity, acceleration, m
     } else {
         newVelocity = 0;
     }
-    return { pos : newPos, velocity : newVelocity };
+    return { pos: newPos, velocity: newVelocity };
 }

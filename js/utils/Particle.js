@@ -10,7 +10,7 @@ class Particle {
 
         this.drawFunction = drawFunction;
 
-        this.pos = { x : emitter.x, y : emitter.y, z : emitter.z };
+        this.pos = { x: emitter.x, y: emitter.y, z: emitter.z };
 
         if (emitterSize.x !== 0.0) {
             this.pos.x += NumberUtils.randFloat(-emitterSize.x, emitterSize.x);
@@ -23,18 +23,18 @@ class Particle {
         }
 
         this.v = {
-            x : NumberUtils.randFloat(initV.x.min, initV.x.max),
-            y : NumberUtils.randFloat(initV.y.min, initV.y.max),
-            z : NumberUtils.randFloat(initV.z.min, initV.z.max)
+            x: NumberUtils.randFloat(initV.x.min, initV.x.max),
+            y: NumberUtils.randFloat(initV.y.min, initV.y.max),
+            z: NumberUtils.randFloat(initV.z.min, initV.z.max)
         };
 
         this.a = {
-            x : { min : initA.x.min, max : initA.x.max },
-            y : { min : initA.y.min, max : initA.y.max },
-            z : { min : initA.z.min, max : initA.z.max }
+            x: { min: initA.x.min, max: initA.x.max },
+            y: { min: initA.y.min, max: initA.y.max },
+            z: { min: initA.z.min, max: initA.z.max }
         };
 
-        this.fric = { x : friction.x, y : friction.y, z : friction.z };
+        this.fric = { x: friction.x, y: friction.y, z: friction.z };
 
         this.life = NumberUtils.randFloat(life.min, life.max);
 

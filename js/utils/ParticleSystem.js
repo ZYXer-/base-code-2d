@@ -12,41 +12,41 @@ class ParticleSystem {
             this.mode = options.mode;
         }
 
-        this.emitter = {x : 0.0, y : 0.0, z : 0.0};
+        this.emitter = {x: 0.0, y: 0.0, z: 0.0};
         if (options.hasOwnProperty("emitter")) {
-            this.emitter = { x : options.emitter.x, y : options.emitter.y, z : options.emitter.z };
+            this.emitter = { x: options.emitter.x, y: options.emitter.y, z: options.emitter.z };
         }
-        this.emitterSize = {x : 0.0, y : 0.0, z : 0.0};
+        this.emitterSize = {x: 0.0, y: 0.0, z: 0.0};
         if (options.hasOwnProperty("emitterSize")) {
-            this.emitterSize = { x : options.emitterSize.x, y : options.emitterSize.y, z : options.emitterSize.z };
+            this.emitterSize = { x: options.emitterSize.x, y: options.emitterSize.y, z: options.emitterSize.z };
         }
 
-        this.initV = {x : { min : 0.0, max : 0.0 }, y : { min : 0.0, max : 0.0 }, z : { min : 0.0, max : 0.0 }};
+        this.initV = {x: { min: 0.0, max: 0.0 }, y: { min: 0.0, max: 0.0 }, z: { min: 0.0, max: 0.0 }};
         if (options.hasOwnProperty("v")) {
             this.initV = {
-                x : { min : options.v.x.min, max : options.v.x.max },
-                y : { min : options.v.y.min, max : options.v.y.max },
-                z : { min : options.v.z.min, max : options.v.z.max }
+                x: { min: options.v.x.min, max: options.v.x.max },
+                y: { min: options.v.y.min, max: options.v.y.max },
+                z: { min: options.v.z.min, max: options.v.z.max }
             };
         }
 
-        this.initA = {x : { min : 0.0, max : 0.0 }, y : { min : 0.0, max : 0.0 }, z : { min : 0.0, max : 0.0 }};
+        this.initA = {x: { min: 0.0, max: 0.0 }, y: { min: 0.0, max: 0.0 }, z: { min: 0.0, max: 0.0 }};
         if (options.hasOwnProperty("a")) {
             this.initA = {
-                x : { min : options.a.x.min, max : options.a.x.max },
-                y : { min : options.a.y.min, max : options.a.y.max },
-                z : { min : options.a.z.min, max : options.a.z.max }
+                x: { min: options.a.x.min, max: options.a.x.max },
+                y: { min: options.a.y.min, max: options.a.y.max },
+                z: { min: options.a.z.min, max: options.a.z.max }
             };
         }
 
-        this.friction = {x : 0.0, y : 0.0, z : 0.0};
+        this.friction = {x: 0.0, y: 0.0, z: 0.0};
         if (options.hasOwnProperty("friction")) {
-            this.friction = { x : options.friction.x, y : options.friction.y, z : options.friction.z };
+            this.friction = { x: options.friction.x, y: options.friction.y, z: options.friction.z };
         }
 
-        this.life = { min : 0.0, max : 0.0 };
+        this.life = { min: 0.0, max: 0.0 };
         if (options.hasOwnProperty("life")) {
-            this.life = { min : options.life.min, max : options.life.max };
+            this.life = { min: options.life.min, max: options.life.max };
         }
 
         this.particlesPerTick = 1;
@@ -85,40 +85,40 @@ class ParticleSystem {
 
 
     setEmitter(emitter) {
-        this.emitter = { x : emitter.x, y : emitter.y, z : emitter.z };
+        this.emitter = { x: emitter.x, y: emitter.y, z: emitter.z };
     }
 
 
     setEmitterSize(size) {
-        this.emitterSize = { x : size.x, y : size.y, z : size.z };
+        this.emitterSize = { x: size.x, y: size.y, z: size.z };
     }
 
 
     setV(v) {
         this.initV = {
-            x : { min : v.x.min, max : v.x.max },
-            y : { min : v.y.min, max : v.y.max },
-            z : { min : v.z.min, max : v.z.max }
+            x: { min: v.x.min, max: v.x.max },
+            y: { min: v.y.min, max: v.y.max },
+            z: { min: v.z.min, max: v.z.max }
         };
     }
 
 
     setA(a) {
         this.initA = {
-            x : { min : a.x.min, max : a.x.max },
-            y : { min : a.y.min, max : a.y.max },
-            z : { min : a.z.min, max : a.z.max }
+            x: { min: a.x.min, max: a.x.max },
+            y: { min: a.y.min, max: a.y.max },
+            z: { min: a.z.min, max: a.z.max }
         };
     }
 
 
     setFriction(friction) {
-        this.friction = { x : friction.x, y : friction.y, z : friction.z };
+        this.friction = { x: friction.x, y: friction.y, z: friction.z };
     }
 
 
     setLife(life) {
-        this.life = { min : life.min, max : life.max };
+        this.life = { min: life.min, max: life.max };
     }
 
 

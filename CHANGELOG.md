@@ -12,6 +12,10 @@ Entries are in reverse chronological order. One bullet per change, one clause pe
 - Updated `CLAUDE.md` to remove jQuery from entry-point description and third-party libs list
 - Replaced `screenfull.js` with the native Fullscreen API (ENG-3): rewrote `isFullScreen`, `makeFullScreen`, `exitFullScreen`, and `toggleFullScreen` in `Viewport.js` using `document.fullscreenElement`, `requestFullscreen()`, and `exitFullscreen()`; deleted `js/libs/screenfull.min.js`
 - Removed stale `screenfull`, `jQuery`, and `$` ESLint globals from `eslint.config.mjs`
+- Applied keyword-spacing fix (CLN-8) across 28 files via `npm run lint -- --fix`: `if(` → `if (`, `for(` → `for (`, `while(` → `while (`, etc.; also removed two stray leading blank lines in `canvas.js`
+- Modernised `PageVisibility.js` (ENG-4): removed vendor-prefix detection (`mozHidden`, `webkitHidden`, `msHidden`), removed IE 9 fallback, switched from property assignment to `addEventListener` for `focus`/`blur`/`pageshow`/`pagehide`, replaced `document[hiddenAttr]` with `document.hidden`, replaced `hasOwnProperty` with `Object.hasOwn`
+- Changed object literal colon spacing style from `{ key : value }` to `{ key: value }` (AirBnB default); updated `eslint.config.mjs` (`key-spacing` simplified to `"warn"`), removed the now-standard section from `docs/style.md`, and updated the deviation count from four to three
+- Applied key-spacing fix across 43 files via `npm run lint -- --fix`
 
 ---
 

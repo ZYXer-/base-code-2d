@@ -67,10 +67,10 @@ class PixelText {
             } else {
                 const charWidth = this.pixelFont.charWidths[c] + this.pixelFont.charSpacing;
                 this.chars[currentLine].push({
-                    char : c,
-                    w : charWidth,
-                    x : lineWidths[currentLine],
-                    y : (this.lineHeight * currentLine)
+                    char: c,
+                    w: charWidth,
+                    x: lineWidths[currentLine],
+                    y: (this.lineHeight * currentLine)
                 });
                 lineWidths[currentLine] += charWidth;
                 if (c === 0) {

@@ -20,7 +20,7 @@ construct();
 export function update() {
     const d = new Date();
     const now = (1000 * d.getSeconds()) + d.getMilliseconds();
-    if(now < lastTime) {
+    if (now < lastTime) {
         lastTime -= 60000;
     }
     delta = Settings.Game.TIME_MULTIPLIER * (now - lastTime) / 1000;
@@ -52,7 +52,7 @@ export function doForCountdown(time, updateCallback, endCallback) {
 
 export function repeatEvery(interval, callback, skipFirst) {
     const timerCallback = new TimerCallback(interval, null, callback, true);
-    if(typeof skipFirst === "undefined" || !skipFirst) {
+    if (typeof skipFirst === "undefined" || !skipFirst) {
         timerCallback.life = 0.0;
     }
     callbacks.add(timerCallback);
@@ -61,9 +61,9 @@ export function repeatEvery(interval, callback, skipFirst) {
 
 
 export function updateCallbacks() {
-    for(let callback of callbacks) {
-        if(callback.killed) {
-            callbacks.delete(callback)
+    for (const callback of callbacks) {
+        if (callback.killed) {
+            callbacks.delete(callback);
         } else {
             callback.update();
         }

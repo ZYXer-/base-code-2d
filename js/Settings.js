@@ -1,5 +1,3 @@
-
-
 // General Settings
 export const Game = {
 

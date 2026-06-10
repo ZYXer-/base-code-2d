@@ -28,21 +28,21 @@ export function reset() {
 
 export function set(newContent) {
 
-    if(painter) {
+    if (painter) {
 
         show = true;
         overridePosition = null;
 
         let contentIsNew = true;
-        if(typeof content === typeof newContent) {
-            if(typeof content === "object") {
+        if (typeof content === typeof newContent) {
+            if (typeof content === "object") {
                 contentIsNew = JSON.stringify(content) !== JSON.stringify(newContent);
             } else {
                 contentIsNew = content !== newContent;
             }
         }
 
-        if(contentIsNew) {
+        if (contentIsNew) {
             content = newContent;
 
             dimensions = painter.insertNewContent(content);
@@ -60,24 +60,24 @@ export function setOverridePosition(pos) {
 
 export function draw() {
 
-    if(painter && show) {
+    if (painter && show) {
 
-        if(displayDelayCountdown > 0.0) {
+        if (displayDelayCountdown > 0.0) {
             displayDelayCountdown -= Timer.delta;
 
         } else {
             let pos = Mouse.pos.add(new Vec2(painter.DISTANCE_TO_MOUSE, painter.DISTANCE_TO_MOUSE));
-            if(overridePosition !== null) {
+            if (overridePosition !== null) {
                 pos = overridePosition;
             }
 
             const maxX = pos.x + dimensions.x + painter.DISTANCE_TO_WINDOW_BORDER;
-            if(maxX >= Viewport.width) {
+            if (maxX >= Viewport.width) {
                 pos.x = Mouse.pos.x - (dimensions.x + painter.DISTANCE_TO_MOUSE);
             }
 
             const maxY = pos.y + dimensions.y + painter.DISTANCE_TO_WINDOW_BORDER;
-            if(maxY >= Viewport.height) {
+            if (maxY >= Viewport.height) {
                 pos.y = Mouse.pos.y - (dimensions.y + painter.DISTANCE_TO_MOUSE);
             }
 
@@ -96,5 +96,4 @@ export function draw() {
     }
 
 }
-
 

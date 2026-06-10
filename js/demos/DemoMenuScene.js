@@ -11,7 +11,7 @@ import Text from "../utils/Text.js";
 
 
 let demoSceneOptions;
-let buttons = new Set();
+const buttons = new Set();
 let backButton = null;
 
 
@@ -19,14 +19,14 @@ export function show() {
 
     // create array of menu items
     demoSceneOptions = new Set([
-        { label : "Physics with Box2D", scene : DemoBox2dScene },
-        { label : "Particle systems", scene : DemoParticlesScene },
-        { label : "Sound and music", scene : DemoSoundScene },
-        { label : "Old demo", scene : OldDemoScene }
+        { label: "Physics with Box2D", scene: DemoBox2dScene },
+        { label: "Particle systems", scene: DemoParticlesScene },
+        { label: "Sound and music", scene: DemoSoundScene },
+        { label: "Old demo", scene: OldDemoScene }
     ]);
 
     let position = 0;
-    for(let option of demoSceneOptions) {
+    for (const option of demoSceneOptions) {
         buttons.add(new Button({
             x: Viewport.centerX + (250 * Math.floor(position / 6)) - 225,
             y: 85 + (70 * (position % 6)),
@@ -37,9 +37,9 @@ export function show() {
             },
             draw(x, y, w, h, isOver, down) {
                 c.fillStyle = "#9cf";
-                if(isOver) {
+                if (isOver) {
                     c.fillStyle = "#bdf";
-                    if(down) {
+                    if (down) {
                         y += 2;
                     }
                 }
@@ -77,14 +77,14 @@ export function draw() {
     // draw title
     Text.draw(Viewport.centerX, 50, 24, "opensans", "center", "#06C", "ZYXer's Base Code Demos");
 
-    for(let button of buttons) {
+    for (const button of buttons) {
         button.draw();
     }
 }
 
 
 export function getBackButton(targetScene) {
-    if(backButton === null) {
+    if (backButton === null) {
         backButton = new Button({
             x: 20,
             y: 20,
@@ -95,16 +95,16 @@ export function getBackButton(targetScene) {
             },
             draw(x, y, w, h, isOver, down) {
                 c.fillStyle = "#9cf";
-                if(isOver) {
+                if (isOver) {
                     c.fillStyle = "#bdf";
-                    if(down) {
+                    if (down) {
                         y += 2;
                     }
                 }
                 c.fillRect(x, y, w, h);
                 Text.draw(x + (w / 2), y + 25, 16, "opensans", "center", "#000", "< back to menu");
             }
-        })
+        });
     }
     return backButton;
 }
