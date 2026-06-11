@@ -1,5 +1,5 @@
 import * as Game from "../core/Game.js";
-import * as Timer from "../core/Timer.js";
+import * as Clock from "../core/Clock.js";
 import * as NumberUtils from "./NumberUtils.js";
 
 
@@ -47,7 +47,7 @@ class Particle {
     draw() {
 
         if (!Game.paused) {
-            const delta = Timer.delta;
+            const delta = Clock.delta;
 
             this.pos.x += this.v.x * delta;
             this.pos.y += this.v.y * delta;

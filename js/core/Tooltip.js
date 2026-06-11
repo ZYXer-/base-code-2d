@@ -1,7 +1,7 @@
 import { c } from "./canvas.js";
 import * as Viewport from "./Viewport.js";
 import * as Mouse from "./input/Mouse.js";
-import * as Timer from "./Timer.js";
+import * as Clock from "./Clock.js";
 import Vec2 from "../utils/Vec2.js";
 
 
@@ -63,7 +63,7 @@ export function draw() {
     if (painter && show) {
 
         if (displayDelayCountdown > 0.0) {
-            displayDelayCountdown -= Timer.delta;
+            displayDelayCountdown -= Clock.delta;
 
         } else {
             let pos = Mouse.pos.add(new Vec2(painter.DISTANCE_TO_MOUSE, painter.DISTANCE_TO_MOUSE));

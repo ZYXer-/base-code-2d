@@ -1,8 +1,7 @@
-import { c } from "../core/canvas.js";
 import { QUART_PI, HALF_PI, PI, TWO_PI } from "./GeometryUtils.js";
 
 
-export function drawPolygon(vec2List) {
+export function drawPolygon(c, vec2List) {
     c.beginPath();
     let vec;
     if (vec2List.length > 0) {
@@ -67,7 +66,7 @@ export function drawRingSegment(c, x, y, innerRadius, outerRadius, startAngle, e
 }
 
 
-export function drawRoundedCornerRect(x, y, w, h, r) {
+export function drawRoundedCornerRect(c, x, y, w, h, r) {
     if (typeof r === "number") {
         r = [ r, r, r, r ];
     }
@@ -80,7 +79,7 @@ export function drawRoundedCornerRect(x, y, w, h, r) {
 }
 
 
-export function drawStar(x, y, points, outerR, innerR) {
+export function drawStar(c, x, y, points, outerR, innerR) {
     const pointAngle = PI / points;
     c.save();
     c.translate(x, y);
@@ -96,7 +95,7 @@ export function drawStar(x, y, points, outerR, innerR) {
 }
 
 
-export function drawHeart(x, y, w, h, overhang) { // negative overhang = left, positive = right, best results h > w * 0.86 && h < w
+export function drawHeart(c, x, y, w, h, overhang) { // negative overhang = left, positive = right, best results h > w * 0.86 && h < w
     if (h < w * 0.86 || h > w) {
         console.warn("Utils.drawHeart() called with height that would not result in a heart shape. Parameter h should be greater than 0.86 * w and less than w.");
     }

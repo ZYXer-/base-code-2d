@@ -25,7 +25,7 @@ The five methods the engine calls on the active scene:
 
 ## Delta
 
-The time elapsed since the last frame, in **milliseconds**. Imported as `delta` from `js/core/Timer.js`. Always multiply movement/velocity by `delta` (divided by a reference frame time) to achieve frame-rate-independent behaviour.
+The time elapsed since the last frame, in **seconds**. Imported as `delta` from `js/core/Clock.js`. Always multiply movement/velocity by `delta` to achieve frame-rate-independent behaviour.
 
 ---
 
@@ -77,9 +77,9 @@ The centralized asset registry in `js/Resources.js`. Defines all images, fonts, 
 
 ---
 
-## Timer Callback
+## Timer
 
-A time-based callback registered via `Timer.countdown()`, `Timer.doFor()`, or `Timer.repeatEvery()`. All callbacks are updated each frame by the game loop.
+A `Timer` (`js/utils/Timer.js`) counts a `value` from `start` to `end` at a configurable `speed` (units/sec). Supports looping, ping-pong oscillation, pause/resume, and per-frame callbacks (`onUpdate`, `onProgress`, `onLoop`, `onBounce`, `onStart`, `onEnd`). Created directly via `new Timer(options)` or via the convenience factories on `Clock`: `countdown()`, `doFor()`, `doForCountdown()`, and `repeatEvery()`. All timers are updated each frame by the game loop via `Clock.updateCallbacks()`.
 
 ---
 

@@ -1,13 +1,13 @@
 import * as Img from "../core/Img.js";
-import * as Utils from "./Utils.js";
+import * as CanvasUtils from "./CanvasUtils.js";
 import * as DataUtils from "./DataUtils.js";
 import Color from "./Color.js";
 
 
 export function readData(image, width, height) {
 
-    const readCanvas = Utils.createCanvas(width, height);
-    const readContext = Utils.getContext(readCanvas);
+    const readCanvas = CanvasUtils.createCanvas(width, height);
+    const readContext = CanvasUtils.getContext(readCanvas);
     readContext.drawImage(Img.get(image), 0, 0);
     const readData = readContext.getImageData(0, 0, width, height).data;
 
@@ -55,8 +55,8 @@ export function replaceColors(source, target, colorMap) {
     const sourceImage = Img.get(source);
     const width = sourceImage.width;
     const height = sourceImage.height;
-    const sourceCanvas = Utils.createCanvas(width, height);
-    const sourceC = Utils.getContext(sourceCanvas);
+    const sourceCanvas = CanvasUtils.createCanvas(width, height);
+    const sourceC = CanvasUtils.getContext(sourceCanvas);
     sourceC.drawImage(sourceImage, 0, 0);
     const imageData = sourceC.getImageData(0, 0, width, height);
     const data = imageData.data;
@@ -77,8 +77,8 @@ export function replaceColors(source, target, colorMap) {
         }
     }
 
-    const targetCanvas = Utils.createCanvas(width, height);
-    const targetC = Utils.getContext(targetCanvas);
+    const targetCanvas = CanvasUtils.createCanvas(width, height);
+    const targetC = CanvasUtils.getContext(targetCanvas);
     targetC.putImageData(imageData, 0, 0);
 
     Img.add(target, targetCanvas);
@@ -88,8 +88,8 @@ export function replaceColors(source, target, colorMap) {
 export function replaceColorsWithImageMap(source, target, imageMap, column) {
 
     const mapImage = Img.get(imageMap);
-    const mapImageCanvas = Utils.createCanvas(mapImage.width, mapImage.height);
-    const mapImageC = Utils.getContext(mapImageCanvas);
+    const mapImageCanvas = CanvasUtils.createCanvas(mapImage.width, mapImage.height);
+    const mapImageC = CanvasUtils.getContext(mapImageCanvas);
     mapImageC.drawImage(mapImage, 0, 0);
     const data = mapImageC.getImageData(0, 0, mapImage.width, mapImage.height).data;
 
@@ -112,8 +112,8 @@ export function removeSemitransparent(source, target) {
     const sourceImage = Img.get(source);
     const width = sourceImage.width;
     const height = sourceImage.height;
-    const sourceCanvas = Utils.createCanvas(width, height);
-    const sourceC = Utils.getContext(sourceCanvas);
+    const sourceCanvas = CanvasUtils.createCanvas(width, height);
+    const sourceC = CanvasUtils.getContext(sourceCanvas);
     sourceC.drawImage(sourceImage, 0, 0);
     const imageData = sourceC.getImageData(0, 0, width, height);
     const data = imageData.data;
@@ -129,8 +129,8 @@ export function removeSemitransparent(source, target) {
         }
     }
 
-    const targetCanvas = Utils.createCanvas(width, height);
-    const targetC = Utils.getContext(targetCanvas);
+    const targetCanvas = CanvasUtils.createCanvas(width, height);
+    const targetC = CanvasUtils.getContext(targetCanvas);
     targetC.putImageData(imageData, 0, 0);
 
     Img.add(target, targetCanvas);
@@ -142,8 +142,8 @@ export function setOpacity(source, target, opacity) {
     const sourceImage = Img.get(source);
     const width = sourceImage.width;
     const height = sourceImage.height;
-    const sourceCanvas = Utils.createCanvas(width, height);
-    const sourceC = Utils.getContext(sourceCanvas);
+    const sourceCanvas = CanvasUtils.createCanvas(width, height);
+    const sourceC = CanvasUtils.getContext(sourceCanvas);
     sourceC.drawImage(sourceImage, 0, 0);
     const imageData = sourceC.getImageData(0, 0, width, height);
     const data = imageData.data;
@@ -157,8 +157,8 @@ export function setOpacity(source, target, opacity) {
         }
     }
 
-    const targetCanvas = Utils.createCanvas(width, height);
-    const targetC = Utils.getContext(targetCanvas);
+    const targetCanvas = CanvasUtils.createCanvas(width, height);
+    const targetC = CanvasUtils.getContext(targetCanvas);
     targetC.putImageData(imageData, 0, 0);
 
     Img.add(target, targetCanvas);
@@ -170,13 +170,13 @@ export function pixelate(source, target, scale) {
     const sourceImage = Img.get(source);
     const width = sourceImage.width;
     const height = sourceImage.height;
-    const sourceCanvas = Utils.createCanvas(width, height);
-    const sourceC = Utils.getContext(sourceCanvas);
+    const sourceCanvas = CanvasUtils.createCanvas(width, height);
+    const sourceC = CanvasUtils.getContext(sourceCanvas);
     sourceC.drawImage(sourceImage, 0, 0);
     const data = sourceC.getImageData(0, 0, width, height).data;
 
-    const targetCanvas = Utils.createCanvas(width * scale, height * scale);
-    const targetC = Utils.getContext(targetCanvas);
+    const targetCanvas = CanvasUtils.createCanvas(width * scale, height * scale);
+    const targetC = CanvasUtils.getContext(targetCanvas);
     const targetImageData = targetC.getImageData(0, 0, width * scale, height * scale);
     const targetData = targetImageData.data;
 
@@ -218,8 +218,8 @@ export function isometricProjection(source, target, tileSize, scale, side) {
     const sourceImage = Img.get(source);
     const width = sourceImage.width;
     const height = sourceImage.height;
-    const sourceCanvas = Utils.createCanvas(width, height);
-    const sourceC = Utils.getContext(sourceCanvas);
+    const sourceCanvas = CanvasUtils.createCanvas(width, height);
+    const sourceC = CanvasUtils.getContext(sourceCanvas);
     sourceC.drawImage(sourceImage, 0, 0);
     const data = sourceC.getImageData(0, 0, width, height).data;
 
@@ -234,8 +234,8 @@ export function isometricProjection(source, target, tileSize, scale, side) {
         targetHeight *= 1.5;
     }
 
-    const targetCanvas = Utils.createCanvas(targetWidth, targetHeight);
-    const targetC = Utils.getContext(targetCanvas);
+    const targetCanvas = CanvasUtils.createCanvas(targetWidth, targetHeight);
+    const targetC = CanvasUtils.getContext(targetCanvas);
     const targetImageData = targetC.getImageData(0, 0, targetWidth, targetHeight);
     const targetData = targetImageData.data;
 
@@ -304,8 +304,8 @@ export function isometricProjection(source, target, tileSize, scale, side) {
 
 export function outputImage(name) {
     const oImage = Img.get(name);
-    const outputCanvas = Utils.createCanvas(oImage.width, oImage.height);
-    const context = Utils.getContext(outputCanvas);
+    const outputCanvas = CanvasUtils.createCanvas(oImage.width, oImage.height);
+    const context = CanvasUtils.getContext(outputCanvas);
     context.drawImage(oImage, 0, 0);
 
     const image = new Image();

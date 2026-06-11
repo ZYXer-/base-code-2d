@@ -1,6 +1,6 @@
 import { c } from "../core/canvas.js";
 import * as Img from "../core/Img.js";
-import * as Timer from "../core/Timer.js";
+import * as Clock from "../core/Clock.js";
 import Vec2 from "./Vec2.js";
 
 
@@ -80,7 +80,7 @@ class Humanoid {
 
 
     update(velocity, stepSize) {
-        this.walkAnimation += (velocity * Timer.delta) / stepSize;
+        this.walkAnimation += (velocity * Clock.delta) / stepSize;
     }
 
 

@@ -26,7 +26,7 @@ Then open `http://localhost:8080` in a browser. The entry point is `index.htm`.
 | `Game.js` | Main game loop (`requestAnimationFrame`), orchestrates all subsystems |
 | `SceneManager.js` | Scene lifecycle: `show()`, `hide()`, `update()`, `draw()`, `resize()` |
 | `Viewport.js` + `canvas.js` | Canvas setup, responsive resizing, pixel ratio, fullscreen |
-| `Timer.js` | Delta time, timed callbacks: `countdown`, `doFor`, `repeatEvery` |
+| `Clock.js` | Delta time, timed callbacks: `countdown`, `doFor`, `repeatEvery` |
 | `Sound.js` + `SoundInstance.js` | Audio via Howler.js; per-instance control via sound IDs and `SoundInstance` wrapper |
 | `PerformanceMonitor.js` | FPS + per-stage timing display |
 | `PageVisibility.js` | Pause on browser blur |
@@ -48,8 +48,12 @@ Staged loading with weighted percentages: Images (30%) → Pixel fonts (5%) → 
 | `GeometryUtils.js` | Math constants, collision detection |
 | `NumberUtils.js` | Random, clamp, min/max, scale, number formatting |
 | `DataUtils.js` | Arrays, objects, matrix creation, unique IDs, shallow/deep copy |
-| `StringUtils.js` | String helpers (`titleCase`; more to be added) |
-| `Utils.js` | Canvas creation, parallax calculator, stopwatch, arrow-key input (CLN-11: these will move to better homes) |
+| `StringUtils.js` | String helpers (`isString`, `isEmptyString`, `isNonemptyString`, `titleCase`, `clip`) |
+| `Timer.js` | Time-based value animator: counts `value` from `start` to `end` at `speed` units/sec; supports looping, ping-pong, pause/resume, and per-frame callbacks |
+| `CanvasUtils.js` | Offscreen canvas creation and 2D context helper |
+| `DateUtils.js` | Timestamp, date formatting (`getNiceDateString`, `getShortDateString`), `isOlderThan` |
+| `ControlUtils.js` | Arrow/WASD input → normalised `Vec2` direction |
+| `ParallaxUtils.js` | Tile layout calculator for parallax scrolling backgrounds |
 | `Text.js` | Web font text rendering with border, alignment, animation |
 | `PixelText.js` | Sprite-based pixel font rendering |
 | `Color.js` | RGB + HSL color class |
@@ -80,7 +84,7 @@ Staged loading with weighted percentages: Images (30%) → Pixel fonts (5%) → 
 - **No build step.** Pure ES6 modules, `import`/`export` throughout. Do not introduce bundlers or transpilers without discussion.
 - **Scenes** are plain objects with lifecycle methods `show()`, `hide()`, `update(delta)`, `draw()`, `resize()`. Create new scenes by following `EmptyScene.js`.
 - **Canvas context** is imported as `c` from `js/core/canvas.js`. Draw calls go directly on `c`.
-- **Delta time** is imported as `delta` from `js/core/Timer.js` (milliseconds).
+- **Delta time** is imported as `delta` from `js/core/Clock.js` (seconds).
 - **Assets** must be registered in `js/Resources.js` before use.
 - **Settings** live in `js/Settings.js`. Do not hard-code tunable values elsewhere.
 - **Global keyboard shortcuts** go in `js/GlobalControls.js`.

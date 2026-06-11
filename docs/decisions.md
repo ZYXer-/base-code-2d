@@ -36,11 +36,11 @@ Locked decisions that constrain ongoing development. These rule out alternatives
 
 ## Delta Time in Milliseconds
 
-**Decision:** `delta` (from `js/core/Timer.js`) is in **milliseconds**, not seconds.
+**Decision:** `delta` (from `js/core/Clock.js`) is in **seconds**.
 
 **Why:** Historical decision made early in development; all existing code uses it this way.
 
-**Constraint:** All time-based calculations must divide by 1000 if seconds are needed, or use consistent millisecond arithmetic. Do not change this without updating all callers.
+**Constraint:** All time-based calculations use seconds directly. Multiply velocity/speed by `delta` to get frame-rate-independent movement.
 
 ---
 

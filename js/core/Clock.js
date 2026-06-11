@@ -1,6 +1,6 @@
 import * as Settings from "../Settings.js";
 import * as NumberUtils from "../utils/NumberUtils.js";
-import TimerCallback from "../utils/TimerCallback.js";
+import Timer from "../utils/Timer.js";
 
 
 export let delta = 0.00001;
@@ -29,34 +29,32 @@ export function update() {
 }
 
 
+export function register(timer) {
+    callbacks.add(timer);
+}
+
+
 export function countdown(time, callback) {
-    const timerCallback = new TimerCallback(time, null, callback, false);
-    callbacks.add(timerCallback);
-    return timerCallback;
+    return new Timer({ end: time, onEnd: callback });
 }
 
 
 export function doFor(time, callback) {
-    const timerCallback = new TimerCallback(time, callback, null, false);
-    callbacks.add(timerCallback);
-    return timerCallback;
+    return new Timer({ end: time, onProgress: callback });
 }
 
 
 export function doForCountdown(time, updateCallback, endCallback) {
-    const timerCallback = new TimerCallback(time, updateCallback, endCallback, false);
-    callbacks.add(timerCallback);
-    return timerCallback;
+    return new Timer({ end: time, onProgress: updateCallback, onEnd: endCallback });
 }
 
 
 export function repeatEvery(interval, callback, skipFirst) {
-    const timerCallback = new TimerCallback(interval, null, callback, true);
-    if (typeof skipFirst === "undefined" || !skipFirst) {
-        timerCallback.life = 0.0;
+    const timer = new Timer({ end: interval, loops: 0, onLoop: callback });
+    if (!skipFirst) {
+        timer.value = timer.end;
     }
-    callbacks.add(timerCallback);
-    return timerCallback;
+    return timer;
 }
 
 

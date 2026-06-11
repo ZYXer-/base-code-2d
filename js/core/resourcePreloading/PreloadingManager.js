@@ -2,7 +2,7 @@ import * as Settings from "../../Settings.js";
 import * as SceneManager from "../SceneManager.js";
 import * as Scenes from "../../Scenes.js";
 import * as NumberUtils from "../../utils/NumberUtils.js";
-import * as Timer from "../Timer.js";
+import * as Clock from "../Clock.js";
 import * as Resources from "../../Resources.js";
 import * as CustomPreloading from "../../CustomPreloading.js";
 import SoundPreloader from "./SoundPreloader.js";
@@ -40,7 +40,7 @@ export function update() {
         && webFontPreloader.isLoaded()
         && (soundPreloader.isLoaded() || soundLoadingCountdown < 0)) {
 
-        fakeLoadingCountdown -= Timer.delta;
+        fakeLoadingCountdown -= Clock.delta;
         if (fakeLoadingCountdown < 0) {
             CustomPreloading.preload();
             SceneManager.changeScene(Scenes.SCENE_AFTER_LOADING);
@@ -52,7 +52,7 @@ export function update() {
         && webFontPreloader.isLoaded()
         && !soundPreloader.isLoaded()) {
 
-        soundLoadingCountdown -= Timer.delta;
+        soundLoadingCountdown -= Clock.delta;
     }
 }
 

@@ -4,6 +4,21 @@ Entries are in reverse chronological order. One bullet per change, one clause pe
 
 ---
 
+## 2026-06-11
+
+- Standardised `c` parameter in `DrawUtils.js` (CLN-9): added `c` as first parameter to `drawPolygon`, `drawRoundedCornerRect`, `drawStar`, and `drawHeart` to match the existing convention in `drawCircle`, `drawEllipse`, `drawRing`, `drawCircleSegment`, and `drawRingSegment`; removed the now-unused `import { c }` from `canvas.js`
+- Renamed `js/core/Timer.js` → `Clock.js`; updated all 11 importing files to use the `Clock` namespace
+- Replaced `js/utils/TimerCallback.js` with a new `Timer` class (`js/utils/Timer.js`): options-object constructor, fluent setters, `pause`/`unpause`/`togglePause`, `finish`/`kill`, `restart`, ping-pong oscillation, configurable loop count, and per-frame callbacks (`onStart`, `onUpdate`, `onProgress`, `onLoop`, `onBounce`, `onEnd`); updated `Clock.js` factory functions to use the new API
+- Expanded `StringUtils.js` with `isString`, `isEmptyString`, `isNonemptyString`, and `clip` (CLN-10)
+- Added `isNumber` and `toPercentage` to `NumberUtils.js` (CLN-10)
+- Removed `Utils.stopwatch()` — superseded by `Timer`; was unused in the codebase; removed now-dead `Clock` and `NumberUtils` imports from `Utils.js`
+- Moved `createCanvas` and `getContext` from `Utils.js` into new `js/utils/CanvasUtils.js`; updated `CustomPreloading.js` and `ImageProcessing.js` to import from the new module
+- Created `js/utils/DateUtils.js` with `getTimestamp`, `isOlderThan`, `getNiceDateString`, and `getShortDateString`
+- Created `js/utils/ControlUtils.js`; moved `getArrowControls` from `Utils.js`; updated `Demo.js` call site
+- Created `js/utils/ParallaxUtils.js`; rewrote `parallaxCalculator` as `calculateParallaxLayer` with clearer parameter and variable names; deleted `Utils.js` (CLN-11)
+
+---
+
 ## 2026-06-10
 
 - Added `import Vec3` to `Vec2.js` to fix `toVec3()` referencing an undefined global (ENG-6)

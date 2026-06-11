@@ -1,5 +1,5 @@
 import * as NumberUtils from "./NumberUtils.js";
-import * as Timer from "../core/Timer.js";
+import * as Clock from "../core/Clock.js";
 import { HALF_PI, PI } from "./GeometryUtils.js";
 
 
@@ -81,10 +81,10 @@ export function accelerateToPos(currentPos, targetPos, velocity, acceleration, m
                 a = acceleration;
             }
         }
-        newVelocity += a * Timer.delta;
+        newVelocity += a * Clock.delta;
         newVelocity = NumberUtils.clamp(newVelocity, -maxV, maxV);
-        newPos += newVelocity * Timer.delta;
-        const threshold = Math.abs(newVelocity * Timer.delta);
+        newPos += newVelocity * Clock.delta;
+        const threshold = Math.abs(newVelocity * Clock.delta);
         if (newPos > targetPos - threshold && newPos < targetPos + threshold) {
             newPos = targetPos;
             newVelocity = 0;

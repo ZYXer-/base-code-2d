@@ -1,5 +1,5 @@
 import * as Img from "./core/Img.js";
-import * as Utils from "./utils/Utils.js";
+import * as CanvasUtils from "./utils/CanvasUtils.js";
 import * as ImageProcessing from "./utils/ImageProcessing.js";
 
 
@@ -13,8 +13,8 @@ export function preload() {
 
     ImageProcessing.pixelate("test2recolored", "test2recoloredResized", 3);
 
-    const demoCanvas = Utils.createCanvas(150, 150);
-    const demoC = Utils.getContext(demoCanvas);
+    const demoCanvas = CanvasUtils.createCanvas(150, 150);
+    const demoC = CanvasUtils.getContext(demoCanvas);
     demoC.fillStyle = "#000";
     demoC.fillRect(0, 0, 150, 150);
     demoC.drawImage(Img.get("test2recoloredResized"), 0, 0);

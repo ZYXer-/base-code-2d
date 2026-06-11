@@ -1,5 +1,5 @@
 import { c } from "../core/canvas.js";
-import * as Timer from "../core/Timer.js";
+import * as Clock from "../core/Clock.js";
 
 
 class Text {
@@ -232,7 +232,7 @@ class Text {
 
 
     updateAppear() {
-        this.appearPos += Timer.delta * this.appearCharPerSec;
+        this.appearPos += Clock.delta * this.appearCharPerSec;
         while (this.appearPos > 1.0) {
             this.appearPos -= 1.0;
             this.appearChar++;

@@ -1,7 +1,7 @@
 import Vec2 from "./Vec2.js";
 import Vec3 from "./Vec3.js";
 import * as NumberUtils from "./NumberUtils.js";
-import * as Timer from "../core/Timer.js";
+import * as Clock from "../core/Clock.js";
 
 
 class Acceleratable {
@@ -68,18 +68,18 @@ class Acceleratable {
             if (propulsionDir === 0.0) {
                 if (this.v !== 0.0) {
                     negSign = this.getSign(-this.v);
-                    this.v += negSign * this.frictionA * Timer.delta;
+                    this.v += negSign * this.frictionA * Clock.delta;
                     if (negSign * this.v > 0.0) {
                         this.v = 0.0;
                     }
                 }
             } else {
-                this.v += this.propulsionA * propulsionDir * Timer.delta;
+                this.v += this.propulsionA * propulsionDir * Clock.delta;
                 sign = this.getSign(propulsionDir);
                 this.v = sign * NumberUtils.min(sign * this.v, sign * this.maxV * propulsionDir);
             }
 
-            this.pos += this.v * Timer.delta;
+            this.pos += this.v * Clock.delta;
 
             if (this.v > 0.0) {
                 this.angle = 1;
@@ -95,13 +95,13 @@ class Acceleratable {
             if (propulsionDir.x === 0.0) {
                 if (this.v.x !== 0.0) {
                     negSign = this.getSign(-this.v.x);
-                    this.v.x += negSign * this.frictionA.x * Timer.delta;
+                    this.v.x += negSign * this.frictionA.x * Clock.delta;
                     if (negSign * this.v.x > 0.0) {
                         this.v.x = 0.0;
                     }
                 }
             } else {
-                this.v.x += this.propulsionA.x * propulsionDir.x * Timer.delta;
+                this.v.x += this.propulsionA.x * propulsionDir.x * Clock.delta;
                 sign = this.getSign(propulsionDir.x);
                 this.v.x = sign * NumberUtils.min(sign * this.v.x, sign * this.maxV.x * propulsionDir.x);
             }
@@ -109,13 +109,13 @@ class Acceleratable {
             if (propulsionDir.y === 0.0) {
                 if (this.v.y !== 0.0) {
                     negSign = this.getSign(-this.v.y);
-                    this.v.y += negSign * this.frictionA.y * Timer.delta;
+                    this.v.y += negSign * this.frictionA.y * Clock.delta;
                     if (negSign * this.v.y > 0.0) {
                         this.v.y = 0.0;
                     }
                 }
             } else {
-                this.v.y += this.propulsionA.y * propulsionDir.y * Timer.delta;
+                this.v.y += this.propulsionA.y * propulsionDir.y * Clock.delta;
                 sign = this.getSign(propulsionDir.y);
                 this.v.y = sign * NumberUtils.min(sign * this.v.y, sign * this.maxV.y * propulsionDir.y);
             }
@@ -124,19 +124,19 @@ class Acceleratable {
                 if (propulsionDir.z === 0.0) {
                     if (this.v.z !== 0.0) {
                         negSign = this.getSign(-this.v.z);
-                        this.v.z += negSign * this.frictionA.z * Timer.delta;
+                        this.v.z += negSign * this.frictionA.z * Clock.delta;
                         if (negSign * this.v.z > 0.0) {
                             this.v.z = 0.0;
                         }
                     }
                 } else {
-                    this.v.z += this.propulsionA.z * propulsionDir.z * Timer.delta;
+                    this.v.z += this.propulsionA.z * propulsionDir.z * Clock.delta;
                     sign = this.getSign(propulsionDir.z);
                     this.v.z = sign * NumberUtils.min(sign * this.v.z, sign * this.maxV.z * propulsionDir.z);
                 }
             }
 
-            this.pos = this.pos.add(this.v.multiply(Timer.delta));
+            this.pos = this.pos.add(this.v.multiply(Clock.delta));
 
             if (this.v.norm() > 0) {
 

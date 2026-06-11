@@ -1,12 +1,12 @@
 import { c, canvas } from "../core/canvas.js";
 import * as Game from "../core/Game.js";
 import * as Viewport from "../core/Viewport.js";
-import * as Timer from "../core/Timer.js";
+import * as Clock from "../core/Clock.js";
 import * as Mouse from "../core/input/Mouse.js";
 import * as Keyboard from "../core/input/Keyboard.js";
 import * as Img from "../core/Img.js";
 import * as Sound from "../core/Sound.js";
-import * as Utils from "../utils/Utils.js";
+import * as ControlUtils from "../utils/ControlUtils.js";
 import * as NumberUtils from "../utils/NumberUtils.js";
 import * as ImageProcessing from "../utils/ImageProcessing.js";
 import * as Easing from "../utils/Easing.js";
@@ -172,7 +172,7 @@ class Demo {
 
         // When you press 'C' you trigger a Countdown
         Keyboard.registerKeyUpHandler(Keyboard.C, () => {
-            Timer.doForCountdown(3.0, progress => {
+            Clock.doForCountdown(3.0, progress => {
                 this.demoPixelText.text("Progress: " + progress.toFixed(2));
             }, () => {
                 this.demoPixelText.text("Hello World!");
@@ -224,10 +224,10 @@ class Demo {
         const oldRotation = this.demoImageRotation;
 
         // Rotate rotating image (black square with cross)
-        this.demoImageRotation += 2.0 * Timer.delta;
+        this.demoImageRotation += 2.0 * Clock.delta;
 
         // Update all timed callbacks
-        Timer.updateCallbacks();
+        Clock.updateCallbacks();
 
         // Update interpolating vertical line
         const interpolate = Easing.accelerateToPos(
@@ -241,7 +241,7 @@ class Demo {
         this.demoInterpolationVelocity = interpolate.velocity;
 
         // Get arrow key inputs and apply it to arrow-key-controlled pawn
-        const arrowKeys = Utils.getArrowControls();
+        const arrowKeys = ControlUtils.getArrowControls();
         this.demoPawn.update(arrowKeys);
 
         if (oldRotation < 3.0 && this.demoImageRotation >= 3.0) {

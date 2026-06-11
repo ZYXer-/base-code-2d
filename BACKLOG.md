@@ -20,9 +20,9 @@ Format: `<TOPIC>-<NUMBER>` — check off items as they are completed.
 - [x] **CLN-6** Replace `options.hasOwnProperty(x)` with `Object.hasOwn(options, x)` throughout (ESLint `no-prototype-builtins` — ~48 occurrences, mainly in `Button.js` and `ParticleSystem.js`)
 - [x] **CLN-7** Replace `var` with `let`/`const` in `Text.js` (15 occurrences flagged by ESLint)
 - [x] **CLN-8** Add space between control-flow keywords and `(` across all source files — `if(` → `if (`, `for(` → `for (`, etc. (ESLint `keyword-spacing` auto-fixable: `npm run lint -- --fix`)
-- [ ] **CLN-9** Fix inconsistent `c` parameter in `DrawUtils.js`
-- [ ] **CLN-10** Expand `StringUtils.js` with more string utility functions (user has additional string utils to add)
-- [ ] **CLN-11** Move remaining `Utils.js` functions (`createCanvas`, `getContext`, `parallaxCalculator`, `stopwatch`, `getArrowControls`) to appropriate files; `Utils.js` should eventually be empty — `drawPolygon`, `drawRoundedCornerRect`, `drawStar`, and `drawHeart` import `c` from `canvas.js` directly instead of accepting it as a first parameter like the other functions in the same file; pick one approach and apply it consistently
+- [x] **CLN-9** Fix inconsistent `c` parameter in `DrawUtils.js`
+- [x] **CLN-10** Expand `StringUtils.js` with more string utility functions (user has additional string utils to add)
+- [x] **CLN-11** Move remaining `Utils.js` functions (`parallaxCalculator`, `getArrowControls`) to appropriate files; `Utils.js` should eventually be empty
 - [ ] **CLN-12** Audit `Object.hasOwn` usages added in CLN-6 — many were originally existence checks used as a proxy for truthiness (written before `?.` existed); where the option value is never a falsy non-default (e.g. `0`, `false`, `""`), replace with optional chaining (`options.x ?? default`) for cleaner intent
 
 ---

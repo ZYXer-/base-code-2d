@@ -8,7 +8,7 @@ import * as Mouse from "./input/Mouse.js";
 import * as GlobalControls from "../GlobalControls.js";
 import * as PageVisibility from "./PageVisibility.js";
 import * as PerformanceMonitor from "./PerformanceMonitor.js";
-import * as Timer from "./Timer.js";
+import * as Clock from "./Clock.js";
 import Button from "../utils/Button.js";
 
 
@@ -88,7 +88,7 @@ function loop() {
     PerformanceMonitor.startStopwatch(1);
 
     SceneManager.update();
-    Timer.update();
+    Clock.update();
     Mouse.update();
     update();
     Button.reset();

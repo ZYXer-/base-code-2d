@@ -1,3 +1,8 @@
+export function isNumber(value) {
+    return typeof value === "number" && !Number.isNaN(value);
+}
+
+
 export function rand(min, max) {
     return min + Math.floor((1 + max - min) * Math.random());
 }
@@ -65,4 +70,9 @@ export function pad(number, length) {
 
 export function toFixedDecimal(number, numberOfDecimals) {
     return number.toFixed(numberOfDecimals);
+}
+
+
+export function toPercentage(value, digits) {
+    return (100 * value).toFixed(digits) + "%";
 }
