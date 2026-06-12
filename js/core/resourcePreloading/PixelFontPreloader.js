@@ -1,5 +1,5 @@
 import * as Img from "../Img.js";
-import * as PixelFontManager from "../../utils/PixelFontManager.js";
+import * as PixelFontManager from "../../utils/gui/PixelFontManager.js";
 import Preloader from "./Preloader.js";
 
 

@@ -1,4 +1,4 @@
-import Vec2 from "../../utils/Vec2.js";
+import Vec2 from "../../utils/geometry/Vec2.js";
 import * as Mouse from "./Mouse.js";
 
 

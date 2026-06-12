@@ -1,6 +1,6 @@
 import * as Settings from "../Settings.js";
-import * as NumberUtils from "../utils/NumberUtils.js";
-import Timer from "../utils/Timer.js";
+import * as NumberUtils from "../utils/data/NumberUtils.js";
+import Timer from "../utils/animation/Timer.js";
 
 
 export let delta = 0.00001;

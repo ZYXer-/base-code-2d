@@ -1,6 +1,6 @@
 import * as Img from "./core/Img.js";
-import * as CanvasUtils from "./utils/CanvasUtils.js";
-import * as ImageProcessing from "./utils/ImageProcessing.js";
+import * as CanvasUtils from "./utils/rendering/CanvasUtils.js";
+import * as ImageProcessing from "./utils/rendering/ImageProcessing.js";
 
 
 export function preload() {

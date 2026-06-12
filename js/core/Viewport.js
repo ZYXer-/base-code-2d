@@ -1,7 +1,7 @@
 import { c, canvas } from "./canvas.js";
 import * as Settings from "../Settings.js";
 import * as SceneManager from "./SceneManager.js";
-import * as NumberUtils from "../utils/NumberUtils.js";
+import * as NumberUtils from "../utils/data/NumberUtils.js";
 
 
 export let canvasWidth = 1;

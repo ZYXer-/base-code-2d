@@ -5,7 +5,7 @@ import * as DemoMenuScene from "./DemoMenuScene.js";
 import * as Tooltip from "../core/Tooltip.js";
 import * as BasicTooltipPainter from "../BasicTooltipPainter.js";
 import Demo from "./Demo.js";
-import Text from "../utils/Text.js";
+import Text from "../utils/gui/Text.js";
 import * as PauseScreen from "../PauseScreen.js";
 
 

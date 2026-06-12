@@ -9,7 +9,7 @@ import * as GlobalControls from "../GlobalControls.js";
 import * as PageVisibility from "./PageVisibility.js";
 import * as PerformanceMonitor from "./PerformanceMonitor.js";
 import * as Clock from "./Clock.js";
-import Button from "../utils/Button.js";
+import Button from "../utils/gui/Button.js";
 
 
 export let paused = false;

@@ -1,7 +1,7 @@
 import * as Settings from "../../Settings.js";
 import * as SceneManager from "../SceneManager.js";
 import * as Scenes from "../../Scenes.js";
-import * as NumberUtils from "../../utils/NumberUtils.js";
+import * as NumberUtils from "../../utils/data/NumberUtils.js";
 import * as Clock from "../Clock.js";
 import * as Resources from "../../Resources.js";
 import * as CustomPreloading from "../../CustomPreloading.js";

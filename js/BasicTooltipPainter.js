@@ -1,5 +1,5 @@
-import Vec2 from "./utils/Vec2.js";
-import Text from "./utils/Text.js";
+import Vec2 from "./utils/geometry/Vec2.js";
+import Text from "./utils/gui/Text.js";
 import { c } from "./core/canvas.js";
 
 

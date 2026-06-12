@@ -1,7 +1,7 @@
 import { c } from "./core/canvas.js";
 import * as Game from "./core/Game.js";
 import * as Viewport from "./core/Viewport.js";
-import Text from "./utils/Text.js";
+import Text from "./utils/gui/Text.js";
 
 
 export function draw() {

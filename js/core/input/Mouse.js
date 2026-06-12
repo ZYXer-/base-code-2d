@@ -1,6 +1,6 @@
 import * as Settings from "../../Settings.js";
 import * as Viewport from "../Viewport.js";
-import Vec2 from "../../utils/Vec2.js";
+import Vec2 from "../../utils/geometry/Vec2.js";
 import MouseButton from "./MouseButton.js";
 
 

@@ -6,8 +6,8 @@ import * as DemoBox2dScene from "./DemoBox2dScene.js";
 import * as DemoParticlesScene from "./DemoParticlesScene.js";
 import * as DemoSoundScene from "./DemoSoundScene.js";
 import * as OldDemoScene from "./OldDemoScene.js";
-import Button from "../utils/Button.js";
-import Text from "../utils/Text.js";
+import Button from "../utils/gui/Button.js";
+import Text from "../utils/gui/Text.js";
 
 
 let demoSceneOptions;

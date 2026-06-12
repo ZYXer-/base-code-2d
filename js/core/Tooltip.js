@@ -2,7 +2,7 @@ import { c } from "./canvas.js";
 import * as Viewport from "./Viewport.js";
 import * as Mouse from "./input/Mouse.js";
 import * as Clock from "./Clock.js";
-import Vec2 from "../utils/Vec2.js";
+import Vec2 from "../utils/geometry/Vec2.js";
 
 
 let show = false;

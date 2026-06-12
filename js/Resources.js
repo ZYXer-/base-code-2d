@@ -1,4 +1,4 @@
-import * as DataUtils from "./utils/DataUtils.js";
+import * as DataUtils from "./utils/data/DataUtils.js";
 
 
 // Images
