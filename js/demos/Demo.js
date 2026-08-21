@@ -23,7 +23,9 @@ import PixelText from "../utils/gui/PixelText.js";
 import Acceleratable from "../utils/animation/Acceleratable.js";
 import IntegerScaling from "../utils/rendering/IntegerScaling.js";
 import * as Tooltip from "../core/Tooltip.js";
-import * as offsetjs from "../libs/offset.min.js";
+// Side-effect import: offset.min.js assigns the global Offset (used below).
+// It has no exports — do not "clean up" this import, it is load-bearing.
+import "../libs/offset.min.js";
 
 
 /*

@@ -1,4 +1,4 @@
-import { c } from "../core/canvas.js";
+import { c } from "../../core/canvas.js";
 import * as PixelFontManager from "./PixelFontManager.js";
 
 
@@ -99,7 +99,7 @@ class PixelText {
 
 
     setFont(font) {
-        this.pixelFont = PixelFont.get(font);
+        this.pixelFont = PixelFontManager.get(font);
     }
 
 

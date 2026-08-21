@@ -1,5 +1,7 @@
 import Preloader from "./Preloader.js";
-import * as ffo from "../../libs/fontfaceobserver.js";
+// Side-effect import: fontfaceobserver.js assigns window.FontFaceObserver.
+// It has no exports — do not "clean up" this import, it is load-bearing.
+import "../../libs/fontfaceobserver.js";
 
 
 class WebFontPreloader extends Preloader {

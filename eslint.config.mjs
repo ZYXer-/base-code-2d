@@ -20,10 +20,13 @@ export default [
             sourceType: "module",
             globals: {
                 ...globals.browser,
-                // Third-party libraries loaded as global <script> tags in index.htm
+                // Third-party library globals. Howl/Howler come from the
+                // <script> tag in index.htm; Offset and FontFaceObserver are
+                // set by side-effect imports of their UMD bundles in js/libs/.
                 "Howl": "readonly",
                 "Howler": "readonly",
                 "Offset": "readonly",
+                "FontFaceObserver": "readonly",
             }
         },
         rules: {
