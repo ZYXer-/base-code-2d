@@ -24,6 +24,7 @@ Format: `<TOPIC>-<NUMBER>` — check off items as they are completed.
 - [x] **CLN-10** Expand `StringUtils.js` with more string utility functions (user has additional string utils to add)
 - [x] **CLN-11** Move remaining `Utils.js` functions (`parallaxCalculator`, `getArrowControls`) to appropriate files; `Utils.js` should eventually be empty
 - [ ] **CLN-12** Audit `Object.hasOwn` usages added in CLN-6 — many were originally existence checks used as a proxy for truthiness (written before `?.` existed); where the option value is never a falsy non-default (e.g. `0`, `false`, `""`), replace with optional chaining (`options.x ?? default`) for cleaner intent
+- [ ] **CLN-13** Fix the remaining 14 ESLint errors (was 18; the two `no-undef` errors and their two load-bearing library imports are fixed) reported by `npm run lint` — unused imports (`Mouse` in `EmptyScene.js`, `IngameScene.js`, `DemoMenuScene.js`, `OldDemoScene.js`; `IngameScene` in `Scenes.js`; `c`/`canvas` in `Game.js`; `canvas`, `HALF_PI`, `PI`, `TWO_PI`, `offsetjs` in `Demo.js`; `ffo` in `WebFontPreloader.js`), unused args in `Humanoid.js:87`, and two `no-undef` (`FontFaceObserver` in `WebFontPreloader.js:20`, `PixelFont` in `PixelText.js:102`)
 
 ---
 
@@ -64,6 +65,7 @@ Format: `<TOPIC>-<NUMBER>` — check off items as they are completed.
 - [ ] **ENG-14** Add `Color.darken()`, `Color.lighten()`, `Color.setSaturation()` to `Color.js`; operate in HSL space; reference implementations from LD42
 - [ ] **ENG-15** Port voxel graphics renderer from LD42 into the engine — 2D renderer that draws voxel-style stacked graphics onto the canvas
 - [ ] **ENG-16** Port `Camera` / projection object from LD42 (`temp/camera.js`) — oblique/isometric projection with `worldToScreen`, `screenToWorld`, `worldToScreen3D`, and `apply`/`restore` canvas helpers; pairs with ENG-15
+- [x] **ENG-17** Repair the 42 stale relative import specifiers left by the 2026-06-12 `js/utils/` reorganisation; the moved modules still import siblings as `./Foo.js` and reach up as `../core/Foo.js` from their old flat depth, so nothing resolves and the engine fails to boot. Affects `animation/` (Acceleratable, Easing, Humanoid, Particle, ParticleSystem, Shaking, Timer), `gameplay/` (ControlUtils, TerrainGeneration), `gui/` (Button, PixelText, Text), `rendering/` (DrawUtils, ImageProcessing, IntegerScaling)
 
 ---
 
@@ -74,6 +76,10 @@ Format: `<TOPIC>-<NUMBER>` — check off items as they are completed.
 - [x] **INF-4** Set up ESLint with a custom config matching project style
 - [ ] **INF-5** Restructure repo — move current root content (demos, assets, entry point) into an `example/` subfolder so the engine and the example game are clearly separated
 - [ ] **INF-6** Clearly separate engine/library code from game boilerplate so the engine can be copied into a new project without carrying demo scaffolding (related to INF-5)
+- [x] **INF-7** Add import-path validation to the lint step so a move like the `js/utils/` reorganisation cannot silently break the build — `tools/check-imports.mjs` asserts every relative specifier under `js/` resolves and carries a file extension; runs first in `npm run lint`
+- [ ] **INF-8** Narrow the `app.get("/{*path}")` fallback in `nodeServer.js` — it currently serves `index.htm` as `text/html` for any missing file, so a broken `.js` module path returns 200 with HTML instead of a 404, turning a clear "file not found" into an opaque MIME-type error
+- [ ] **INF-9** Expand the `test/` suite beyond the boot smoke test — candidates: each demo scene reachable from `DemoMenuScene` boots without error, `Viewport` resize does not throw, `SceneManager.changeScene` runs `hide`/`show` in order
+- [ ] **INF-10** Consider a CI workflow running `npm run lint` and `npm test` on push, so agent-authored changes are checked without relying on anyone running them locally
 
 ---
 

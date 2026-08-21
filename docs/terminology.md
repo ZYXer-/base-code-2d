@@ -17,7 +17,7 @@ An object with lifecycle methods (`show`, `hide`, `update`, `draw`, `resize`) th
 The five methods the engine calls on the active scene:
 - `show()` — called when the scene becomes active
 - `hide()` — called just before the scene is replaced
-- `update(delta)` — called every frame before drawing; `delta` is time since last frame in milliseconds
+- `update(delta)` — called every frame before drawing; `delta` is time since last frame in seconds
 - `draw()` — called every frame after update; draw to canvas here
 - `resize()` — called when the viewport dimensions change
 
@@ -104,3 +104,9 @@ A screen-space offset effect that simulates camera shake. Triggered by `Shaking.
 ## Integer Scaling
 
 A rendering mode (`js/utils/IntegerScaling.js`) that scales the canvas by an integer factor, preserving pixel-perfect appearance for pixelated/retro aesthetics.
+
+---
+
+## Draw Queue
+
+A `DrawQueue` (`js/utils/rendering/DrawQueue.js`) holds a list of drawable elements and tracks whether that list has changed since the last frame via a `needsUpdate` flag. Used to batch and re-sort draw calls only when the contents actually change.

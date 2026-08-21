@@ -49,12 +49,20 @@ js/
   Scenes.js           # Which scene is initial / shown after loading
   CustomPreloading.js # Hook for custom preload logic
   core/               # Engine core (game loop, input, audio, viewport, timer…)
-  utils/              # Reusable utilities (Vec2, DrawUtils, particles, easing…)
+  utils/              # Reusable utilities, grouped by topic
+    geometry/         # Vec2, Vec3, collision + math helpers
+    data/             # Numbers, arrays/objects, strings, dates
+    animation/        # Timer, easing, particles, shake, parallax
+    rendering/        # Draw primitives, colour, offscreen canvas, scaling
+    gui/              # Text, pixel text, buttons
+    gameplay/         # Controls, pathfinding, terrain generation
   demos/              # Example scenes demonstrating engine features
   libs/               # Bundled third-party libraries
 css/                  # Minimal layout styles + web fonts
 img/                  # Image assets
 audio/                # Sound assets
+tools/                # check-imports.mjs (import-path guard)
+test/                 # Engine boot smoke test — delete for a new project
 docs/                 # Design decisions and terminology
 ```
 
@@ -65,7 +73,28 @@ docs/                 # Design decisions and terminology
 3. Set your scene as `SCENE_AFTER_LOADING` in `js/Scenes.js`.
 4. Tweak canvas size, aspect ratio, and other settings in `js/Settings.js`.
 
-The demo scenes in `js/demos/` and `js/Demo.js` show how to use particles, buttons, text, sounds, physics, and more.
+The demo scenes in `js/demos/` show how to use particles, buttons, text, sounds, physics, and more — `js/demos/Demo.js` is the broadest of them.
+
+## Developing the Base Code Itself
+
+*(Skip this section if you are building a game — it is about maintaining the engine.)*
+
+```bash
+npm run lint     # verifies every import path resolves, then runs ESLint
+npm test         # Playwright smoke test: does the engine still boot and render?
+```
+
+The `test/` suite exists to catch refactors that break the engine. It is **not**
+useful for a game built on this repo — when you copy the base code for a new
+project, delete it:
+
+```bash
+rm -rf test/
+npm uninstall --save-dev @playwright/test
+```
+
+See `test/README.md` for the full removal steps. Keep `npm run lint` — it has no
+dependencies and stays useful in a real project.
 
 ## Key Settings (`js/Settings.js`)
 

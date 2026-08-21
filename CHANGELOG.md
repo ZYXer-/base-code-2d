@@ -4,6 +4,42 @@ Entries are in reverse chronological order. One bullet per change, one clause pe
 
 ---
 
+## 2026-08-21
+
+- Bumped `brace-expansion` 5.0.6 → 5.0.9 (dev-only, via `eslint` → `minimatch`) to clear GHSA-3jxr-9vmj-r5cp and two related DoS advisories
+- Bumped `body-parser` 2.2.2 → 2.3.0 (via `express`) to clear GHSA-v422-hmwv-36x6; pulled in `content-type` 2.1.0 as a new transitive dependency
+- `npm audit` now reports 0 vulnerabilities
+- Backfilled the missing 2026-06-12 changelog entry for the `js/utils/` reorganisation
+- Corrected `docs/decisions.md` heading "Delta Time in Milliseconds" to "Seconds" — the body, `CLAUDE.md`, and `Clock.js` (`/1000`) all already said seconds
+- Corrected `update(delta)` units in `docs/terminology.md` from milliseconds to seconds
+- Updated the `Utils.createCanvas()` reference in `docs/decisions.md` to `CanvasUtils.createCanvas()` (`Utils.js` was deleted in CLN-11)
+- Rewrote the `js/utils/` table in `CLAUDE.md` around the six subfolders; added the previously undocumented `Img.js`, `DrawQueue.js`, `TerrainGeneration.js`, and `PixelFontManager.js`
+- Moved the demo scenes in `CLAUDE.md` from `js/` to `js/demos/` and listed all six
+- Added a `js/utils/` subfolder decision to `docs/decisions.md` and a `DrawQueue` entry to `docs/terminology.md`
+- Filed ENG-17 (broken import paths), CLN-13 (18 ESLint errors), and INF-7/INF-8 (import-path linting, dev-server 404 masking)
+- Repaired 42 stale relative import specifiers across 15 modules under `js/utils/`, left behind by the 2026-06-12 reorganisation (ENG-17) — the engine could not boot until now
+- Added `tools/check-imports.mjs`, which asserts every relative import under `js/` resolves and carries a file extension (INF-7)
+- Wired the import check into `npm run lint` ahead of ESLint, and exposed it standalone as `npm run check-imports`
+- Verified the fix by walking the import graph from `js/main.js` (59 modules, 0 unresolved) and serving each over the dev server (59/59 returned `application/javascript`)
+- Added a Playwright boot smoke test in `test/` — asserts no uncaught/console errors, every module served as JavaScript, canvas renders, and the render loop keeps ticking
+- Scoped the suite as base-code-only infrastructure: config lives in `test/`, not the repo root, and `test/README.md` documents a two-command removal for downstream projects
+- Added `npm test` and `npm run test:headed`; installed `@playwright/test` as a devDependency and gitignored Playwright artifacts
+- Verified the suite fails on a reintroduced ENG-17 regression, reporting the offending URL in ~1s rather than a 25s blank-canvas timeout
+- Fixed `PixelText.setFont()` calling undefined `PixelFont.get()` instead of the imported `PixelFontManager.get()` — a dormant ReferenceError (part of CLN-13)
+- Converted the load-bearing namespace imports of `fontfaceobserver.js` and `offset.min.js` to bare side-effect imports with explanatory comments — ESLint reported the bindings as unused, inviting a "cleanup" that would have broken web fonts and polygon offsetting at runtime
+- Added `FontFaceObserver` to the ESLint globals and clarified which library globals come from `<script>` tags versus side-effect imports
+- ESLint errors down from 18 to 14; the remainder are unused imports and args with no runtime risk
+
+---
+
+## 2026-06-12
+
+- Reorganised `js/utils/` into six subfolders: `geometry/`, `data/`, `animation/`, `rendering/`, `gui/`, `gameplay/`
+- Updated import paths in all consuming files under `js/`, `js/core/`, and `js/demos/`
+- Left intra-`js/utils/` import paths unrewritten in the 14 moved modules that import siblings or reach up into `js/core/` — 42 specifiers still point at pre-move locations (tracked as ENG-17)
+
+---
+
 ## 2026-06-11
 
 - Standardised `c` parameter in `DrawUtils.js` (CLN-9): added `c` as first parameter to `drawPolygon`, `drawRoundedCornerRect`, `drawStar`, and `drawHeart` to match the existing convention in `drawCircle`, `drawEllipse`, `drawRing`, `drawCircleSegment`, and `drawRingSegment`; removed the now-unused `import { c }` from `canvas.js`
