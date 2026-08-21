@@ -1,5 +1,5 @@
-import { c } from "../core/canvas.js";
-import * as Clock from "../core/Clock.js";
+import { c } from "../../core/canvas.js";
+import * as Clock from "../../core/Clock.js";
 
 
 class Text {

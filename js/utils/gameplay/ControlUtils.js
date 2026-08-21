@@ -1,5 +1,5 @@
-import * as Keyboard from "../core/input/Keyboard.js";
-import Vec2 from "./Vec2.js";
+import * as Keyboard from "../../core/input/Keyboard.js";
+import Vec2 from "../geometry/Vec2.js";
 
 
 export function getArrowControls() {

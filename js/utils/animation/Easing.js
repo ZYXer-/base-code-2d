@@ -1,6 +1,6 @@
-import * as NumberUtils from "./NumberUtils.js";
-import * as Clock from "../core/Clock.js";
-import { HALF_PI, PI } from "./GeometryUtils.js";
+import * as NumberUtils from "../data/NumberUtils.js";
+import * as Clock from "../../core/Clock.js";
+import { HALF_PI, PI } from "../geometry/GeometryUtils.js";
 
 
 export function sin(x) {

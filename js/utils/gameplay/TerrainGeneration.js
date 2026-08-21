@@ -1,7 +1,7 @@
-import * as NumberUtils from "./NumberUtils.js";
-import * as DataUtils from "./DataUtils.js";
-import { distance } from "./GeometryUtils.js";
-import * as Easing from "./Easing.js";
+import * as NumberUtils from "../data/NumberUtils.js";
+import * as DataUtils from "../data/DataUtils.js";
+import { distance } from "../geometry/GeometryUtils.js";
+import * as Easing from "../animation/Easing.js";
 
 
 export function perlinNoise(size, lowestOctave, highOctaveWeight) { // size and lowestOctave must be multiple of 2, highOctaveWeight must be 0.0 - 1.0

@@ -1,4 +1,4 @@
-import { QUART_PI, HALF_PI, PI, TWO_PI } from "./GeometryUtils.js";
+import { QUART_PI, HALF_PI, PI, TWO_PI } from "../geometry/GeometryUtils.js";
 
 
 export function drawPolygon(c, vec2List) {

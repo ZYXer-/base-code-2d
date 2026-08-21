@@ -1,5 +1,5 @@
-import * as Clock from "../core/Clock.js";
-import * as NumberUtils from "./NumberUtils.js";
+import * as Clock from "../../core/Clock.js";
+import * as NumberUtils from "../data/NumberUtils.js";
 
 
 // Counts `value` from `start` to `end` at a given `speed` (units/sec).

@@ -1,4 +1,4 @@
-import * as Game from "../core/Game.js";
+import * as Game from "../../core/Game.js";
 import Particle from "./Particle.js";
 
 

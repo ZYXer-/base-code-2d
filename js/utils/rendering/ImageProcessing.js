@@ -1,6 +1,6 @@
-import * as Img from "../core/Img.js";
+import * as Img from "../../core/Img.js";
 import * as CanvasUtils from "./CanvasUtils.js";
-import * as DataUtils from "./DataUtils.js";
+import * as DataUtils from "../data/DataUtils.js";
 import Color from "./Color.js";
 
 

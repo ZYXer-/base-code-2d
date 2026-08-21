@@ -1,7 +1,7 @@
-import Vec2 from "./Vec2.js";
-import Vec3 from "./Vec3.js";
-import * as NumberUtils from "./NumberUtils.js";
-import * as Clock from "../core/Clock.js";
+import Vec2 from "../geometry/Vec2.js";
+import Vec3 from "../geometry/Vec3.js";
+import * as NumberUtils from "../data/NumberUtils.js";
+import * as Clock from "../../core/Clock.js";
 
 
 class Acceleratable {

@@ -1,6 +1,6 @@
-import * as Game from "../core/Game.js";
-import * as Clock from "../core/Clock.js";
-import * as NumberUtils from "./NumberUtils.js";
+import * as Game from "../../core/Game.js";
+import * as Clock from "../../core/Clock.js";
+import * as NumberUtils from "../data/NumberUtils.js";
 
 
 class Particle {

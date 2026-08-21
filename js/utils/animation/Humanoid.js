@@ -1,7 +1,7 @@
-import { c } from "../core/canvas.js";
-import * as Img from "../core/Img.js";
-import * as Clock from "../core/Clock.js";
-import Vec2 from "./Vec2.js";
+import { c } from "../../core/canvas.js";
+import * as Img from "../../core/Img.js";
+import * as Clock from "../../core/Clock.js";
+import Vec2 from "../geometry/Vec2.js";
 
 
 class Humanoid {
