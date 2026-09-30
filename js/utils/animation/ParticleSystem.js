@@ -7,62 +7,32 @@ class ParticleSystem {
 
     constructor(options) {
 
-        this.mode = ParticleSystem.CONTINUOUS_MODE;
-        if (Object.hasOwn(options, "mode")) {
-            this.mode = options.mode;
-        }
+        this.mode = options.mode ?? ParticleSystem.CONTINUOUS_MODE;
 
-        this.emitter = {x: 0.0, y: 0.0, z: 0.0};
-        if (Object.hasOwn(options, "emitter")) {
-            this.emitter = { x: options.emitter.x, y: options.emitter.y, z: options.emitter.z };
-        }
-        this.emitterSize = {x: 0.0, y: 0.0, z: 0.0};
-        if (Object.hasOwn(options, "emitterSize")) {
-            this.emitterSize = { x: options.emitterSize.x, y: options.emitterSize.y, z: options.emitterSize.z };
-        }
+        this.emitter = { x: 0.0, y: 0.0, z: 0.0, ...options.emitter };
+        this.emitterSize = { x: 0.0, y: 0.0, z: 0.0, ...options.emitterSize };
 
-        this.initV = {x: { min: 0.0, max: 0.0 }, y: { min: 0.0, max: 0.0 }, z: { min: 0.0, max: 0.0 }};
-        if (Object.hasOwn(options, "v")) {
-            this.initV = {
-                x: { min: options.v.x.min, max: options.v.x.max },
-                y: { min: options.v.y.min, max: options.v.y.max },
-                z: { min: options.v.z.min, max: options.v.z.max }
-            };
-        }
+        const v = options.v ?? {};
+        this.initV = {
+            x: { min: 0.0, max: 0.0, ...v.x },
+            y: { min: 0.0, max: 0.0, ...v.y },
+            z: { min: 0.0, max: 0.0, ...v.z }
+        };
 
-        this.initA = {x: { min: 0.0, max: 0.0 }, y: { min: 0.0, max: 0.0 }, z: { min: 0.0, max: 0.0 }};
-        if (Object.hasOwn(options, "a")) {
-            this.initA = {
-                x: { min: options.a.x.min, max: options.a.x.max },
-                y: { min: options.a.y.min, max: options.a.y.max },
-                z: { min: options.a.z.min, max: options.a.z.max }
-            };
-        }
+        const a = options.a ?? {};
+        this.initA = {
+            x: { min: 0.0, max: 0.0, ...a.x },
+            y: { min: 0.0, max: 0.0, ...a.y },
+            z: { min: 0.0, max: 0.0, ...a.z }
+        };
 
-        this.friction = {x: 0.0, y: 0.0, z: 0.0};
-        if (Object.hasOwn(options, "friction")) {
-            this.friction = { x: options.friction.x, y: options.friction.y, z: options.friction.z };
-        }
+        this.friction = { x: 0.0, y: 0.0, z: 0.0, ...options.friction };
 
-        this.life = { min: 0.0, max: 0.0 };
-        if (Object.hasOwn(options, "life")) {
-            this.life = { min: options.life.min, max: options.life.max };
-        }
+        this.life = { min: 0.0, max: 0.0, ...options.life };
 
-        this.particlesPerTick = 1;
-        if (Object.hasOwn(options, "particlesPerTick")) {
-            this.particlesPerTick = options.particlesPerTick;
-        }
-
-        this.initFunction = null;
-        if (Object.hasOwn(options, "init")) {
-            this.initFunction = options.init;
-        }
-
-        this.drawFunction = null;
-        if (Object.hasOwn(options, "draw")) {
-            this.drawFunction = options.draw;
-        }
+        this.particlesPerTick = options.particlesPerTick ?? 1;
+        this.initFunction = options.init ?? null;
+        this.drawFunction = options.draw ?? null;
 
         this.particles = {};
         this.particleCounter = 0;

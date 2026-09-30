@@ -6,55 +6,16 @@ class Text {
 
     constructor(options) {
 
-        this.x = 0;
-        if (Object.hasOwn(options, "x")) {
-            this.x = options.x;
-        }
-
-        this.y = 0;
-        if (Object.hasOwn(options, "y")) {
-            this.y = options.y;
-        }
-
-        this.size = 16;
-        if (Object.hasOwn(options, "size")) {
-            this.size = options.size;
-        }
-
-        this.font = "";
-        if (Object.hasOwn(options, "font")) {
-            this.font = options.font;
-        }
-
-        this.align = "left";
-        if (Object.hasOwn(options, "align")) {
-            this.align = options.align;
-        }
-
-        this.color = "#000";
-        if (Object.hasOwn(options, "color")) {
-            this.color = options.color;
-        }
-
-        this.borderWidth = 0;
-        if (Object.hasOwn(options, "borderWidth")) {
-            this.borderWidth = options.borderWidth;
-        }
-
-        this.borderColor = "#000";
-        if (Object.hasOwn(options, "borderColor")) {
-            this.borderColor = options.borderColor;
-        }
-
-        this.borderLineJoin = "round";
-        if (Object.hasOwn(options, "borderLineJoin")) {
-            this.borderLineJoin = options.borderLineJoin;
-        }
-
-        this.monospaced = -1;
-        if (Object.hasOwn(options, "monospaced")) {
-            this.monospaced = options.monospaced;
-        }
+        this.x = options.x ?? 0;
+        this.y = options.y ?? 0;
+        this.size = options.size ?? 16;
+        this.font = options.font ?? "";
+        this.align = options.align ?? "left";
+        this.color = options.color ?? "#000";
+        this.borderWidth = options.borderWidth ?? 0;
+        this.borderColor = options.borderColor ?? "#000";
+        this.borderLineJoin = options.borderLineJoin ?? "round";
+        this.monospaced = options.monospaced ?? -1;
 
         this.lines = [""];
         this.showLines = [""];
@@ -63,35 +24,14 @@ class Text {
         this.appearLine = 0;
         this.finishedAppearing = true;
 
-        this.maxWidth = 0;
-        if (Object.hasOwn(options, "maxWidth")) {
-            this.maxWidth = options.maxWidth;
-        }
-
-        this.lineHeight = 0;
-        if (Object.hasOwn(options, "lineHeight")) {
-            this.lineHeight = options.lineHeight;
-        } else if (Object.hasOwn(options, "size")) {
-            this.lineHeight = options.size;
-        }
-
-        this.verticalAlign = "top";
-        if (Object.hasOwn(options, "verticalAlign")) {
-            this.verticalAlign = options.verticalAlign;
-        }
-
-        this.letterSpacing = 0;
-        if (Object.hasOwn(options, "letterSpacing")) {
-            this.letterSpacing = options.letterSpacing;
-        }
-
-        this.appearCharPerSec = 0;
-        if (Object.hasOwn(options, "appearCharPerSec")) {
-            this.appearCharPerSec = options.appearCharPerSec;
-        }
+        this.maxWidth = options.maxWidth ?? 0;
+        this.lineHeight = options.lineHeight ?? options.size ?? 0;
+        this.verticalAlign = options.verticalAlign ?? "top";
+        this.letterSpacing = options.letterSpacing ?? 0;
+        this.appearCharPerSec = options.appearCharPerSec ?? 0;
 
         this.text = "";
-        if (Object.hasOwn(options, "text")) {
+        if (options.text !== undefined) {
             this.setText(options.text);
         }
     }

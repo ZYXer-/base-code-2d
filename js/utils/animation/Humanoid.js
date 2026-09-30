@@ -84,7 +84,7 @@ class Humanoid {
     }
 
 
-    draw(direction, x, y) {
+    draw(_direction, _x, _y) {
 
         c.save();
         c.translate(0, 0); // TODO

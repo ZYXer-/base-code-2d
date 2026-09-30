@@ -1,4 +1,4 @@
-import { c, canvas } from "../core/canvas.js";
+import { c } from "../core/canvas.js";
 import * as Game from "../core/Game.js";
 import * as Viewport from "../core/Viewport.js";
 import * as Clock from "../core/Clock.js";
@@ -10,7 +10,7 @@ import * as ControlUtils from "../utils/gameplay/ControlUtils.js";
 import * as NumberUtils from "../utils/data/NumberUtils.js";
 import * as ImageProcessing from "../utils/rendering/ImageProcessing.js";
 import * as Easing from "../utils/animation/Easing.js";
-import { QUART_PI, HALF_PI, PI, TWO_PI } from "../utils/geometry/GeometryUtils.js";
+import { QUART_PI } from "../utils/geometry/GeometryUtils.js";
 import { drawCircle } from "../utils/rendering/DrawUtils.js";
 import Vec2 from "../utils/geometry/Vec2.js";
 import Vec3 from "../utils/geometry/Vec3.js";

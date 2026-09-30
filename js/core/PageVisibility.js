@@ -10,9 +10,7 @@ export function registerBlurHandler(key, callback) {
 
 
 export function deleteBlurHandler(key) {
-    if (Object.hasOwn(blurHandlers, key)) {
-        delete blurHandlers[key];
-    }
+    delete blurHandlers[key];
 }
 
 
@@ -22,9 +20,7 @@ export function registerFocusHandler(key, callback) {
 
 
 export function deleteFocusHandler(key) {
-    if (Object.hasOwn(focusHandlers, key)) {
-        delete focusHandlers[key];
-    }
+    delete focusHandlers[key];
 }
 
 

@@ -14,6 +14,12 @@ Entries are in reverse chronological order. One bullet per change, one clause pe
 - Documented in `CLAUDE.md` that the `typescript-lsp` plugin is expected at user scope; `typescript-language-server`, `typescript@5.9.3`, and the plugin were already installed
 - Recorded the plan-doc convention in `docs/decisions.md` and added "Plan Doc" and "Work Package" to `docs/terminology.md`
 - Bumped transitive `qs` (6.15.2 → 6.16.0, via Express) and `brace-expansion` (5.0.9 → 5.0.12, via ESLint) to clear two Dependabot advisories; `npm audit` reports 0 vulnerabilities
+- Fixed the last 14 ESLint errors (CLN-13): removed unused `Mouse` imports from `EmptyScene`, `IngameScene`, `DemoMenuScene`, and `OldDemoScene`, the unused `IngameScene` import from `Scenes.js` (now a comment showing how to swap it in), the unused `c`/`canvas` import from `Game.js`, and unused `canvas`, `HALF_PI`, `PI`, `TWO_PI` imports from `Demo.js`; prefixed the unused arguments of the `Humanoid.draw()` stub with `_`; `npm run lint` now reports 0 problems
+- Dropped the stale CLN-8 note from `docs/style.md` and fixed its two remaining `if(condition)` examples; the no-space keyword style is gone from `js/`
+- Replaced the `Object.hasOwn(options, …)` default-value checks in `Text`, `Button`, `ParticleSystem`, and `PixelFontManager` with `options.x ?? default` (CLN-12); structured `ParticleSystem` options (`emitter`, `emitterSize`, `friction`, `life`, `v`, `a`) are now filled in with a spread over their defaults, so partial objects get defaults instead of `undefined` fields
+- Removed the redundant `Object.hasOwn` guards around `delete` in `PageVisibility.js`; the two remaining `Object.hasOwn` calls (`ImageProcessing.js` colour-map lookups) are genuine existence checks and stay
+- Restored `no-prototype-builtins` to its recommended `error` severity in `eslint.config.mjs`; the CLN-6 downgrade had no remaining occurrences to cover
+- Documented the `options.x ?? default` convention in `docs/style.md`
 
 ---
 

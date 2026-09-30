@@ -1,4 +1,3 @@
-import { c, canvas } from "./canvas.js";
 import * as Viewport from "./Viewport.js";
 import * as Settings from "../Settings.js";
 import * as SceneManager from "./SceneManager.js";

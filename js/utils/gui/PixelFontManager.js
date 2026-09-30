@@ -102,13 +102,10 @@ export function create(name, file, minCharSpacingInFile, printCharSpacing, print
 
     for (let i = 0; i < manualSpacing.length; i++) {
         const c = manualSpacing[i].char.charCodeAt(0) - 32;
-        if (Object.hasOwn(manualSpacing[i], "left")) {
-            font.charOffsets[c] -= manualSpacing[i]["left"];
-            font.charWidths[c] += manualSpacing[i]["left"];
-        }
-        if (Object.hasOwn(manualSpacing[i], "right")) {
-            font.charWidths[c] += manualSpacing[i]["right"];
-        }
+        const left = manualSpacing[i].left ?? 0;
+        const right = manualSpacing[i].right ?? 0;
+        font.charOffsets[c] -= left;
+        font.charWidths[c] += left + right;
     }
 
     fonts.set(name, font);

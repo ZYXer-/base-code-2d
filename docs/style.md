@@ -12,7 +12,7 @@ The style is close to AirBnB JavaScript with three deliberate differences noted 
 
 ```js
 function example() {
-    if(condition) {
+    if (condition) {
         doSomething();
     }
 }
@@ -57,7 +57,6 @@ while (running) { ... }
 switch (state) { ... }
 ```
 
-> **Note:** Existing code uses the no-space style (`if(x)`). Fixing it across the codebase is tracked as CLN-8.
 
 ---
 
@@ -135,7 +134,7 @@ if (condition) doSomething();
 Opening brace on the same line (1TBS / K&R style).
 
 ```js
-if(condition) {
+if (condition) {
     ...
 } else {
     ...
@@ -167,6 +166,32 @@ export function update() {
 Use `import`/`export`. No `require()` outside of `nodeServer.js`.
 
 Namespace imports (`import * as Foo`) are preferred over named imports for module-level singletons, because they make the source of each call obvious at the call site (`Foo.bar()` vs bare `bar()`).
+
+---
+
+## Option defaults
+
+Constructors and setters that take an `options` object read each option with `??`, so `0`, `false`, and `""` are kept as real values and only a missing (`undefined`/`null`) option falls back to the default. Structured options are filled in with a spread over the defaults, which also copies the object.
+
+```js
+this.x = options.x ?? 0;
+this.active = options.active ?? true;
+this.emitter = { x: 0.0, y: 0.0, z: 0.0, ...options.emitter };
+```
+
+Do not use `||` for defaults (it drops falsy values) and do not use `Object.hasOwn(options, "x")` for defaults (it is only for genuine key-existence checks on maps, e.g. a colour lookup table).
+
+---
+
+## Unused variables and arguments
+
+Unused imports and variables are an **error** (`no-unused-vars`) — remove them. An argument that a stub or callback must accept but does not use is prefixed with `_`, which the rule ignores.
+
+```js
+draw(_direction, _x, _y) {
+    // TODO
+}
+```
 
 ---
 

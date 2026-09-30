@@ -44,10 +44,6 @@ export default [
             "no-constant-condition": "error",
             "no-unreachable": "error",
 
-            // --- Downgraded from recommended (tracked in backlog, not blocking) ---
-            // CLN-6: Replace options.hasOwnProperty(x) with Object.hasOwn(options, x)
-            "no-prototype-builtins": "warn",
-
             // --- Style (warnings) ---
             // Enforced for consistency but won't block the game from running.
             // See docs/style.md for the rationale behind each rule.

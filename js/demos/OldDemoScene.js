@@ -1,6 +1,5 @@
 import { c } from "../core/canvas.js";
 import * as Viewport from "../core/Viewport.js";
-import * as Mouse from "../core/input/Mouse.js";
 import * as DemoMenuScene from "./DemoMenuScene.js";
 import * as Tooltip from "../core/Tooltip.js";
 import * as BasicTooltipPainter from "../BasicTooltipPainter.js";

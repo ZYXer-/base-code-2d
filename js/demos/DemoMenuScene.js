@@ -1,6 +1,5 @@
 import { c } from "../core/canvas.js";
 import * as Viewport from "../core/Viewport.js";
-import * as Mouse from "../core/input/Mouse.js";
 import * as SceneManager from "../core/SceneManager.js";
 import * as DemoBox2dScene from "./DemoBox2dScene.js";
 import * as DemoParticlesScene from "./DemoParticlesScene.js";

@@ -128,7 +128,7 @@ It complements `check-imports`: that guard proves modules *resolve*, the suite p
 ## Known Issues / Status
 
 - The dev server's `app.get("/{*path}")` fallback in `nodeServer.js` returns `index.htm` (`text/html`) for missing files, so a bad module path surfaces as a MIME-type error rather than a 404. `npm run check-imports` catches this class of break at lint time; narrowing the fallback itself is tracked as INF-8.
-- `npm run lint` reports 14 pre-existing errors (unused imports and unused function args; no runtime risk). Tracked as CLN-13.
+- `npm run lint` runs clean (0 errors, 0 warnings) as of 2026-09-30; keep it that way. Unused stub arguments are prefixed with `_` (e.g. `Humanoid.draw(_direction, _x, _y)`), which the `no-unused-vars` rule ignores.
 - Documentation was essentially nonexistent before June 2026 — docs are being built up incrementally.
 
 ## Useful Commands
