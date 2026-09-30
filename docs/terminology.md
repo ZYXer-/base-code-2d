@@ -110,3 +110,19 @@ A rendering mode (`js/utils/IntegerScaling.js`) that scales the canvas by an int
 ## Draw Queue
 
 A `DrawQueue` (`js/utils/rendering/DrawQueue.js`) holds a list of drawable elements and tracks whether that list has changed since the last frame via a `needsUpdate` flag. Used to batch and re-sort draw calls only when the contents actually change.
+
+---
+
+## Plan Doc
+
+A design document for a piece of work that spans several sessions, written by `/create-plan-doc` to `docs/plan-<YYYY-MM-DD>-<topic>.md`. Opens with a Created/Updated/Status header and the fixed sections Goal, Requirements, Decisions, Things that came up, and Work packages. Worked to the end by `/run-plan`.
+
+**Not:** "spec", "roadmap", "TODO list".
+
+---
+
+## Work Package
+
+A session-sized unit of work with a stable `<TOPIC>-<NUMBER>` id: either an item in `BACKLOG.md` or one heading in a plan doc's "Work packages" section. Specified so that a fresh session can implement it from the backlog or plan alone, and marked done only once verified.
+
+**Not:** "task", "ticket", "step".

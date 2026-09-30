@@ -111,3 +111,13 @@ Locked decisions that constrain ongoing development. These rule out alternatives
 **Why:** These bundles have no ES exports, so a namespace import binds an empty object that ESLint then reports as an unused variable — inviting a "cleanup" that silently removes the assignment and breaks the feature at runtime. A bare import states the intent.
 
 **Constraint:** Libraries loaded via `<script>` in `index.htm` (Howler) are not imported at all; they only need the ESLint global. Do not mix the two mechanisms for one library.
+
+---
+
+## Plan Docs Are Dated and Carry a Header
+
+**Decision:** A plan is written by `/create-plan-doc` to `docs/plan-<YYYY-MM-DD>-<topic>.md`, dated the day it is first written, and opens with a **Created** / **Updated** / **Status** header followed by the sections Goal, Requirements, Decisions, Things that came up, and Work packages, in that order.
+
+**Why:** Plans are worked across many sessions, increasingly by subagents (`/run-plan`) that see only the doc. A dated name and a maintained header let a fresh session tell at a glance which plan is current and where it stands; the fixed sections give it one place to look for the requirements, the settled decisions, and the questions that came up along the way.
+
+**Constraint:** Every session that changes a plan's content refreshes **Updated** and rewrites **Status**; `/sync-docs` checks this. Work packages carry `<TOPIC>-<NUMBER>` ids numbered on from `BACKLOG.md` so the two never collide. A plan is retired only once nothing in it would be lost.

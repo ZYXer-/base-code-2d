@@ -63,7 +63,8 @@ img/                  # Image assets
 audio/                # Sound assets
 tools/                # check-imports.mjs (import-path guard)
 test/                 # Engine boot smoke test — delete for a new project
-docs/                 # Design decisions and terminology
+docs/                 # Design decisions, terminology, style, plan docs
+.claude/              # Claude Code skills (onboard, sync-docs, plan workflow) and the plan-worker agent
 ```
 
 ## Making a Game

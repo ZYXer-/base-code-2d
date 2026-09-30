@@ -1,3 +1,8 @@
+---
+name: sync-docs
+description: End of a piece of work - brings CHANGELOG, README, CLAUDE.md, BACKLOG, the docs folder and any touched plan docs in line with what actually changed.
+---
+
 # /sync-docs — Sync Documentation
 
 First, orient yourself to what has changed since the last sync:
@@ -14,5 +19,8 @@ Then review whether any of the following files need updating, based on what actu
 - `BACKLOG.md` — open work items. Mark completed items done, add newly discovered items with the correct ID format (`<TOPIC>-<NUMBER>`).
 - `docs/decisions.md` — locked design and tech decisions. Add decisions made this session. Remove or correct superseded ones. Do NOT add implementation details or preferences — only choices that rule out alternatives.
 - `docs/terminology.md` — canonical terms. Add new terms introduced this session; update or remove any that no longer apply.
+- `docs/style.md` — coding style rules and how ESLint enforces them. Update if a rule, its severity, or the lint setup changed.
+- `docs/plan-*.md` — every plan touched this session: **Updated** refreshed if its content changed, **Status** saying where the plan stands now, finished packages marked, anything that came up recorded in its "Things that came up" section. A finished plan is retired as before, once nothing in it would be lost.
+- `test/README.md` — what the engine test suite covers and how to remove it downstream. Update if the suite's scope, commands, or removal steps changed.
 
 For each file, either make the changes or explicitly confirm no changes are needed.

@@ -4,6 +4,18 @@ Entries are in reverse chronological order. One bullet per change, one clause pe
 
 ---
 
+## 2026-09-30
+
+- Moved the project skills from `.claude/commands/*.md` to `.claude/skills/<name>/SKILL.md`, Claude Code's documented layout; each now carries `name` and `description` frontmatter, and `onboard` and `create-plan-doc` are marked user-invoked only
+- `/onboard` now ends by proposing the next work package (`Next up: <ID> — …`) instead of asking what to work on
+- Rewrote `/create-plan-doc`: plans are saved as `docs/plan-<YYYY-MM-DD>-<topic>.md` with a Created/Updated/Status header and fixed Goal, Requirements, Decisions, Things that came up, and Work packages sections; packages use `<TOPIC>-<NUMBER>` ids numbered on from `BACKLOG.md`
+- `/sync-docs` now also covers `docs/plan-*.md`, `docs/style.md`, and `test/README.md`, which were missing from its file list
+- Added `/requirements-elicitation` (guided brain dump before planning) and `/run-plan` (one subagent per work package, plan doc kept current), plus the `plan-worker` agent definition in `.claude/agents/`
+- Documented in `CLAUDE.md` that the `typescript-lsp` plugin is expected at user scope; `typescript-language-server`, `typescript@5.9.3`, and the plugin were already installed
+- Recorded the plan-doc convention in `docs/decisions.md` and added "Plan Doc" and "Work Package" to `docs/terminology.md`
+
+---
+
 ## 2026-08-21
 
 - Bumped `brace-expansion` 5.0.6 → 5.0.9 (dev-only, via `eslint` → `minimatch`) to clear GHSA-3jxr-9vmj-r5cp and two related DoS advisories

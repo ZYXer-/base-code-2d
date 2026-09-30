@@ -117,6 +117,7 @@ Grouped into six topic subfolders. Import paths are relative; `npm run check-imp
 - **Assets** must be registered in `js/Resources.js` before use.
 - **Settings** live in `js/Settings.js`. Do not hard-code tunable values elsewhere.
 - **Global keyboard shortcuts** go in `js/GlobalControls.js`.
+- **Language servers:** the `typescript-lsp` plugin should be installed at user scope for this repo's language (JavaScript). If the LSP tool is missing or a go-to-definition fails, tell the user rather than working around it.
 
 ## Testing
 
