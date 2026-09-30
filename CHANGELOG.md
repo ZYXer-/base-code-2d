@@ -13,6 +13,7 @@ Entries are in reverse chronological order. One bullet per change, one clause pe
 - Added `/requirements-elicitation` (guided brain dump before planning) and `/run-plan` (one subagent per work package, plan doc kept current), plus the `plan-worker` agent definition in `.claude/agents/`
 - Documented in `CLAUDE.md` that the `typescript-lsp` plugin is expected at user scope; `typescript-language-server`, `typescript@5.9.3`, and the plugin were already installed
 - Recorded the plan-doc convention in `docs/decisions.md` and added "Plan Doc" and "Work Package" to `docs/terminology.md`
+- Bumped transitive `qs` (6.15.2 → 6.16.0, via Express) and `brace-expansion` (5.0.9 → 5.0.12, via ESLint) to clear two Dependabot advisories; `npm audit` reports 0 vulnerabilities
 
 ---
 
